@@ -1,0 +1,70 @@
+<template name="videosTemplate">
+  {{#if isPlaylistSelected}}
+    <h2>{{playlistName}}</h2>
+    <h3>Videos</h3>
+    <a href="#" id="add-video"><i class="icon-plus-sign"></i> Add a new Video</a><br /><br />
+    <table class="table table-striped table-condensed">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      {{#each videos}}
+        <tr class="video" playlist="{{playlist}}" video="{{_id}}">
+          <td class="videos-playing"><i class="{{isPlaying}}"></i></td>
+          <td class="videos-name">{{name}}</td>
+          <td class="videos-playing"><a href="#" class="remove-video" video="{{_id}}"><i class="icon-remove"></i></a></td>
+        </tr>
+      {{/each}}
+      </tbody>
+    </table>
+    {{> remove-video-popup}}
+    {{> add-video-popup}}
+  {{/if}}
+</template>
+
+
+<template name="remove-video-popup">
+  <div class="modal hide fade" id="remove-video-modal">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3>Remove a Video</h3>
+    </div>
+    <div class="modal-body">
+      <p>Please confirm the deletion of this video</p>
+    </div>
+    <div class="modal-footer">
+      <div class="controls">
+        <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</a>
+        <a href="#" class="btn btn-danger" id="remove-video-submit">Remove</a>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+<template name="add-video-popup">
+  <div class="modal hide fade" id="add-video-modal">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3>Add a Video</h3>
+    </div>
+    <form class="form-horizontal">
+      <div class="modal-body">
+        <label class="control-label" for="inputEmail">URL</label>
+        <div class="controls">
+          <input type="text" id="add-video-url" placeholder="URL">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="controls">
+          <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</a>
+          <button type="submit" class="btn btn-primary">Add</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</template>

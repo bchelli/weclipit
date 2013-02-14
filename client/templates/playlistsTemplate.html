@@ -1,0 +1,54 @@
+<template name="playlistsTemplate">
+  <ul class="nav nav-list">
+    <li class="nav-header">My Playlists</li>
+    <li><a href="#" id="add-playlist"><i class="icon-plus-sign"></i> Create a new Playlist</a></li>
+  {{#each playlists}}
+    <li class="{{active}}"><a class="playlist" href="#" playlist="{{_id}}"><i class="icon-list"></i> {{name}} {{#if active}}<i class="icon-remove playlist-remove" playlist="{{_id}}"></i>{{/if}}</a></li>
+  {{/each}}
+  </ul>
+  {{> remove-playlist-popup}}
+  {{> create-playlist-popup}}
+</template>
+
+
+<template name="remove-playlist-popup">
+  <div class="modal hide fade" id="remove-playlist-modal">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3>Remove a Playlist</h3>
+    </div>
+    <div class="modal-body">
+      <p>Please confirm the deletion of this playlist</p>
+    </div>
+    <div class="modal-footer">
+      <div class="controls">
+        <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</a>
+        <a href="#" class="btn btn-danger" id="remove-playlist-submit">Remove</a>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+<template name="create-playlist-popup">
+  <div class="modal hide fade" id="add-playlist-modal">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3>Create a Playlist</h3>
+    </div>
+    <form class="form-horizontal">
+      <div class="modal-body">
+        <label class="control-label" for="inputEmail">Name</label>
+        <div class="controls">
+          <input type="text" id="add-playlist-name" placeholder="Name">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="controls">
+          <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</a>
+          <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</template>

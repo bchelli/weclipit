@@ -1,0 +1,7 @@
+.video {cursor: pointer;}
+  .video td.videos-playing {width:30px;text-align:center;}
+  .video td.videos-name {}
+  .video td.videos-duration {width:100px;text-align:center;}
+
+#add-video-modal{}
+  #add-video-modal form{margin:0}
