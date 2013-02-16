@@ -9,12 +9,14 @@
         </button>
         <a class="brand" href="/">26plays</a>
         <div class="nav-collapse collapse">
+          {{#if isPlaying}}
           <ul class="nav">
             <li><a href="#" onclick="Template.playerTemplate.toogleFullscreen();return false;"><i class="icon-white icon-fullscreen"></i></a></li>
             <li><a href="#" onclick="Template.playerTemplate.playerGoTo('prev');return false;"><i class="icon-white icon-fast-backward"></i></a></li>
             <li><a href="#" onclick="Template.playerTemplate.playerStop();return false;"><i class="icon-white icon-stop"></i></a></li>
             <li><a href="#" onclick="Template.playerTemplate.playerGoTo('next');return false;"><i class="icon-white icon-fast-forward"></i></a></li>
           </ul>
+          {{/if}}
           <ul class="nav pull-right">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-white icon-user"></i> {{userName}}</a>
