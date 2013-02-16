@@ -29,7 +29,6 @@ Template.videosTemplate.videos = function() {
 };
 Template.videosTemplate.playlistName = function() {
   var pl = playlists.findOne({_id:Session.get('playlist')});
-  console.log(pl);
   return pl && pl.name ? pl.name : '';
 };
 Template.videosTemplate.isPlaylistSelected = function() {
@@ -45,7 +44,12 @@ Template.videosTemplate.events({
 
 
 , 'click #add-video': function (event, template) {
-    $('#add-video-modal').modal();
+    $('#add-video-url').val('');
+    $('#add-video-modal')
+      .on('shown', function(){
+        $('#add-video-url').focus();
+      })
+      .modal();
     return false;
   }
 , 'submit #add-video-modal form': function (event, template) {
@@ -56,7 +60,11 @@ Template.videosTemplate.events({
   }
 , 'click .remove-video': function (event, template) {
     $('#remove-video-submit').attr('video', event.currentTarget.getAttribute('video'));
-    $('#remove-video-modal').modal();
+    $('#remove-video-modal')
+      .on('shown', function(){
+        $('#remove-video-submit').focus();
+      })
+      .modal();
     return false;
   }
 , 'click #remove-video-submit': function (event, template) {

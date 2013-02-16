@@ -7,7 +7,7 @@
 
 // Subscribe to my playlists
 Meteor.autorun(function(){
-  Meteor.subscribe("playlists");
+  Meteor.subscribe("playlists", Meteor.userId());
 });
 
 // Set Template Variables
@@ -29,18 +29,25 @@ Template.playlistsTemplate.events({
     return false;
   }
 , 'click #add-playlist': function (event, template) {
-    $('#add-playlist-modal').modal();
+    $('#add-playlist-name').val('');
+    $('#add-playlist-modal')
+      .on('shown', function(){
+        $('#add-playlist-name').focus();
+      })
+      .modal();
     return false;
   }
 , 'submit #add-playlist-modal form': function (event, template) {
-    playlists.insert({
-      name:$('#add-playlist-name').val()
-    });
+    Meteor.call('createPlaylist', $('#add-playlist-name').val());
     $('#add-playlist-modal').modal('hide');
     return false;
   }
 , 'click .playlist-remove': function (event, template) {
-    $('#remove-playlist-modal').modal();
+    $('#remove-playlist-modal')
+      .on('shown', function(){
+        $('#remove-playlist-submit').focus();
+      })
+      .modal();
     $('#remove-playlist-submit').attr('playlist', event.currentTarget.getAttribute('playlist'));
     return false;
   }

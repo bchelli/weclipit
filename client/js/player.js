@@ -18,6 +18,18 @@ Template.playerTemplate.helpers({
     return this.provider == type;
   }
 });
+
+function updateFullscreen(){
+  if(Session.get('fullscreen')){
+    $('#player').addClass('fullscreen');
+  } else {
+    $('#player').removeClass('fullscreen');
+  }
+}
+Template.playerTemplate.toogleFullscreen = function(){
+  Session.set('fullscreen', !Session.get('fullscreen'));
+  updateFullscreen();
+}
 Template.playerTemplate.playerStop = function(){
   playlistsRouter.setPlaylist(Session.get('playing').playlist);
   Session.set('playing', null);
@@ -74,6 +86,8 @@ Template.playerTemplate.rendered = function() {
       }
     });
   }
+
+  updateFullscreen()
 
 };
 

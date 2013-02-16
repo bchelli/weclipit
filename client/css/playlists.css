@@ -1,2 +1,5 @@
 #add-playlist-modal{}
   #add-playlist-modal form{margin:0}
+
+a.playlist i.pull-right {visibility:hidden;margin:3px;}
+a.playlist:hover i.pull-right {visibility:visible;}

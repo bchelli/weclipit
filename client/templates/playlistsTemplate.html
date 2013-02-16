@@ -3,7 +3,15 @@
     <li class="nav-header">My Playlists</li>
     <li><a href="#" id="add-playlist"><i class="icon-plus-sign"></i> Create a new Playlist</a></li>
   {{#each playlists}}
-    <li class="{{active}}"><a class="playlist" href="#" playlist="{{_id}}"><i class="icon-list"></i> {{name}} {{#if active}}<i class="icon-remove playlist-remove" playlist="{{_id}}"></i>{{/if}}</a></li>
+    <li class="{{active}}">
+      <a class="playlist" href="#" playlist="{{_id}}">
+        <i class="icon-list"></i>
+        {{name}}
+        <i class="icon-remove playlist-remove pull-right" playlist="{{_id}}"></i>
+        <i class="icon-share-alt playlist-share pull-right" playlist="{{_id}}"></i>
+        <i class="icon-pencil playlist-edit pull-right" playlist="{{_id}}"></i>
+      </a>
+    </li>
   {{/each}}
   </ul>
   {{> remove-playlist-popup}}
@@ -38,7 +46,7 @@
     </div>
     <form class="form-horizontal">
       <div class="modal-body">
-        <label class="control-label" for="inputEmail">Name</label>
+        <label class="control-label" for="add-playlist-name">Name</label>
         <div class="controls">
           <input type="text" id="add-playlist-name" placeholder="Name">
         </div>
