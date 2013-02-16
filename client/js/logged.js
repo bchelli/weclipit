@@ -1,6 +1,7 @@
 
 
 Template.loggedTemplate.userName = function(){
-  return Meteor.user().profile.name;
+  var user = Meteor.user();
+  return user && user.profile && user.profile.name ? user.profile.name : '';
 };
 
