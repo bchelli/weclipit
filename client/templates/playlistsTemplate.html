@@ -3,6 +3,7 @@
     <li class="nav-header">My Playlists</li>
     <li><a href="#" id="add-playlist"><i class="icon-plus-sign"></i> Create a new Playlist</a></li>
   {{#each playlists}}
+    {{#if isMine}}
     <li class="{{active}}">
       <a class="playlist" href="#" playlist="{{_id}}">
         <i class="icon-list"></i>
@@ -12,6 +13,19 @@
         <i class="icon-pencil playlist-edit pull-right" playlist="{{_id}}"></i>
       </a>
     </li>
+    {{/if}}
+  {{/each}}
+    <li class="nav-header">Shared Playlists</li>
+  {{#each playlists}}
+    {{#if isMine}}
+    {{else}}
+    <li class="{{active}}">
+      <a class="playlist" href="#" playlist="{{_id}}">
+        <i class="icon-list"></i>
+        {{name}}
+      </a>
+    </li>
+    {{/if}}
   {{/each}}
   </ul>
   {{> remove-playlist-popup}}

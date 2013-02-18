@@ -1,23 +1,10 @@
 
 Meteor.publish('playlists', function(userId){
-  return playlists.find({owner:userId});
-});
-
-Meteor.methods({
-  removePlaylist : function(playlist){
-    var pl = playlists.findOne({owner:Meteor.userId(),_id:playlist});
-    if(pl){
-      videos.remove({playlist:pl._id})
-      playlists.remove({_id:pl._id})
-    }
+  var query = {$or:[{owner:this.userId}]}
+    , user = Meteor.users.findOne({_id:this.userId})
+    ;
+  if(user && user.services && user.services.facebook && user.services.facebook.id){
+    query.$or.push({canRead : user.services.facebook.id});
   }
-, createPlaylist : function(name){
-    var userId = Meteor.userId();
-    if(userId){
-      playlists.insert({
-        name:name
-      , owner:userId
-      });
-    }
-  }
+  return playlists.find(query);
 });

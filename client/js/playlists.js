@@ -17,7 +17,10 @@ Template.playlistsTemplate.playlists = function() {
 
 // Set Template Helpers
 Template.playlistsTemplate.helpers({
-  active: function () {
+  isMine: function () {
+    return this.owner === Meteor.userId();
+  }
+, active: function () {
     return this._id === Session.get("playlist") ? 'active' : '';
   }
 });
