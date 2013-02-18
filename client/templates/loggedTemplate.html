@@ -39,18 +39,20 @@
     <div class="row-fluid">
 
       <!-- List of Playlists -->
-      <div class="span3">
+      <div class="span3" id="menuContainer">
         <div class="well sidebar-nav">
           {{> playlistsTemplate}}
         </div><!--/.well -->
       </div><!--/span-->
 
-      <div class="span9">
-        {{> videosTemplate}}
+      <div class="span9" id="playlistContainer">
+        <div id="playlistContent">
+          {{> videosTemplate}}
+        </div>
       </div><!--/span-->
     </div><!--/row-->
 
-    <hr>
+    <hr class="footer" />
 
     <footer>
       <p>&copy; Company 2013</p>

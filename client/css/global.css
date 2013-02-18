@@ -1,9 +1,28 @@
 body {
   padding-top: 60px;
-  padding-bottom: 40px;
+  padding-bottom: 0;
 }
 .sidebar-nav {
   padding: 9px 0;
+}
+
+hr.footer{
+  margin-bottom:5px;
+}
+
+@media (min-width: 980px) {
+  #menuContainer,
+  #playlistContainer {
+    display:block;
+  }
+  
+  #playlistContent,#menuContainer .well {
+    display: block;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+  }
 }
 
 @media (max-width: 980px) {

@@ -9,3 +9,23 @@ Template.loggedTemplate.isPlaying = function(){
   return !!Session.get('playing');
 };
 
+(function(){
+  var $window = $(window);
+  var resizeWindow = function(){
+    var wH = $window.height();
+    $('#menuContainer,#playlistContainer').stop().animate({'height':wH-117});
+  };
+  var resizeTO;
+  var onResize = function(){
+    clearTimeout(resizeTO);
+    resizeTO = setTimeout(resizeWindow, 100);
+  };
+  Template.loggedTemplate.rendered = function() {
+    $window.bind('resize', onResize);
+    resizeWindow();
+  };
+  
+  Template.loggedTemplate.destroyed = function() {
+    $window.unbind('resize', onResize);
+  }
+})();
