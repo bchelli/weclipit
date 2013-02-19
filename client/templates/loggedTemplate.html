@@ -40,9 +40,18 @@
 
       <!-- List of Playlists -->
       <div class="span3" id="menuContainer">
+        {{#if isPlaying}}
+        <div class="well sidebar-nav isPlaying">
+          {{> playlistsTemplate}}
+        </div><!--/.well -->
+        <div id="playerContent">
+          {{> playerTemplate}}
+        </div>
+        {{else}}
         <div class="well sidebar-nav">
           {{> playlistsTemplate}}
         </div><!--/.well -->
+        {{/if}}
       </div><!--/span-->
 
       <div class="span9" id="playlistContainer">
@@ -60,5 +69,4 @@
 
   </div><!--/.fluid-container-->
 
-  {{> playerTemplate}}
 </template>

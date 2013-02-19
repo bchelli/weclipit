@@ -23,6 +23,14 @@ hr.footer{
     padding: 0;
     overflow: auto;
   }
+
+  #playerContent{
+    height:30%;
+  }
+
+  #menuContainer .well.isPlaying {
+    height: 70%;
+  }
 }
 
 @media (max-width: 980px) {
