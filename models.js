@@ -38,9 +38,9 @@ Meteor.methods({
     if(pl){
       playlists.update(partyId, {
         $addToSet: {
-          canRead: userId
-        , canWrite: userId
-        , canDelete: userId
+          canAccess:      userId
+        , canAddVideo:    userId
+        , canRemoveVideo: userId
         }
       });
     }
@@ -59,9 +59,9 @@ Meteor.methods({
       playlists.insert({
         name:           name
       , owner:          userId
-      , canRead:   []
-      , canWrite:  []
-      , canDelete: []
+      , canAccess:      []
+      , canAddVideo:    []
+      , canRemoveVideo: []
       });
     }
   }
@@ -97,6 +97,7 @@ Meteor.methods({
           if(providerId !== ''){
             videos.insert({
               url:        url
+            , owner:      Meteor.userId()
             , playlist:   playlist
             , provider:   provider
             , providerId: providerId
