@@ -27,9 +27,9 @@ Template.videosTemplate.videos = function() {
   if (!pl) return {};
   return videos.find({playlist:pl});
 };
-Template.videosTemplate.playlistName = function() {
+Template.videosTemplate.playlist = function() {
   var pl = playlists.findOne({_id:Session.get('playlist')});
-  return pl && pl.name ? pl.name : '';
+  return pl || {};
 };
 Template.videosTemplate.isPlaylistSelected = function() {
   return !!Session.get('playlist');
@@ -41,8 +41,6 @@ Template.videosTemplate.events({
     videosRouter.setVideo(event.currentTarget.getAttribute('playlist'), event.currentTarget.getAttribute('video'));
     return false;
   }
-
-
 , 'click #add-video': function (event, template) {
     $('#add-video-url').val('');
     $('#add-video-modal')
