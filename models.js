@@ -37,7 +37,7 @@ if(Meteor.isServer){
   , sharePlaylist : function(playlist, userId){
       var pl = playlists.findOne({owner:Meteor.userId(),_id:playlist});
       if(pl){
-        playlists.update(partyId, {
+        playlists.update({_id:playlist}, {
           $addToSet: {
             canAccess:      userId
           , canAddVideo:    userId
@@ -112,6 +112,5 @@ if(Meteor.isServer){
   , removeVideo : function(video){
       videos.remove({_id:video});
     }
-  
   });
 }
