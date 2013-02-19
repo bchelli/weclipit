@@ -2,7 +2,9 @@
   {{#if isPlaylistSelected}}
     <h2>{{playlist.name}}</h2>
     <h3>Videos</h3>
+    {{#if rightTo "canAddVideo" playlist myUser}}
     <a href="#" id="add-video"><i class="icon-plus-sign"></i> Add a new Video</a><br /><br />
+    {{/if}}
     <table class="table table-striped table-condensed">
       <thead>
         <tr>
@@ -16,7 +18,13 @@
         <tr class="video" playlist="{{playlist._id}}" video="{{_id}}">
           <td class="videos-playing"><i class="{{isPlaying}}"></i></td>
           <td class="videos-name">{{name}}</td>
-          <td class="videos-playing"><a href="#" class="remove-video" video="{{_id}}"><i class="icon-remove"></i></a></td>
+          <td class="videos-playing">
+            <a href="#" class="remove-video" video="{{_id}}">
+            {{#if rightTo "canRemoveVideo" playlist myUser owner}}
+            <i class="icon-remove"></i>
+            {{/if}}
+            </a>
+          </td>
         </tr>
       {{/each}}
       </tbody>

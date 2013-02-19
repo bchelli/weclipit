@@ -10,6 +10,7 @@ Meteor.autorun(function () {
   var pl = Session.get('playlist');
   if (pl) {
     Meteor.subscribe('videos', pl);
+    Meteor.subscribe('userData');
   }
 });
 
@@ -18,6 +19,14 @@ Template.videosTemplate.helpers({
   isPlaying: function () {
     var pl = Session.get("playing");
     return (pl && this._id === pl.video) ? 'icon-play' : '';
+  }
+, rightTo: function(right, playlist, myUser, videoOwner){
+    var fbId = myUser && myUser.services && myUser.services.facebook && myUser.services.facebook.id ? myUser.services.facebook.id : 0
+      , result = playlist.owner === myUser._id
+      ;
+    if(!result && playlist[right] && playlist[right].indexOf) result = playlist[right].indexOf(fbId)!==-1;
+    if(!result && videoOwner) result = videoOwner === myUser._id;
+    return result;
   }
 });
 
@@ -30,6 +39,10 @@ Template.videosTemplate.videos = function() {
 Template.videosTemplate.playlist = function() {
   var pl = playlists.findOne({_id:Session.get('playlist')});
   return pl || {};
+};
+Template.videosTemplate.myUser = function() {
+  var u = Meteor.users.findOne({_id:Meteor.userId()});
+  return u || {};
 };
 Template.videosTemplate.isPlaylistSelected = function() {
   return !!Session.get('playlist');
