@@ -13,7 +13,7 @@
       </thead>
       <tbody>
       {{#each videos}}
-        <tr class="video" playlist="{{playlist}}" video="{{_id}}">
+        <tr class="video" playlist="{{playlist._id}}" video="{{_id}}">
           <td class="videos-playing"><i class="{{isPlaying}}"></i></td>
           <td class="videos-name">{{name}}</td>
           <td class="videos-playing"><a href="#" class="remove-video" video="{{_id}}"><i class="icon-remove"></i></a></td>
