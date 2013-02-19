@@ -5,7 +5,20 @@ body {
 .sidebar-nav {
   padding: 9px 0;
 }
-
+.navbar{
+  border-bottom: 4px solid #0088cc;
+}
+#login-buttons-image-facebook{
+  margin-top:-2px;
+}
+#login-buttons-facebook{
+  background-color: #0088cc !important;
+  background-image: none !important;
+}
+.logo{
+  width: 79px;
+  margin: -16px 0 -30px;
+}
 hr.footer{
   margin-bottom:5px;
 }
