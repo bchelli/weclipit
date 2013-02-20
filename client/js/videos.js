@@ -90,6 +90,7 @@ var VideosRouter = Backbone.Router.extend({
     "playlist/:playlist/video/:video": "openVideo"
   },
   openVideo: function (playlist, video) {
+    Session.set('page', 'playlist');
     Session.set("playing", {video:video,playlist:playlist});
     if(!Session.set("playlist")){
       Session.set("playlist", playlist);

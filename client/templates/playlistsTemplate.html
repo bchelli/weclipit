@@ -1,13 +1,13 @@
 <template name="playlistsTemplate">
   <ul class="nav nav-list">
     <li class="nav-header">Pages</li>
-    <li><a href=""><i class="icon-home"></i> Home</a></li>
-    <li><a href=""><i class="icon-search"></i> Search</a></li>
+    <li class="{{active 'home'}}"><a href="#" class="page" page="home"><i class="icon-home"></i> Home</a></li>
+    <li class="{{active 'search'}}"><a href="#" class="page" page="search"><i class="icon-search"></i> Search</a></li>
     <li class="nav-header">My Playlists</li>
     <li><a href="#" id="add-playlist"><i class="icon-plus-sign"></i> Create a new Playlist</a></li>
   {{#each playlists}}
     {{#if isMine}}
-    <li class="{{active}}">
+    <li class="{{active 'playlist'}}">
       <a class="playlist" href="#" playlist="{{_id}}">
         <i class="icon-list"></i>
         {{name}}

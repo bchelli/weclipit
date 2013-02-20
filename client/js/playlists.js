@@ -20,8 +20,14 @@ Template.playlistsTemplate.helpers({
   isMine: function () {
     return this.owner === Meteor.userId();
   }
-, active: function () {
-    return this._id === Session.get("playlist") ? 'active' : '';
+, active: function (page) {
+    var active;
+    if(Session.get("page") === 'playlist'){
+      active = this._id === Session.get("playlist");
+    } else {
+      active = Session.get("page") === page;
+    }
+    return active ? 'active' : '';
   }
 });
 
@@ -66,6 +72,7 @@ var PlaylistsRouter = Backbone.Router.extend({
     "playlist/:playlist": "openPlaylist"
   },
   openPlaylist: function (playlist) {
+    Session.set('page', 'playlist');
     Session.set("playlist", playlist);
   },
   setPlaylist: function (playlist) {
