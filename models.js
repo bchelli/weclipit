@@ -150,7 +150,7 @@ if(Meteor.isServer){
         var rights = ['canAccess', 'canAddVideo', 'canRemoveVideo'];
         for(var i in friends){
           for(var r in rights){
-            friends[i][rights[r]] = pl[rights[r]].indexOf(friends[i].id)!==-1;
+            friends[i][rights[r]] = !!pl[rights[r]] && pl[rights[r]].indexOf(friends[i].id)!==-1;
           }
         }
       }
