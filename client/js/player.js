@@ -73,7 +73,13 @@ Template.playerTemplate.rendered = function() {
   if(youtube){
     var newPlayer = new YT.Player("youtube-player", {
       "videoId": youtube.getAttribute("providerId"),
-      "playerVars": {},
+      "playerVars": {
+        "controls":0
+      , "iv_load_policy":3
+      , "modestbranding":0
+      , "rel":0
+      , "showinfo":0
+      },
       "events": {
         "onReady": function(){
           newPlayer.playVideo();
