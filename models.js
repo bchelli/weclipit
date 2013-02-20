@@ -137,7 +137,7 @@ if(Meteor.isServer){
           , fiber = Fiber.current
           ;
   
-        Meteor.http.get('https://graph.facebook.com/597795991/friends?method=GET&format=json&access_token='+u.services.facebook.accessToken, function(err, res){
+        Meteor.http.get('https://graph.facebook.com/'+u.services.facebook.id+'/friends?method=GET&format=json&access_token='+u.services.facebook.accessToken, function(err, res){
           if(!err){
             if(res && res.data && res.data.data){
               friends = res.data.data;
