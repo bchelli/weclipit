@@ -31,6 +31,18 @@ Template.playlistsTemplate.helpers({
   }
 });
 
+Template.playlistsTemplate.filterFriends = function(text){
+  text = text.toLowerCase();
+  _.each(Template.playlistsTemplate.friends, function(friend, index){
+    if(text === '' || friend.name.toLowerCase().indexOf(text)!==-1){
+      $('#friend-'+index).show();
+    } else {
+      $('#friend-'+index).hide();
+    }
+  });
+}
+
+
 // Set Template Events
 Template.playlistsTemplate.events({
   'click .playlist': function (event, template) {
@@ -63,6 +75,51 @@ Template.playlistsTemplate.events({
 , 'click #remove-playlist-submit': function (event, template) {
     Meteor.call('removePlaylist', event.currentTarget.getAttribute('playlist'));
     $('#remove-playlist-modal').modal('hide');
+  }
+, 'click .playlist-share': function (event, template) {
+    var $list = $('#share-users-list')
+      , playlist = event.currentTarget.getAttribute('playlist')
+      ;
+    $('#filter-share-users-list').val('');
+    $list.html('LOADING . . .');
+    Meteor.call('getPlaylistFriendsSharing', playlist, function(err, res){
+      Template.playlistsTemplate.friends = res;
+      var result = ''
+        , $list = $('#share-users-list')
+        ;
+      _.each(Template.playlistsTemplate.friends, function(friend, index){
+        result += '<tr id="friend-'+index+'">'
+                + '  <td style="text-align:right;">'
+                + '    <input type="checkbox" id="friend-'+index+'-canAccess" '+(friend.canAccess?'checked ':'')+' />'
+                + '  </td>'
+                + '  <td><img src="http://graph.facebook.com/'+friend.id+'/picture" /></td>'
+                + '  <td>'
+                + '    '+friend.name
+                + '  </td>'
+                + '</tr>';
+      });
+      $list.html('<center><table>'+result+'</table></center>');
+      Template.playlistsTemplate.filterFriends('');
+    });
+    $('#share-playlist-modal')
+      .attr('playlist', playlist)
+      .modal();
+    return false;
+  }
+, 'keyup #filter-share-users-list': function (event, template) {
+    Template.playlistsTemplate.filterFriends($('#filter-share-users-list').val());
+  }
+, 'click #share-playlist-submit': function (event, template) {
+    var changes = [];
+    _.each(Template.playlistsTemplate.friends, function(friend, index){
+      if($('#friend-'+index+'-canAccess').is(':checked')!=friend.canAccess){
+        changes.push({id:friend.id,status:!friend.canAccess});
+      }
+    });
+    if(changes.length>0) {
+      Meteor.call('sharePlaylist', $('#share-playlist-modal').attr('playlist'), changes);
+    }
+    $('#share-playlist-modal').modal('hide');
   }
 });
 

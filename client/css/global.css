@@ -8,7 +8,13 @@ body {
 .navbar{
 }
 .navbar .nav > li > a {
-  padding: 25px 15px 25px;
+  line-height: 50px;
+}
+.navbar-inverse .nav li.dropdown > .dropdown-toggle .caret{
+  margin-top:25px;
+}
+.header-profile-picture{
+  height:30px;
 }
 .navbar-inverse .brand{
   padding-left:120px;

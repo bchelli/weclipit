@@ -34,16 +34,29 @@ if(Meteor.isServer){
     }
   
   // PLAYLISTS
-  , sharePlaylist : function(playlist, userId){
+  , sharePlaylist : function(playlist, users){
       var pl = playlists.findOne({owner:Meteor.userId(),_id:playlist});
       if(pl){
-        playlists.update({_id:playlist}, {
-          $addToSet: {
-            canAccess:      userId
-          , canAddVideo:    userId
-          , canRemoveVideo: userId
+        for(var i in users){
+          var userId = users[i].id;
+          if(users[i].status){
+            playlists.update({_id:playlist}, {
+              $addToSet: {
+                canAccess:      userId
+              , canAddVideo:    userId
+              , canRemoveVideo: userId
+              }
+            });
+          } else {
+            playlists.update({_id:playlist}, {
+              $pull: {
+                canAccess:      userId
+              , canAddVideo:    userId
+              , canRemoveVideo: userId
+              }
+            });
           }
-        });
+        }
       }
     }
   , removePlaylist : function(playlist){
@@ -69,6 +82,7 @@ if(Meteor.isServer){
   
   // VIDEOS
   , addVideo : function(playlist, url){
+      var fiber = Fiber.current;
       Meteor.http.get(
         "http://api.embed.ly/1/oembed?key=41f79dded6d843f68d00896d0fc1500d&url="+encodeURIComponent(url)
       , function(err, res){
@@ -106,11 +120,41 @@ if(Meteor.isServer){
               });
             }
           }
+          fiber.run();
         }
       );
+      Fiber.yield();
     }
   , removeVideo : function(video){
       videos.remove({_id:video});
+    }
+  , getPlaylistFriendsSharing : function(playlist){
+      var pl = playlists.findOne({owner:Meteor.userId(),_id:playlist})
+        , friends
+        ;
+      if(pl){
+        var u = Meteor.user()
+          , fiber = Fiber.current
+          ;
+  
+        Meteor.http.get('https://graph.facebook.com/597795991/friends?method=GET&format=json&access_token='+u.services.facebook.accessToken, function(err, res){
+          if(!err){
+            if(res && res.data && res.data.data){
+              friends = res.data.data;
+            }
+          }
+          fiber.run();
+        });
+        Fiber.yield();
+        
+        var rights = ['canAccess', 'canAddVideo', 'canRemoveVideo'];
+        for(var i in friends){
+          for(var r in rights){
+            friends[i][rights[r]] = pl[rights[r]].indexOf(friends[i].id)!==-1;
+          }
+        }
+      }
+      return friends;
     }
   });
 }

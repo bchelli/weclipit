@@ -33,6 +33,7 @@
   </ul>
   {{> remove-playlist-popup}}
   {{> create-playlist-popup}}
+  {{> share-playlist-popup}}
 </template>
 
 
@@ -75,5 +76,25 @@
         </div>
       </div>
     </form>
+  </div>
+</template>
+
+
+<template name="share-playlist-popup">
+  <div class="modal hide fade" id="share-playlist-modal">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3>Share Playlist</h3>
+    </div>
+    <div class="modal-body">
+      <input id="filter-share-users-list" type="text" />
+      <div id="share-users-list"></div>
+    </div>
+    <div class="modal-footer">
+      <div class="controls">
+        <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</a>
+        <a href="#" class="btn btn-primary" id="share-playlist-submit">Share</a>
+      </div>
+    </div>
   </div>
 </template>

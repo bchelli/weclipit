@@ -5,6 +5,11 @@ Template.loggedTemplate.userName = function(){
   return user && user.profile && user.profile.name ? user.profile.name : '';
 };
 
+Template.loggedTemplate.userPhoto = function(){
+  var user = Meteor.user();
+  return user && user.services && user.services.facebook && user.services.facebook.id ? 'http://graph.facebook.com/'+user.services.facebook.id+'/picture' : '';
+};
+
 Template.loggedTemplate.isPlaying = function(){
   return !!Session.get('playing');
 };
