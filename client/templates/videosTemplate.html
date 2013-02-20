@@ -2,9 +2,11 @@
   {{#if isPlaylistSelected}}
     <h2>{{playlist.name}}</h2>
     <h3>Shared with</h3>
+    <div class="shared-users">
     {{#each playlist.canAccess}}
       <img src="http://graph.facebook.com/{{.}}/picture" />
     {{/each}}
+    </div>
     <h3>Videos</h3>
     {{#if rightTo "canAddVideo" playlist myUser}}
     <a href="#" id="add-video"><i class="icon-plus-sign"></i> Add a new Video</a><br /><br />

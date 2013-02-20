@@ -5,3 +5,6 @@
 
 #add-video-modal{}
   #add-video-modal form{margin:0}
+
+.shared-users {overflow: hidden;max-height:104px;font-size:0}
+  .shared-users img {height:50px;margin:0 4px 4px 0;}

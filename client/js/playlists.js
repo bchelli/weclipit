@@ -90,7 +90,7 @@ Template.playlistsTemplate.events({
       _.each(Template.playlistsTemplate.friends, function(friend, index){
         result += '<tr id="friend-'+index+'">'
                 + '  <td style="text-align:right;">'
-                + '    <input type="checkbox" id="friend-'+index+'-canAccess" '+(friend.canAccess?'checked ':'')+' />'
+                + '    <input type="checkbox" id="friend-'+index+'-canAccess" class="friend-canAccess" '+(friend.canAccess?'checked ':'')+' />'
                 + '  </td>'
                 + '  <td><img src="http://graph.facebook.com/'+friend.id+'/picture" /></td>'
                 + '  <td>'
@@ -108,6 +108,14 @@ Template.playlistsTemplate.events({
   }
 , 'keyup #filter-share-users-list': function (event, template) {
     Template.playlistsTemplate.filterFriends($('#filter-share-users-list').val());
+  }
+, 'click #share-playlist-select-all': function (event, template) {
+    $('.friend-canAccess').prop('checked', true);
+    return false;
+  }
+, 'click #share-playlist-select-none': function (event, template) {
+    $('.friend-canAccess').prop('checked', false);
+    return false;
   }
 , 'click #share-playlist-submit': function (event, template) {
     var changes = [];
