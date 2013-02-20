@@ -10,6 +10,11 @@ body {
 .navbar .nav > li > a {
   padding: 25px 15px 25px;
 }
+.navbar-inverse .brand{
+  padding-left:120px;
+  line-height:50px;
+  background:url(/img/logo.png) no-repeat 20px center;
+}
 .container-fluid.no-padding-left {
   padding-left: 0;
 }
@@ -19,9 +24,6 @@ body {
 #login-buttons-facebook{
   background-color: #3b5998 !important;
   background-image: none !important;
-}
-.logo{
-  width: 100px;
 }
 hr.footer{
   margin:0;
