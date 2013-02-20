@@ -13,7 +13,7 @@ Template.loggedTemplate.isPlaying = function(){
   var $window = $(window);
   var resizeWindow = function(){
     var wH = $window.height();
-    $('#menuContainer,#playlistContainer').stop().animate({'height':wH-117});
+    $('#menuContainer,#playlistContainer').css({'height':wH-107});
   };
   var resizeTO;
   var onResize = function(){

@@ -7,7 +7,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="brand" href="/"><img src="/img/logo.png" class="logo" /></a>
+        <a class="brand" href="/"><img src="/img/logo.png" class="logo" /> 26 plays</a>
         <div class="nav-collapse collapse">
           {{#if isPlaying}}
           <ul class="nav">
@@ -33,20 +33,20 @@
     </div>
   </div>
 
-  <div class="container-fluid">
+  <div class="container-fluid no-padding-left">
     <div class="row-fluid">
 
       <!-- List of Playlists -->
       <div class="span3" id="menuContainer">
         {{#if isPlaying}}
-        <div class="well sidebar-nav isPlaying">
+        <div class="sidebar-nav isPlaying">
           {{> playlistsTemplate}}
         </div><!--/.well -->
         <div id="playerContent">
           {{> playerTemplate}}
         </div>
         {{else}}
-        <div class="well sidebar-nav">
+        <div class="sidebar-nav">
           {{> playlistsTemplate}}
         </div><!--/.well -->
         {{/if}}
@@ -59,12 +59,10 @@
       </div><!--/span-->
     </div><!--/row-->
 
-    <hr class="footer" />
-
-    <footer>
-      <p>&copy; Benjamin Chelli 2013</p>
-    </footer>
-
   </div><!--/.fluid-container-->
+
+  <footer>
+    <p>&copy; Benjamin Chelli 2013</p>
+  </footer>
 
 </template>
