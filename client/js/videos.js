@@ -17,13 +17,14 @@ Meteor.autorun(function () {
 (function(){
   var $window = $(window);
   var resizeWindow = function(){
-    var h = $('.shared-users').height();
+    var h = $('.shared-users').height()
+      , t = $('.shared-users').position().top
+      ;
     $('.shared-users img').each(function(pos, el){
       var $el = $(el)
         , pos = $el.position()
         ;
-      console.log(pos.top, h);
-      if(pos.top < h){
+      if(pos.top-t < h){
         $el.attr('src', $el.attr('data-src'));
       }
     });
