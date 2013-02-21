@@ -14,6 +14,35 @@ Meteor.autorun(function () {
   }
 });
 
+(function(){
+  var $window = $(window);
+  var resizeWindow = function(){
+    var h = $('.shared-users').height();
+    $('.shared-users img').each(function(pos, el){
+      var $el = $(el)
+        , pos = $el.position()
+        ;
+      console.log(pos.top, h);
+      if(pos.top < h){
+        $el.attr('src', $el.attr('data-src'));
+      }
+    });
+  };
+  var resizeTO;
+  var onResize = function(){
+    clearTimeout(resizeTO);
+    resizeTO = setTimeout(resizeWindow, 100);
+  };
+  Template.videosTemplate.rendered = function() {
+    $window.bind('resize', onResize);
+    resizeWindow();
+  };
+  
+  Template.videosTemplate.destroyed = function() {
+    $window.unbind('resize', onResize);
+  }
+})();
+
 // Set Template Helpers
 Template.videosTemplate.helpers({
   isPlaying: function () {
