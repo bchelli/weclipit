@@ -19,11 +19,34 @@ Template.playerTemplate.helpers({
   }
 });
 
+(function(){
+  var resizeTO;
+  var onResize = function(){
+    clearTimeout(resizeTO);
+    resizeTO = setTimeout(updateFullscreen, 100);
+  };
+  Template.playerTemplate.rendered = function() {
+    $window.bind('resize', onResize);
+    resizeWindow();
+  };
+  
+  Template.playerTemplate.destroyed = function() {
+    $window.unbind('resize', onResize);
+  }
+})();
+
 function updateFullscreen(){
   if(Session.get('fullscreen')){
-    $('#player').addClass('fullscreen');
+    var wH = $(window).height();
+    $('#player')
+      .css({'height':wH-107})
+      .addClass('fullscreen')
+      ;
   } else {
-    $('#player').removeClass('fullscreen');
+    $('#player')
+      .removeClass('fullscreen')
+      .css({'height':'auto'})
+      ;
   }
 }
 Template.playerTemplate.toogleFullscreen = function(){
