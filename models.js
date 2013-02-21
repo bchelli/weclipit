@@ -2,7 +2,41 @@ var playlists = new Meteor.Collection('playlists');
 
 var videos = new Meteor.Collection('videos');
 
+
+
 if(Meteor.isServer){
+  var homeVideos = [];
+
+  function refreshHomeVideos(){
+    var urls = [];
+    Meteor.http.get('https://gdata.youtube.com/feeds/api/standardfeeds/on_the_web?alt=json', function(err, res){
+      if(!err){
+        var entries = res.data.feed.entry
+          , count = 0
+          ;
+        _.each(entries, function(entry){
+          Meteor.http.get(
+            "http://api.embed.ly/1/oembed?key=41f79dded6d843f68d00896d0fc1500d&url="+encodeURIComponent(entry.content.src)
+          , function(err, res){
+              if(!err){
+                urls.push(res.data);
+              }
+              count++;
+              if(count === entries.length){
+                homeVideos = urls;
+              }
+            }
+          );
+        });
+      }
+    });
+  }
+  
+  Meteor.startup(function(){
+    refreshHomeVideos();
+    Meteor.setInterval(refreshHomeVideos, 5*60*1000);
+  });
+
   Meteor.methods({
   // PLAYER
     playNext : function(playing){
@@ -127,6 +161,9 @@ if(Meteor.isServer){
     }
   , removeVideo : function(video){
       videos.remove({_id:video});
+    }
+  , getHomeVideos : function(){
+      return homeVideos;
     }
   , getPlaylistFriendsSharing : function(playlist){
       var pl = playlists.findOne({owner:Meteor.userId(),_id:playlist})
