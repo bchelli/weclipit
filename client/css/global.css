@@ -22,7 +22,7 @@ body {
   background:url(/img/logo.png) no-repeat 20px center;
 }
 .container-fluid.no-padding-left {
-  padding-left: 0;
+  padding: 0;
 }
 #login-buttons-image-facebook{
   margin-top:-2px;

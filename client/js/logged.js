@@ -11,7 +11,8 @@ Template.loggedTemplate.userPhoto = function(){
 };
 
 Template.loggedTemplate.isPlaying = function(){
-  return !!Session.get('playing');
+  var pl = Session.get('playing');
+  return !!pl && pl.playlist === Session.get('playlist');
 };
 
 Template.loggedTemplate.page = function(){

@@ -74,7 +74,7 @@ Template.playerTemplate.rendered = function() {
     var newPlayer = new YT.Player("youtube-player", {
       "videoId": youtube.getAttribute("providerId"),
       "playerVars": {
-        "controls":0
+        "controls":1
       , "iv_load_policy":3
       , "modestbranding":0
       , "rel":0
@@ -105,5 +105,6 @@ Template.playerTemplate.video = function() {
 };
 
 Template.playerTemplate.isPlaying = function(){
-  return !!Session.get('playing');
+  var pl = Session.get('playing');
+  return !!pl && pl.playlist === Session.get('playlist');
 }
