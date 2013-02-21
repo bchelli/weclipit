@@ -89,11 +89,11 @@ Template.playlistsTemplate.events({
         ;
       _.each(Template.playlistsTemplate.friends, function(friend, index){
         result += '<tr id="friend-'+index+'">'
-                + '  <td style="text-align:right;">'
+                + '  <td class="span1" style="text-align:center">'
                 + '    <input type="checkbox" id="friend-'+index+'-canAccess" class="friend-canAccess" '+(friend.canAccess?'checked ':'')+' />'
                 + '  </td>'
-                + '  <td><img src="http://graph.facebook.com/'+friend.id+'/picture" /></td>'
-                + '  <td>'
+                + '  <td class="span1 friendToogle" data-index="'+index+'"><img src="http://graph.facebook.com/'+friend.id+'/picture" /></td>'
+                + '  <td class="friendToogle" data-index="'+index+'">'
                 + '    '+friend.name
                 + '  </td>'
                 + '</tr>';
@@ -128,6 +128,13 @@ Template.playlistsTemplate.events({
       Meteor.call('sharePlaylist', $('#share-playlist-modal').attr('playlist'), changes);
     }
     $('#share-playlist-modal').modal('hide');
+  }
+, 'click .friendToogle': function (event, template) {
+    var index = $(event.currentTarget).attr('data-index')
+      , $checkbox = $('#friend-'+index+'-canAccess')
+      ;
+    $checkbox.prop('checked', !$checkbox.is(':checked'));
+    return false;
   }
 });
 
