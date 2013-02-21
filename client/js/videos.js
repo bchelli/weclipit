@@ -68,6 +68,7 @@ Template.videosTemplate.videos = function() {
 };
 Template.videosTemplate.playlist = function() {
   var pl = playlists.findOne({_id:Session.get('playlist')});
+  if(pl) pl.canAccess = _.shuffle(pl.canAccess || []);
   return pl || {};
 };
 Template.videosTemplate.myUser = function() {
