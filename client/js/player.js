@@ -21,6 +21,7 @@ Template.playerTemplate.helpers({
 
 (function(){
   var resizeTO;
+  var $window = $(window);
   var onResize = function(){
     clearTimeout(resizeTO);
     resizeTO = setTimeout(updateFullscreen, 100);
