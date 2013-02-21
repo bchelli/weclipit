@@ -46,7 +46,7 @@ function updateFullscreen(){
   } else {
     $('#player')
       .removeClass('fullscreen')
-      .css({'height':'auto'})
+      .css({'height':''})
       ;
   }
 }
