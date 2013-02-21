@@ -3,3 +3,22 @@
 
 a.playlist i.pull-right {visibility:hidden;margin:3px;}
 a.playlist:hover i.pull-right {visibility:visible;}
+
+#share-users-list td {
+  vertical-align: middle;
+}
+
+#share-users-list td img {
+  width:30px;
+  height:30px;
+}
+
+#share-users-list td input[type="checkbox"]{
+  margin:0;
+}
+
+h1.loading{
+  margin: 100px 0;
+  text-align: center;
+  color: #ccc;
+}

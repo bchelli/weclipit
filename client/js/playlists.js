@@ -81,7 +81,7 @@ Template.playlistsTemplate.events({
       , playlist = event.currentTarget.getAttribute('playlist')
       ;
     $('#filter-share-users-list').val('');
-    $list.html('LOADING . . .');
+    $list.html('<h1 class="loading">LOADING . . .</h1>');
     Meteor.call('getPlaylistFriendsSharing', playlist, function(err, res){
       Template.playlistsTemplate.friends = res;
       var result = ''
@@ -98,7 +98,7 @@ Template.playlistsTemplate.events({
                 + '  </td>'
                 + '</tr>';
       });
-      $list.html('<center><table>'+result+'</table></center>');
+      $list.html('<table class="table table-striped table-condensed">'+result+'</table>');
       Template.playlistsTemplate.filterFriends('');
     });
     $('#share-playlist-modal')
