@@ -18,17 +18,22 @@ Meteor.autorun(function () {
 (function(){
   var $window = $(window);
   var resizeWindow = function(){
-    var h = $('.shared-users').height()
-      , t = $('.shared-users').position().top
+    var $shUsers = $('.shared-users')
+      , shUsersPos = $shUsers.position()
       ;
-    $('.shared-users img').each(function(pos, el){
-      var $el = $(el)
-        , pos = $el.position()
+    if($shUsers && shUsersPos){
+      var h = $shUsers.height()
+        , t = shUsersPos.top
         ;
-      if(pos.top-t < h){
-        $el.attr('src', $el.attr('data-src'));
-      }
-    });
+      $('img', $shUsers).each(function(pos, el){
+        var $el = $(el)
+          , pos = $el.position()
+          ;
+        if(pos.top-t < h){
+          $el.attr('src', $el.attr('data-src'));
+        }
+      });
+    }
   };
   var resizeTO;
   var onResize = function(){
