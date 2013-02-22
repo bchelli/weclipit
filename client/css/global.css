@@ -64,6 +64,7 @@ footer p{
 
   #playerContent{
     height:23.076923076923077%;
+    overflow:hidden;
   }
 
   #menuContainer .sidebar-nav.isPlaying {
