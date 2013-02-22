@@ -11,9 +11,6 @@
       <a class="playlist" href="#" playlist="{{_id}}">
         <i class="icon-list"></i>
         {{name}}
-        <i class="icon-remove playlist-remove pull-right" playlist="{{_id}}"></i>
-        <i class="icon-share-alt playlist-share pull-right" playlist="{{_id}}"></i>
-        <i class="icon-pencil playlist-edit pull-right" playlist="{{_id}}"></i>
       </a>
     </li>
     {{/if}}
@@ -31,28 +28,7 @@
     {{/if}}
   {{/each}}
   </ul>
-  {{> remove-playlist-popup}}
   {{> create-playlist-popup}}
-  {{> share-playlist-popup}}
-</template>
-
-
-<template name="remove-playlist-popup">
-  <div class="modal hide fade" id="remove-playlist-modal">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h3>Remove a Playlist</h3>
-    </div>
-    <div class="modal-body">
-      <p>Please confirm the deletion of this playlist</p>
-    </div>
-    <div class="modal-footer">
-      <div class="controls">
-        <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</a>
-        <a href="#" class="btn btn-danger" id="remove-playlist-submit">Remove</a>
-      </div>
-    </div>
-  </div>
 </template>
 
 
@@ -76,29 +52,5 @@
         </div>
       </div>
     </form>
-  </div>
-</template>
-
-
-<template name="share-playlist-popup">
-  <div class="modal hide fade" id="share-playlist-modal">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h3>Share Playlist</h3>
-    </div>
-    <div class="modal-body">
-      <div class="input-prepend input-append">
-        <span class="add-on">Filter</span>
-        <input id="filter-share-users-list" type="text" />
-        <span class="add-on">Select: <a href="#" id="share-playlist-select-all">all</a> / <a href="#" id="share-playlist-select-none">none</a></span>
-      </div>
-      <div id="share-users-list"></div>
-    </div>
-    <div class="modal-footer">
-      <div class="controls">
-        <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</a>
-        <a href="#" class="btn btn-primary" id="share-playlist-submit">Share</a>
-      </div>
-    </div>
   </div>
 </template>

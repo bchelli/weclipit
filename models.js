@@ -162,6 +162,9 @@ if(Meteor.isServer){
   , removeVideo : function(video){
       videos.remove({_id:video});
     }
+  , getUsers : function(){
+      return Meteor.users.find({}).fetch();
+    }
   , getHomeVideos : function(){
       return homeVideos;
     }
