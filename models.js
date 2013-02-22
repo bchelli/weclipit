@@ -40,7 +40,7 @@ if(Meteor.isServer){
   Meteor.methods({
   // PLAYER
     playNext : function(playing){
-      var v = videos.find({playlist:playing.playlist}, {sort:{nbLikes:-1}}).fetch()
+      var v = videos.find({playlist:playing.playlist}, {sort:[['nbLikes','desc'],['data.title','asc']]}).fetch()
         , videoFound = false
         , firstVideoId = ""
         ;
@@ -55,7 +55,7 @@ if(Meteor.isServer){
     }
   
   , playPrevious : function(playing){
-      var v = videos.find({playlist:playing.playlist}, {sort:{nbLikes:-1}}).fetch()
+      var v = videos.find({playlist:playing.playlist}, {sort:[['nbLikes','desc'],['data.title','asc']]}).fetch()
         , lastVideoId = v[v.length-1]._id
         ;
   
