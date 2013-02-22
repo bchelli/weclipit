@@ -7,7 +7,7 @@
 
 // Subscribe to my playlists
 Meteor.autorun(function(){
-  Meteor.subscribe("playlists", Meteor.userId());
+  Meteor.subscribe("playlists");
 });
 
 // Set Template Variables

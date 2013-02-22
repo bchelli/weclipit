@@ -8,6 +8,7 @@
 // Auto subscribe videos from the selected playlist
 Meteor.autorun(function () {
   var pl = Session.get('playlist');
+  Meteor.subscribe('playlists', pl);
   if (pl) {
     Meteor.subscribe('videos', pl);
     Meteor.subscribe('userData');

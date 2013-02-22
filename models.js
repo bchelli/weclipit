@@ -94,14 +94,23 @@ if(Meteor.isServer){
       }
     }
   , removePlaylist : function(playlist){
-      var pl = playlists.findOne({owner:Meteor.userId(),_id:playlist});
+      var pl = playlists.findOne({_id:playlist});
       if(pl){
-        videos.remove({playlist:pl._id})
-        playlists.remove({_id:pl._id})
+        if(pl.owner===Meteor.userId()){
+          videos.remove({playlist:pl._id})
+          playlists.remove({_id:pl._id})
+        } else {
+          playlists.update({_id:playlist}, {
+            $pull: {
+              canAccess:      Meteor.user().services.facebook.id
+            , canAddVideo:    Meteor.user().services.facebook.id
+            , canRemoveVideo: Meteor.user().services.facebook.id
+            }
+          });
+        }
       }
     }
   , createPlaylist : function(name){
-      console.log(Accounts.facebook);
       var userId = Meteor.userId();
       if(userId){
         playlists.insert({
@@ -163,6 +172,7 @@ if(Meteor.isServer){
       videos.remove({_id:video});
     }
   , getUsers : function(){
+      /// SECURITY WHOLE
       return Meteor.users.find({}).fetch();
     }
   , getHomeVideos : function(){

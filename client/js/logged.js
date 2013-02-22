@@ -1,4 +1,6 @@
-
+Meteor.autorun(function(){
+  Meteor.subscribe('userData');
+});
 
 Template.loggedTemplate.userName = function(){
   var user = Meteor.user();

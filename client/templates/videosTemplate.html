@@ -1,22 +1,25 @@
 <template name="videosTemplate">
   {{#if isPlaylistSelected}}
     {{#with playlist}}
-    <h3>{{name}}</h3>
+    <div class="video-title">
+      <!img class="owner-picture" src="http://graph.facebook.com/{{owner}}/picture" />
+      <h2>{{name}}</h2>
     {{#if isMine}}
+      <a href="#" class="playlist-share" playlist="{{_id}}"><i class="icon-share-alt"></i> Share</a>
+      -
       <a href="#" class="playlist-edit" playlist="{{_id}}"><i class="icon-pencil"></i> Edit</a>
       -
+    {{/if}}
       <a href="#" class="playlist-remove" playlist="{{_id}}"><i class="icon-remove"></i> Remove</a>
-    {{/if}}
-    <h3>Shared with</h3>
-    {{#if isMine}}
-      <a href="#" class="playlist-share" playlist="{{_id}}"><i class="icon-share-alt"></i> Share</a><br /><br />
-    {{/if}}
+    </div>
     {{/with}}
+    {{#if playlist.canAccess.length}}
     <div class="shared-users">
     {{#each playlist.canAccess}}
       <img data-src="http://graph.facebook.com/{{.}}/picture" />
     {{/each}}
     </div>
+    {{/if}}
     <h3>Videos</h3>
     {{#if rightTo "canAddVideo" playlist myUser}}
     <a href="#" id="add-video"><i class="icon-plus-sign"></i> Add a new Video</a><br /><br />

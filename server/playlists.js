@@ -1,5 +1,5 @@
 
-Meteor.publish('playlists', function(userId){
+Meteor.publish('playlists', function(){
   var query = {$or:[{owner:this.userId}]}
     , user = Meteor.users.findOne({_id:this.userId})
     ;
