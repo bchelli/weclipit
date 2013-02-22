@@ -1,5 +1,7 @@
 .videos-list {width:96%;}
 .video {cursor: pointer;}
+  .video td.videos-likes {width:30px;text-align:center;font-size:11px;line-height:12px;}
+    .video td.videos-likes a {padding-top:12px;display:block;color:#777;}
   .video td.videos-preview {height:50px;width:50px;}
     .video td.videos-preview .img-container {height:50px;width:50px;overflow:hidden;}
       .video td.videos-preview img {height:50px;max-width:none;}

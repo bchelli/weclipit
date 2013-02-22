@@ -67,6 +67,9 @@ Template.videosTemplate.helpers({
     if(!result && videoOwner) result = videoOwner === myUser._id;
     return result;
   }
+, liked: function(){
+    return this.likes && this.likes.indexOf(Meteor.userId())!==-1 ? 'icon-star' : 'icon-star-empty';
+  }
 });
 
 // Set Template Variables

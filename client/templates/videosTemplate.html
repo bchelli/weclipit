@@ -38,9 +38,9 @@
       {{#each videos}}
         <tr class="video" playlist="{{playlist._id}}" video="{{_id}}">
           <td class="videos-playing"><i class="{{isPlaying}}"></i></td>
-          <td class="videos-playing">
+          <td class="videos-likes">
             <a href="#" class="like-video" video="{{_id}}">
-              <i class="icon-heart"></i> {{nbLikes}}
+              <i class="{{liked}}"></i><br />{{nbLikes}}
             </a>
           </td>
           <td class="videos-preview"><div class="img-container"><img src="{{data.thumbnail_url}}" /></div></td>
