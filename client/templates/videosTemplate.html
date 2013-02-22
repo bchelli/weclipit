@@ -30,6 +30,7 @@
           <th></th>
           <th></th>
           <th>Name</th>
+          <th>Likes</th>
           <th></th>
         </tr>
       </thead>
@@ -44,6 +45,11 @@
               from <a href="{{data.provider_url}}" target="_blank">{{data.provider_name}}</a>
               by <a href="{{data.author_url}}" target="_blank">{{data.author_name}}</a>
             </div>
+          </td>
+          <td class="videos-playing">
+            <a href="#" class="like-video" video="{{_id}}">
+              <i class="icon-heart"></i> {{nbLikes}}
+            </a>
           </td>
           <td class="videos-playing">
             <a href="#" class="remove-video" video="{{_id}}">

@@ -40,7 +40,7 @@ if(Meteor.isServer){
   Meteor.methods({
   // PLAYER
     playNext : function(playing){
-      var v = videos.find({playlist:playing.playlist}).fetch()
+      var v = videos.find({playlist:playing.playlist}, {sort:{nbLikes:-1}}).fetch()
         , videoFound = false
         , firstVideoId = ""
         ;
@@ -55,7 +55,7 @@ if(Meteor.isServer){
     }
   
   , playPrevious : function(playing){
-      var v = videos.find({playlist:playing.playlist}).fetch()
+      var v = videos.find({playlist:playing.playlist}, {sort:{nbLikes:-1}}).fetch()
         , lastVideoId = v[v.length-1]._id
         ;
   
@@ -158,6 +158,8 @@ if(Meteor.isServer){
               , playlist:   playlist
               , provider:   provider
               , providerId: providerId
+              , likes:      []
+              , nbLikes:    0
               , data:       res.data
               });
             }
@@ -166,6 +168,29 @@ if(Meteor.isServer){
         }
       );
       Fiber.yield();
+    }
+  , likeVideo : function(video, status){
+      var userId = Meteor.userId();
+      function updateNbLikes(){
+        videos.update({_id:video}, {
+          $set: {
+            nbLikes: videos.findOne({_id:video}).likes.length
+          }
+        });
+      }
+      if(status){
+        videos.update({_id:video}, {
+          $addToSet: {
+            likes: userId
+          }
+        }, updateNbLikes);
+      } else {
+        videos.update({_id:video}, {
+          $pull: {
+            likes: userId
+          }
+        }, updateNbLikes);
+      }
     }
   , removeVideo : function(video){
       videos.remove({_id:video});

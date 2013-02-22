@@ -73,7 +73,7 @@ Template.videosTemplate.helpers({
 Template.videosTemplate.videos = function() {
   var pl = Session.get('playlist');
   if (!pl) return {};
-  return videos.find({playlist:pl});
+  return videos.find({playlist:pl}, {sort:[['nbLikes','desc'],['data.title','asc']]});
 };
 Template.videosTemplate.playlist = function() {
   var pl = playlists.findOne({_id:Session.get('playlist')});
@@ -134,6 +134,13 @@ Template.videosTemplate.events({
 , 'click #remove-video-submit': function (event, template) {
     Meteor.call('removeVideo', event.currentTarget.getAttribute('video'));
     $('#remove-video-modal').modal('hide');
+  }
+, 'click .like-video': function (event, template) {
+    var videoId = event.currentTarget.getAttribute('video')
+      , status = !videos.findOne({_id:videoId}).likes || videos.findOne({_id:videoId}).likes.indexOf(Meteor.userId())===-1
+      ;
+    Meteor.call('likeVideo', videoId, status);
+    return false;
   }
 , 'click .playlist-remove': function (event, template) {
     $('#remove-playlist-modal')

@@ -4,14 +4,6 @@
  * Responsible for rendering the playerTemplate
  */
 
-// Auto subscribe videos from the selected playlist
-Meteor.autorun(function () {
-  var pl = Session.get('playing');
-  if (pl) {
-    Meteor.subscribe('player', pl.playlist, pl.video);
-  }
-});
-
 // helpers
 Template.playerTemplate.helpers({
   isType: function(type){
@@ -125,7 +117,7 @@ Template.playerTemplate.rendered = function() {
 Template.playerTemplate.video = function() {
   var pl = Session.get('playing');
   if(!pl) return {};
-  return videos.findOne({_id:pl.video,playlist:pl.playlist});
+  return videos.findOne({_id:pl.video,playlist:pl.playlist}, {reactive:false});
 };
 
 Template.playerTemplate.isPlaying = function(){
