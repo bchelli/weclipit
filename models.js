@@ -133,7 +133,6 @@ if(Meteor.isServer){
             
             var provider = res.data.provider_name.toLowerCase()
               , providerId = ''
-              , name = res.data.title
               ;
             switch(provider){
               case 'vimeo':
@@ -159,7 +158,7 @@ if(Meteor.isServer){
               , playlist:   playlist
               , provider:   provider
               , providerId: providerId
-              , name:       name
+              , data:       res.data
               });
             }
           }

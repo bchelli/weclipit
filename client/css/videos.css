@@ -1,7 +1,12 @@
+.videos-list {width:96%;}
 .video {cursor: pointer;}
-  .video td.videos-playing {width:30px;text-align:center;}
-  .video td.videos-name {}
-  .video td.videos-duration {width:100px;text-align:center;}
+  .video td.videos-preview {height:50px;width:50px;}
+    .video td.videos-preview .img-container {height:50px;width:50px;overflow:hidden;}
+      .video td.videos-preview img {height:50px;max-width:none;}
+  .video td.videos-playing {width:30px;text-align:center;line-height:50px;}
+  .video td.videos-description {}
+    .video td.videos-description .video-description-title {font-size:16px;margin-top:5px;}
+    .video td.videos-description .video-description-origin {font-size:12px;color:#777;}
 
 #add-video-modal{}
   #add-video-modal form{margin:0}
