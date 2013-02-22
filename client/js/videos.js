@@ -104,6 +104,9 @@ Template.videosTemplate.events({
     videosRouter.setVideo(event.currentTarget.getAttribute('playlist'), event.currentTarget.getAttribute('video'));
     return false;
   }
+, 'click .video a': function (event, template) {
+    event.stopPropagation();
+  }
 , 'click #add-video': function (event, template) {
     $('#add-video-url').val('');
     $('#add-video-modal')
