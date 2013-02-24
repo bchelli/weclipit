@@ -123,11 +123,11 @@ Template.videosTemplate.filterFriends = function(text){
 
 // Set Template Events
 Template.videosTemplate.events({
-  'click .video': function (event, template) {
+  'click .video-playlist': function (event, template) {
     videosRouter.setVideo(event.currentTarget.getAttribute('playlist'), event.currentTarget.getAttribute('video'));
     return false;
   }
-, 'click .video a': function (event, template) {
+, 'click .video-playlist a': function (event, template) {
     event.stopPropagation();
   }
 , 'click #add-video-from-url': function (event, template) {
@@ -138,6 +138,50 @@ Template.videosTemplate.events({
       })
       .modal();
     return false;
+  }
+, 'click #add-video-from-search': function (event, template) {
+    $('#search-video-query').val('');
+    $('#search-video-result').html('');
+    $('#search-video-modal')
+      .on('shown', function(){
+        $('#search-video-query').focus();
+      })
+      .modal();
+    return false;
+  }
+, 'submit #search-video-modal form': function (event, template) {
+    var query = $('#search-video-query').val();
+    $('#search-video-result').html('Loading');
+    Meteor.http.get('https://gdata.youtube.com/feeds/api/videos?q='+encodeURIComponent(query)+'&alt=json', function(err, res){
+      var result = '';
+      if(!err){
+        var videosYoutube = res && res.data && res.data.feed && res.data.feed.entry ? res.data.feed.entry : [];
+        for(var i=0,l=videosYoutube.length;i<l;i++){
+          var url = videosYoutube[i].link[0].href.replace('&feature=youtube_gdata', '')
+            , id = url.replace('https://www.youtube.com/watch?v=', '')
+            , inPlaylist = !!videos.findOne({'provider':'youtube','providerId':id})
+            ;
+          if(!inPlaylist)
+          result += '<tr class="video video-to-add not-playing" data-url="'+url+'">'
+                  + '  <td class="videos-preview"><div class="img-container"><img src="'+videosYoutube[i].media$group.media$thumbnail[0].url+'" /></div></td>'
+                  + '  <td class="videos-description">'
+                  + '    <div class="video-description-title">'+videosYoutube[i].title.$t+'</div>'
+                  + '  </td>'
+                  + '</tr>'
+                  ;
+        }
+        result = '<table class="table table-condensed videos-list"><tbody>'+result+'</tbody></table>';
+      }
+      $('#search-video-result').html(result);
+    });
+    $('#search-video-query').focus();
+    return false;
+  }
+, 'click .video-to-add': function(event, template){
+    var $el = $(event.currentTarget);
+    Meteor.call('addVideo', Session.get('playlist'), $el.attr('data-url'), function(){
+      $el.remove();
+    });
   }
 , 'submit #add-video-modal form': function (event, template) {
     Meteor.call('addVideo', Session.get('playlist'), $('#add-video-url').val(), function(){

@@ -18,6 +18,10 @@
   .video.not-playing:hover td {background:#f9f9f9;}
     .video.not-playing:hover td.videos-preview img {opacity:0.3}
 
+#search-video-modal{}
+  #search-video-modal .video td.videos-preview .img-container {background:url(/img/add.png)}
+  #search-video-result {height:300px;overflow:auto;}
+
 
 #add-video-modal{}
   #add-video-modal form{margin:0}

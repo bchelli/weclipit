@@ -30,7 +30,7 @@
     <table class="table table-condensed videos-list">
       <tbody>
       {{#each videos}}
-        <tr class="video{{#if isPlaying}} {{else}} not-playing {{/if}}" playlist="{{playlist._id}}" video="{{_id}}">
+        <tr class="video video-playlist{{#if isPlaying}} {{else}} not-playing {{/if}}" playlist="{{playlist._id}}" video="{{_id}}">
           <td class="videos-likes">
             <a href="#" class="like-video" video="{{_id}}">
               <i class="{{liked}}"></i><br />{{nbLikes}}
@@ -60,6 +60,7 @@
     {{/if}}
     {{> remove-video-popup}}
     {{> add-video-popup}}
+    {{> search-video-popup}}
     {{> remove-playlist-popup}}
     {{> share-playlist-popup}}
   {{/if}}
@@ -103,6 +104,29 @@
         </div>
       </div>
     </form>
+  </div>
+</template>
+
+
+<template name="search-video-popup">
+  <div class="modal hide fade" id="search-video-modal">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3>Search a Video</h3>
+    </div>
+    <div class="modal-body">
+      <form class="form-search">
+        <input type="text" class="input-medium search-query span10" id="search-video-query">
+        <button type="submit" class="btn">Search</button>
+      </form>
+      <div id="search-video-result">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="controls">
+        <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+      </div>
+    </div>
   </div>
 </template>
 
