@@ -3,12 +3,21 @@
   .video td.videos-likes {width:30px;text-align:center;font-size:11px;line-height:12px;}
     .video td.videos-likes a {padding-top:12px;display:block;color:#777;}
   .video td.videos-preview {height:50px;width:50px;}
-    .video td.videos-preview .img-container {height:50px;width:50px;overflow:hidden;}
+    .video td.videos-preview .img-container {height:50px;width:50px;overflow:hidden;border:1px solid #ccc;background:url(/img/play.png)}
       .video td.videos-preview img {height:50px;max-width:none;}
   .video td.videos-playing {width:30px;text-align:center;line-height:50px;}
   .video td.videos-description {}
-    .video td.videos-description .video-description-title {font-size:16px;margin-top:5px;}
+    .video td.videos-description .video-description-title {font-size:14px;margin-top:5px;}
     .video td.videos-description .video-description-origin {font-size:12px;color:#777;}
+
+  .video td {background:#f3f3f3;}
+    .video td.videos-preview .img-container {border-color:#ddd}
+    .video td.videos-preview img {opacity:0}
+  .video.not-playing td {background:#fff;}
+    .video.not-playing td.videos-preview img {opacity:1}
+  .video.not-playing:hover td {background:#f9f9f9;}
+    .video.not-playing:hover td.videos-preview img {opacity:0.3}
+
 
 #add-video-modal{}
   #add-video-modal form{margin:0}
@@ -19,5 +28,5 @@
   
 .video-title {margin-top: 15px;}
   .video-title .owner-picture{width:50px;height:50px;float:left;margin-right:6px;margin-top:6px;}
-  .video-title h2{margin:0;padding:0;margin-bottom: -5px;}
+  .video-title h3{margin:0;padding:0;margin-bottom: -5px;}
   .video-title a{font-size: 12px;}

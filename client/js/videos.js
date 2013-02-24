@@ -54,7 +54,7 @@ Meteor.autorun(function () {
 Template.videosTemplate.helpers({
   isPlaying: function () {
     var pl = Session.get("playing");
-    return (pl && this._id === pl.video) ? 'icon-play' : '';
+    return pl && this._id === pl.video;
   }
 , isMine: function () {
     return this.owner === Meteor.userId();
