@@ -161,8 +161,7 @@ Template.videosTemplate.events({
             , id = url.replace('https://www.youtube.com/watch?v=', '')
             , inPlaylist = !!videos.findOne({'provider':'youtube','providerId':id})
             ;
-          if(!inPlaylist)
-          result += '<tr class="video video-to-add not-playing" data-url="'+url+'">'
+          result += '<tr class="video not-playing '+(inPlaylist?'video-added':'video-to-add')+'" data-url="'+url+'">'
                   + '  <td class="videos-preview"><div class="img-container"><img src="'+videosYoutube[i].media$group.media$thumbnail[0].url+'" /></div></td>'
                   + '  <td class="videos-description">'
                   + '    <div class="video-description-title">'+videosYoutube[i].title.$t+'</div>'
@@ -179,9 +178,11 @@ Template.videosTemplate.events({
   }
 , 'click .video-to-add': function(event, template){
     var $el = $(event.currentTarget);
-    Meteor.call('addVideo', Session.get('playlist'), $el.attr('data-url'), function(){
-      $el.remove();
-    });
+    $el
+      .removeClass('video-to-add')
+      .addClass('video-added')
+      ;
+    Meteor.call('addVideo', Session.get('playlist'), $el.attr('data-url'));
   }
 , 'submit #add-video-modal form': function (event, template) {
     Meteor.call('addVideo', Session.get('playlist'), $('#add-video-url').val(), function(){

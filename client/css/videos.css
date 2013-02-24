@@ -20,6 +20,8 @@
 
 #search-video-modal{}
   #search-video-modal .video td.videos-preview .img-container {background:url(/img/add.png)}
+  #search-video-modal .video.video-added td.videos-preview .img-container {background:url(/img/added.png)}
+  #search-video-modal .video.not-playing.video-added td.videos-preview img{opacity:0.3}
   #search-video-result {height:300px;overflow:auto;}
 
 
