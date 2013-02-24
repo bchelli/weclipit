@@ -65,11 +65,11 @@ var pageFactory = function(page){
 var HomeRouter = Backbone.Router.extend({
   routes: {
     '':       'openHome'
-  , 'search': 'openSearch'
+//  , 'search': 'openSearch'
   },
 
   openHome: pageFactory('home'),
-  openSearch: pageFactory('search'),
+//  openSearch: pageFactory('search'),
 
   goToPage: function (page) {
     this.navigate(page === 'home' ? '' : page, true);

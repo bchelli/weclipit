@@ -70,6 +70,9 @@ Template.videosTemplate.helpers({
 , liked: function(){
     return this.likes && this.likes.indexOf(Meteor.userId())!==-1 ? 'icon-star' : 'icon-star-empty';
   }
+, hasVideo: function(){
+    return !!this.videos.findOne();
+  }
 });
 
 // Set Template Variables
@@ -127,7 +130,7 @@ Template.videosTemplate.events({
 , 'click .video a': function (event, template) {
     event.stopPropagation();
   }
-, 'click #add-video': function (event, template) {
+, 'click #add-video-from-url': function (event, template) {
     $('#add-video-url').val('');
     $('#add-video-modal')
       .on('shown', function(){

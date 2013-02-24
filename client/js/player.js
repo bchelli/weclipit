@@ -122,5 +122,5 @@ Template.playerTemplate.video = function() {
 
 Template.playerTemplate.isPlaying = function(){
   var pl = Session.get('playing');
-  return !!pl && pl.playlist === Session.get('playlist');
+  return Session.get('page')==='playlist' && !!pl && pl.playlist === Session.get('playlist');
 }
