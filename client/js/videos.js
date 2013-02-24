@@ -222,6 +222,7 @@ Template.videosTemplate.events({
 , 'click #remove-playlist-submit': function (event, template) {
     Meteor.call('removePlaylist', event.currentTarget.getAttribute('playlist'));
     $('#remove-playlist-modal').modal('hide');
+    homeRouter.openHome();
   }
 , 'click .playlist-share': function (event, template) {
     var $list = $('#share-users-list')
