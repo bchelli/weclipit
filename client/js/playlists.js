@@ -5,11 +5,6 @@
  *     + the rendering of the playlistsTemplate
  */
 
-// Subscribe to my playlists
-Meteor.autorun(function(){
-  Meteor.subscribe("playlists");
-});
-
 // Set Template Variables
 Template.playlistsTemplate.playlists = function() {
   return playlists.find();
@@ -34,7 +29,11 @@ Template.playlistsTemplate.helpers({
 
 // Set Template Events
 Template.playlistsTemplate.events({
-  'click .playlist': function (event, template) {
+  'click .page': function (event, template) {
+    homeRouter.goToPage(event.currentTarget.getAttribute('page'));
+    return false;
+  }
+, 'click .playlist': function (event, template) {
     playlistsRouter.setPlaylist(event.currentTarget.getAttribute('playlist'));
     return false;
   }

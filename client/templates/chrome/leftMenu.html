@@ -1,0 +1,16 @@
+<template name="leftMenuTemplate">
+  <div class="span3" id="menuContainer">
+    {{#if isPlaying}}
+    <div class="sidebar-nav isPlaying">
+      {{> playlistsTemplate}}
+    </div><!--/.well -->
+    <div id="playerContent">
+      {{> playerTemplate}}
+    </div>
+    {{else}}
+    <div class="sidebar-nav">
+      {{> playlistsTemplate}}
+    </div><!--/.well -->
+    {{/if}}
+  </div><!--/span-->
+</template>

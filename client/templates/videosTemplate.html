@@ -1,69 +1,13 @@
 <template name="videosTemplate">
-  {{#if isPlaylistSelected}}
-    {{#with playlist}}
-    <div class="video-title">
-      <!img class="owner-picture" src="http://graph.facebook.com/{{owner}}/picture" />
-      <h3>{{name}}</h3>
-    {{#if isMine}}
-      <a href="#" class="playlist-share" playlist="{{_id}}"><i class="icon-share-alt"></i> Share</a>
-      <a href="#" class="playlist-edit" playlist="{{_id}}"><i class="icon-pencil"></i> Edit</a>
-    {{/if}}
-      <a href="#" class="playlist-remove" playlist="{{_id}}"><i class="icon-remove"></i> Remove</a>
-    </div>
-    {{/with}}
-    {{#if playlist.canAccess.length}}
-    <div class="shared-users">
-    {{#each playlist.canAccess}}
-      <img data-src="http://graph.facebook.com/{{.}}/picture" />
-    {{/each}}
-    </div>
-    {{/if}}
-    <div class="video-title">
-      <!img class="owner-picture" src="http://graph.facebook.com/{{owner}}/picture" />
-      <h3>Videos</h3>
-    {{#if rightTo "canAddVideo" playlist myUser}}
-      <a href="#" id="add-video-from-search"><i class="icon-search"></i> Search a new video</a>
-      <a href="#" id="add-video-from-url"><i class="icon-plus-sign"></i> Add video URL</a><br /><br />
-    {{/if}}
-    </div>
-    {{#if hasVideo}}
-    <table class="table table-condensed videos-list">
-      <tbody>
-      {{#each videos}}
-        <tr class="video video-playlist{{#if isPlaying}} {{else}} not-playing {{/if}}" playlist="{{playlist._id}}" video="{{_id}}">
-          <td class="videos-likes">
-            <a href="#" class="like-video" video="{{_id}}">
-              <i class="{{liked}}"></i><br />{{nbLikes}}
-            </a>
-          </td>
-          <td class="videos-preview"><div class="img-container"><img src="{{data.thumbnail_url}}" /></div></td>
-          <td class="videos-description">
-            <div class="video-description-title">{{data.title}}</div>
-            <div class="video-description-origin">
-              from <a href="{{data.provider_url}}" target="_blank">{{data.provider_name}}</a>
-              by <a href="{{data.author_url}}" target="_blank">{{data.author_name}}</a>
-            </div>
-          </td>
-          <td class="videos-playing">
-            <a href="#" class="remove-video" video="{{_id}}">
-            {{#if rightTo "canRemoveVideo" playlist myUser owner}}
-            <i class="icon-remove"></i>
-            {{/if}}
-            </a>
-          </td>
-        </tr>
-      {{/each}}
-      </tbody>
-    </table>
-    {{else}}
-      <h2 class="no-video">No video in this playlist</h2>
-    {{/if}}
-    {{> remove-video-popup}}
-    {{> add-video-popup}}
-    {{> search-video-popup}}
-    {{> remove-playlist-popup}}
-    {{> share-playlist-popup}}
-  {{/if}}
+  {{> videosSharingTemplate}}
+
+  {{> videosListTemplate}}
+
+  {{> remove-video-popup}}
+  {{> add-video-popup}}
+  {{> search-video-popup}}
+  {{> remove-playlist-popup}}
+  {{> share-playlist-popup}}
 </template>
 
 

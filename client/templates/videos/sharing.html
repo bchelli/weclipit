@@ -1,0 +1,20 @@
+<template name="videosSharingTemplate">
+  {{#with playlist}}
+  <div class="video-title">
+    <!img class="owner-picture" src="http://graph.facebook.com/{{owner}}/picture" />
+    <h3>{{name}}</h3>
+  {{#if isMine}}
+    <a href="#" class="playlist-share" playlist="{{_id}}"><i class="icon-share-alt"></i> Share</a>
+    <a href="#" class="playlist-edit" playlist="{{_id}}"><i class="icon-pencil"></i> Edit</a>
+  {{/if}}
+    <a href="#" class="playlist-remove" playlist="{{_id}}"><i class="icon-remove"></i> Remove</a>
+  </div>
+  {{/with}}
+  {{#if playlist.canAccess.length}}
+  <div class="shared-users">
+  {{#each playlist.canAccess}}
+    <img data-src="http://graph.facebook.com/{{.}}/picture" />
+  {{/each}}
+  </div>
+  {{/if}}
+</template>

@@ -2,7 +2,17 @@ var playlists = new Meteor.Collection('playlists');
 
 var videos = new Meteor.Collection('videos');
 
+if(Meteor.isClient){
+  Meteor.autorun(function () {
+    Meteor.subscribe('playlists');
+    Meteor.subscribe('userData');
 
+    var pl = Session.get('playlist');
+    if (pl) {
+      Meteor.subscribe('videos', pl);
+    }
+  });
+}
 
 if(Meteor.isServer){
   var homeVideos = [];
