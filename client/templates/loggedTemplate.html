@@ -8,21 +8,7 @@
       <!-- List of Playlists -->
       {{> leftMenuTemplate}}
 
-      <div class="span9" id="playlistContainer">
-        <div id="playlistContent">
-        {{#if isPage 'home'}}
-          {{> homeTemplate}}
-        {{/if}}
-  
-        {{#if isPage 'search'}}
-          {{> searchTemplate}}
-        {{/if}}
-  
-        {{#if isPage 'playlist'}}
-          {{> videosTemplate}}
-        {{/if}}
-        </div>
-      </div><!--/span-->
+      {{> mainContentTemplate}}
 
     </div><!--/row-->
   </div><!--/.fluid-container-->

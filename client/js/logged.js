@@ -1,10 +1,4 @@
 
-Template.loggedTemplate.helpers({
-  isPage:function(page){
-    return Session.get('page') === page;
-  }
-});
-
 var pageFactory = function(page){
   return function (playlist) {
     Session.set('page', page);
