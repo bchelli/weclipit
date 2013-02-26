@@ -25,10 +25,11 @@ body {
   height:70px;
 }
 #progress-play {
-  width: 200px;
-  margin: 32px 20px;
+  width: 300px;
+  margin: 5px 20px 0;
   height:6px;
   cursor:pointer;
+  background: #000;
 }
 #progress-play .bar.playing{
   background:#5c948d;
@@ -36,6 +37,18 @@ body {
 #progress-play .bar.loaded{
   background:#ccc;
 }
+#video-played {
+  margin: 18px 20px 0;
+  width: 300px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size:12px;
+  color:#777;
+}
+#video-played .video-current-time {}
+#video-played .video-total-time {font-size:10px;}
+#video-played .video-title-progress {font-size:14px;color:#333;}
 .container-fluid.no-padding-left {
   padding: 0;
 }

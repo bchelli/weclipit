@@ -75,6 +75,22 @@ Template.playerTemplate.getPositionInterval = null;
 
 Template.playerTemplate.rendered = function() {
 
+  function formatTime(time){
+    time = Math.floor(time);
+    var sec = time % 60
+      , min = Math.floor(time/60)
+      ;
+    if(sec<10) sec = '0'+sec;
+    return min+':'+sec;
+  }
+
+  function setVideoPlayed(position, total, title){
+    var $vp = $('#video-played');
+    $vp.find('.video-current-time').html(formatTime(position));
+    $vp.find('.video-total-time').html(formatTime(total));
+    $vp.find('.video-title-progress').html(title);
+  }
+
   function setProgressPosition(type, position){
     $('#progress-play .bar.'+type).attr('data-percent', position);
 
@@ -102,6 +118,7 @@ Template.playerTemplate.rendered = function() {
     Template.playerTemplate.seekToPlayer(position);
   };
 
+  setVideoPlayed(0,0,'Loading . . .');
   setRefreshProgression();
   setProgressPosition('playing', 0);
   setProgressPosition('loaded', 0);
@@ -119,6 +136,7 @@ Template.playerTemplate.rendered = function() {
       });
       player.addEvent('playProgress', function(obj){
         setProgressPosition('playing', Math.floor(100*obj.percent));
+        setVideoPlayed(obj.seconds, obj.duration, $('#player').attr('data-title'));
       });
       setSeeker(function(percent){
         player.api('getDuration', function(duration){
@@ -157,6 +175,7 @@ Template.playerTemplate.rendered = function() {
             setRefreshProgression(function(){
               setProgressPosition('playing', Math.floor(100*newPlayer.getCurrentTime()/newPlayer.getDuration()));
               setProgressPosition('loaded', Math.floor(100*newPlayer.getVideoLoadedFraction()));
+              setVideoPlayed(newPlayer.getCurrentTime(), newPlayer.getDuration(), $('#player').attr('data-title'));
             });
           }
           if(newState.data==0){
