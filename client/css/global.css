@@ -26,7 +26,12 @@ body {
 }
 #progress-play {
   width: 200px;
-  margin: 25px 20px;
+  margin: 32px 20px;
+  height:6px;
+  cursor:pointer;
+}
+#progress-play .bar{
+  background:#5c948d;
 }
 .container-fluid.no-padding-left {
   padding: 0;
