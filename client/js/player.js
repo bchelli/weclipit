@@ -72,7 +72,24 @@ Template.playerTemplate.playerGoTo = function(direction){
 };
 
 // After rendering
+Template.playerTemplate.getPositionInterval = null;
+Template.playerTemplate.seekTo = null;
+
 Template.playerTemplate.rendered = function() {
+
+  function setProgressPosition(position){
+    $('#progress-play .bar').width(position+'%');
+  }
+
+  function setPositionRequest(fn){
+    setProgressPosition(0);
+    Meteor.clearInterval(Template.playerTemplate.getPositionInterval);
+    Template.playerTemplate.getPositionInterval = Meteor.setInterval(fn, 1000);
+  }
+
+  function setSeeker(fn){
+    Template.playerTemplate.seekTo = fn;
+  }
 
   var vimeo = document.getElementById('vimeo-player');
   if(vimeo){
@@ -82,6 +99,18 @@ Template.playerTemplate.rendered = function() {
       player.addEvent('finish', function(){
         Template.playerTemplate.playerGoTo('next');
       });
+      setPositionRequest(function(){
+        player.api('getCurrentTime', function(currentTime){
+          player.api('getDuration', function(duration){
+            setProgressPosition(Math.floor(100*currentTime/duration));
+          });
+        });
+      });
+      setSeeker(function(percent){
+        player.api('getDuration', function(duration){
+          player.api('seekTo', Math.floor(duration*percent/100));
+        });
+      });
     });
   }
 
@@ -90,7 +119,7 @@ Template.playerTemplate.rendered = function() {
     var newPlayer = new YT.Player("youtube-player", {
       "videoId": youtube.getAttribute("providerId"),
       "playerVars": {
-        "controls":1
+        "controls":0
       , "iv_load_policy":3
       , "modestbranding":0
       , "rel":0
@@ -99,6 +128,12 @@ Template.playerTemplate.rendered = function() {
       "events": {
         "onReady": function(){
           newPlayer.playVideo();
+          setPositionRequest(function(){
+            setProgressPosition(Math.floor(100*newPlayer.getCurrentTime()/newPlayer.getDuration()));
+          });
+          setSeeker(function(percent){
+            newPlayer.seekTo(Math.floor(newPlayer.getDuration()*percent/100), true);
+          });
         },
         "onStateChange": function(newState){
           if(newState.data==0){

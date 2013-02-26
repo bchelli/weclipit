@@ -21,6 +21,13 @@ body {
   line-height:50px;
   background:url(/img/logo.png) no-repeat 20px center;
 }
+.navbar .divider-vertical {
+  height:70px;
+}
+#progress-play {
+  width: 200px;
+  margin: 24px 20px;
+}
 .container-fluid.no-padding-left {
   padding: 0;
 }

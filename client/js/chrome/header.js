@@ -13,3 +13,8 @@ Template.headerTemplate.isPlaying = function(){
   return !!pl && pl.playlist === Session.get('playlist');
 };
 
+Template.headerTemplate.events({
+  'click #progress-play': function(ev){
+    Template.playerTemplate.seekTo(Math.floor(100*ev.offsetX/$('#progress-play').width()));
+  }
+});
