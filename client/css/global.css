@@ -32,7 +32,7 @@ body {
   background: #000;
 }
 #progress-play .bar.playing{
-  background:#5c948d;
+  background:#0c9db7;
 }
 #progress-play .bar.loaded{
   background:#ccc;
