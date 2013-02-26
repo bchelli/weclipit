@@ -71,9 +71,7 @@ Template.playerTemplate.playerGoTo = function(direction){
   }
 };
 
-// After rendering
 Template.playerTemplate.getPositionInterval = null;
-Template.playerTemplate.seekTo = null;
 
 Template.playerTemplate.rendered = function() {
 
@@ -81,15 +79,25 @@ Template.playerTemplate.rendered = function() {
     $('#progress-play .bar').width(position+'%');
   }
 
-  function setPositionRequest(fn){
-    setProgressPosition(0);
+  function setRefreshProgression(fn){
     Meteor.clearInterval(Template.playerTemplate.getPositionInterval);
-    Template.playerTemplate.getPositionInterval = Meteor.setInterval(fn, 1000);
+    if(!!fn){
+      Template.playerTemplate.getPositionInterval = Meteor.setInterval(fn, 1000);
+    }
   }
 
   function setSeeker(fn){
-    Template.playerTemplate.seekTo = fn;
+    Template.playerTemplate.seekToPlayer = fn;
   }
+
+  Template.playerTemplate.seekTo = function(position){
+    setRefreshProgression();
+    setProgressPosition(position);
+    Template.playerTemplate.seekToPlayer(position);
+  };
+
+  setRefreshProgression();
+  setProgressPosition(0);
 
   var vimeo = document.getElementById('vimeo-player');
   if(vimeo){
@@ -99,13 +107,17 @@ Template.playerTemplate.rendered = function() {
       player.addEvent('finish', function(){
         Template.playerTemplate.playerGoTo('next');
       });
-      setPositionRequest(function(){
+      function updatePosition(){
         player.api('getCurrentTime', function(currentTime){
           player.api('getDuration', function(duration){
             setProgressPosition(Math.floor(100*currentTime/duration));
           });
         });
+      }
+      player.addEvent('seek', function(){
+        setRefreshProgression(updatePosition);
       });
+      setRefreshProgression(updatePosition);
       setSeeker(function(percent){
         player.api('getDuration', function(duration){
           player.api('seekTo', Math.floor(duration*percent/100));
@@ -128,14 +140,16 @@ Template.playerTemplate.rendered = function() {
       "events": {
         "onReady": function(){
           newPlayer.playVideo();
-          setPositionRequest(function(){
-            setProgressPosition(Math.floor(100*newPlayer.getCurrentTime()/newPlayer.getDuration()));
-          });
           setSeeker(function(percent){
             newPlayer.seekTo(Math.floor(newPlayer.getDuration()*percent/100), true);
           });
         },
         "onStateChange": function(newState){
+          if(newState.data==1){
+            setRefreshProgression(function(){
+              setProgressPosition(Math.floor(100*newPlayer.getCurrentTime()/newPlayer.getDuration()));
+            });
+          }
           if(newState.data==0){
             Template.playerTemplate.playerGoTo('next');
           }
