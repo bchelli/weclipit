@@ -31,18 +31,21 @@ body {
   background-color: #3b5998 !important;
   background-image: none !important;
 }
-hr.footer{
-  margin:0;
+footer.navbar{
+  margin-bottom:0;
+  border-bottom:none;
+  border-left:none;
+  border-right:none;
 }
-footer{
-  padding: 8px;
-  background-color: #fafafa;
-  border-top:1px solid #d4d4d4;
+footer.navbar .navbar-inner {
+  -webkit-border-radius:0;
+  -moz-border-radius:0;
+  border-radius:0;
+  min-height:35px;
+  height:35px;
+  line-height:35px;
+  padding:0 15px;
 }
-footer p{
-  margin:0;
-}
-
 #menuContainer{
   background-color: #f5f5f5;
   border-right:1px solid #ddd;
