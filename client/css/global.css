@@ -10,13 +10,13 @@ body {
 .navbar .nav > li > a {
   line-height: 50px;
 }
-.navbar-inverse .nav li.dropdown > .dropdown-toggle .caret{
+.navbar .nav li.dropdown > .dropdown-toggle .caret{
   margin-top:25px;
 }
 .header-profile-picture{
   height:30px;
 }
-.navbar-inverse .brand{
+.navbar .brand{
   padding-left:120px;
   line-height:50px;
   background:url(/img/logo.png) no-repeat 20px center;
@@ -36,8 +36,8 @@ hr.footer{
 }
 footer{
   padding: 8px;
-  background-color: #1b1b1b;
-  color:#ccc;
+  background-color: #fafafa;
+  border-top:1px solid #d4d4d4;
 }
 footer p{
   margin:0;

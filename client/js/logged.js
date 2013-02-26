@@ -38,7 +38,7 @@ Template.loggedTemplate.events({
   var $window = $(window);
   var resizeWindow = function(){
     var wH = $window.height();
-    $('#menuContainer,#playlistContainer').css({'height':wH-107});
+    $('#menuContainer,#playlistContainer').css({'height':wH-108});
   };
   var resizeTO;
   var onResize = function(){

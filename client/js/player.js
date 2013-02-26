@@ -32,7 +32,7 @@ function updateFullscreen(){
   if(Session.get('fullscreen')){
     var wH = $(window).height();
     $('#player')
-      .css({'height':wH-107})
+      .css({'height':wH-108})
       .addClass('fullscreen')
       ;
   } else {
