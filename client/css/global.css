@@ -30,8 +30,11 @@ body {
   height:6px;
   cursor:pointer;
 }
-#progress-play .bar{
+#progress-play .bar.playing{
   background:#5c948d;
+}
+#progress-play .bar.loaded{
+  background:#ccc;
 }
 .container-fluid.no-padding-left {
   padding: 0;

@@ -15,6 +15,11 @@ Template.headerTemplate.isPlaying = function(){
 
 Template.headerTemplate.events({
   'click #progress-play': function(ev){
-    Template.playerTemplate.seekTo(Math.floor(100*ev.offsetX/$('#progress-play').width()));
+    var $pp = $('#progress-play')
+      , w = $pp.width()
+      , offsetX = ev.clientX - $pp.offset().left
+      ;
+    Template.playerTemplate.seekTo(Math.floor(100*offsetX/w));
+    return false;
   }
 });

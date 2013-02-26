@@ -75,8 +75,14 @@ Template.playerTemplate.getPositionInterval = null;
 
 Template.playerTemplate.rendered = function() {
 
-  function setProgressPosition(position){
-    $('#progress-play .bar').width(position+'%');
+  function setProgressPosition(type, position){
+    $('#progress-play .bar.'+type).attr('data-percent', position);
+
+    // render
+    var playing = parseFloat($('#progress-play .bar.playing').attr('data-percent') || 0);
+    var loaded = parseFloat($('#progress-play .bar.loaded').attr('data-percent') || 0);
+    $('#progress-play .bar.playing').width(playing+'%');
+    $('#progress-play .bar.loaded').width(Math.max(loaded-playing, 0)+'%');
   }
 
   function setRefreshProgression(fn){
@@ -92,12 +98,13 @@ Template.playerTemplate.rendered = function() {
 
   Template.playerTemplate.seekTo = function(position){
     setRefreshProgression();
-    setProgressPosition(position);
+    setProgressPosition('playing', position);
     Template.playerTemplate.seekToPlayer(position);
   };
 
   setRefreshProgression();
-  setProgressPosition(0);
+  setProgressPosition('playing', 0);
+  setProgressPosition('loaded', 0);
 
   var vimeo = document.getElementById('vimeo-player');
   if(vimeo){
@@ -107,17 +114,12 @@ Template.playerTemplate.rendered = function() {
       player.addEvent('finish', function(){
         Template.playerTemplate.playerGoTo('next');
       });
-      function updatePosition(){
-        player.api('getCurrentTime', function(currentTime){
-          player.api('getDuration', function(duration){
-            setProgressPosition(Math.floor(100*currentTime/duration));
-          });
-        });
-      }
-      player.addEvent('seek', function(){
-        setRefreshProgression(updatePosition);
+      player.addEvent('loadProgress', function(obj){
+        setProgressPosition('loaded', Math.floor(100*obj.percent));
       });
-      setRefreshProgression(updatePosition);
+      player.addEvent('playProgress', function(obj){
+        setProgressPosition('playing', Math.floor(100*obj.percent));
+      });
       setSeeker(function(percent){
         player.api('getDuration', function(duration){
           player.api('seekTo', Math.floor(duration*percent/100));
@@ -128,6 +130,12 @@ Template.playerTemplate.rendered = function() {
 
   var youtube = document.getElementById('youtube-player');
   if(youtube){
+    if(!YT || !YT.Player) {
+      Meteor.setTimeout(function(){
+        Template.playerTemplate.rendered();
+      }, 100);
+      return;
+    }
     var newPlayer = new YT.Player("youtube-player", {
       "videoId": youtube.getAttribute("providerId"),
       "playerVars": {
@@ -147,7 +155,8 @@ Template.playerTemplate.rendered = function() {
         "onStateChange": function(newState){
           if(newState.data==1){
             setRefreshProgression(function(){
-              setProgressPosition(Math.floor(100*newPlayer.getCurrentTime()/newPlayer.getDuration()));
+              setProgressPosition('playing', Math.floor(100*newPlayer.getCurrentTime()/newPlayer.getDuration()));
+              setProgressPosition('loaded', Math.floor(100*newPlayer.getVideoLoadedFraction()));
             });
           }
           if(newState.data==0){
