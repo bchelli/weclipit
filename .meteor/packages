@@ -6,7 +6,6 @@
 insecure
 preserve-inputs
 backbone
-bootstrap
 jquery
 http
 accounts-base
