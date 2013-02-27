@@ -57,7 +57,6 @@ if(Meteor.isServer){
               $addToSet: {
                 canAccess:      userId
               , canAddVideo:    userId
-              , canRemoveVideo: userId
               }
             });
           } else {
