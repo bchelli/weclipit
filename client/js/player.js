@@ -48,7 +48,6 @@ Template.playerTemplate.toogleFullscreen = function(){
 }
 Template.playerTemplate.playerStop = function(){
   playlistsRouter.setPlaylist(Session.get('playing').playlist);
-  Session.set('playing', null);
 };
 Template.playerTemplate.playerGoTo = function(direction){
   var fctn = "";
@@ -65,7 +64,7 @@ Template.playerTemplate.playerGoTo = function(direction){
     Meteor.call(fctn, Session.get('playing'), function(err, nextToPlay){
       if(err) Template.playerTemplate.playerStop();
       else {
-        videosRouter.setVideo(nextToPlay.playlist, nextToPlay.video);
+        videosRouter.openVideo(nextToPlay.playlist, nextToPlay.video);
       }
     });
   }
