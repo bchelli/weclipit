@@ -175,7 +175,11 @@ if(Meteor.isServer){
     }
   , getUsers : function(){
       /// SECURITY WHOLE
-      return Meteor.users.find({}).fetch();
+      var u = Meteor.users.find({}).fetch(), res = [];
+      for(var i in u){
+        res.push(u[i].profile.name)
+      }
+      return res;
     }
   , getPlaylistFriendsSharing : function(playlist){
       var pl = playlists.findOne({owner:Meteor.userId(),_id:playlist})
