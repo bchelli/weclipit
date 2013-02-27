@@ -22,4 +22,8 @@ Template.headerTemplate.events({
     Template.playerTemplate.seekTo(Math.floor(100*offsetX/w));
     return false;
   }
+, 'click .brand': function(ev){
+    homeRouter.openHome();
+    return false;
+  }
 });
