@@ -61,6 +61,7 @@ var PlaylistsRouter = Backbone.Router.extend({
   openPlaylist: function (playlist) {
     Session.set('page', 'playlist');
     Session.set("playlist", playlist);
+    Session.set('playing', null);
   },
   setPlaylist: function (playlist) {
     this.navigate('playlist/'+playlist, true);
