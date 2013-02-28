@@ -28,7 +28,7 @@ body {
 }
 #progress-play {
   width: 300px;
-  margin: 5px 20px 0;
+  margin: 5px 15px 0;
   height:6px;
   cursor:pointer;
   background: #444;
@@ -40,7 +40,7 @@ body {
   background:#555;
 }
 #video-played {
-  margin: 18px 20px 0;
+  margin: 17px 15px 0;
   width: 300px;
   text-overflow: ellipsis;
   overflow: hidden;

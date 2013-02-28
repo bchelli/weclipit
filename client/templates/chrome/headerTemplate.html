@@ -11,11 +11,10 @@
         <div class="nav-collapse collapse">
           {{#if isPlaying}}
           <ul class="nav">
-            <li class="divider-vertical"></li>
             <li><a href="#" onclick="Template.playerTemplate.playerGoTo('prev');return false;"><i class="icon-white icon-fast-backward"></i></a></li>
             <li><a href="#" onclick="Template.playerTemplate.playerStop();return false;"><i class="icon-white icon-stop"></i></a></li>
             <li><a href="#" onclick="Template.playerTemplate.playerGoTo('next');return false;"><i class="icon-white icon-fast-forward"></i></a></li>
-            <li class="divider-vertical"></li>
+            <li><a href="#" onclick="Template.playerTemplate.toogleFullscreen();return false;"><i class="icon-white icon-fullscreen"></i></a></li>
             <li>
               <div id="video-played"><span class="video-current-time"></span> / <span class="video-total-time"></span> - <span class="video-title-progress"></span></div>
               <div class="progress" id="progress-play">
@@ -23,9 +22,6 @@
                 <div class="bar loaded"></div>
               </div>
             </li>
-            <li class="divider-vertical"></li>
-            <li><a href="#" onclick="Template.playerTemplate.toogleFullscreen();return false;"><i class="icon-white icon-fullscreen"></i></a></li>
-            <li class="divider-vertical"></li>
           </ul>
           {{/if}}
           <ul class="nav pull-right">
