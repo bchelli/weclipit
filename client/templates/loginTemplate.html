@@ -8,7 +8,7 @@
   
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
-        <div class="container-fluid">
+        <div class="container">
           <a class="brand" href="/">26 plays</a>
         </div>
       </div>
@@ -22,15 +22,57 @@
 
       <div id="login-text">
         <h1>Welcome to 26plays</h1>
-        <h3>Share videos and playlists with your friends</h3>
+        <h3>Keep, play and share videos</h3>
       </div>
       
       <div id="login-box">
-        <h4>Login with Facebook</h4>
-        <h5>And start to enjoy your music</h5>
         {{loginButtons}}
       </div>
 
+    </div>
+
+    <div class="container login">
+      <div class="row">
+        <a class="span4 home-point">
+          <h2>Keep</h2>
+          <i class="home-icon keep"></i>
+          Keep all your videos and organize them in playlists
+          <img src="/img/home-keep.jpg" class="img-polaroid" />
+        </a>
+        <a class="span4 home-point">
+          <h2>Play</h2>
+          <i class="home-icon play"></i>
+          Enjoy your best videos anywhere and at anytime
+          <img src="/img/home-play.jpg" class="img-polaroid" />
+        </a>
+        <a class="span4 home-point">
+          <h2>Share</h2>
+          <i class="home-icon share"></i>
+          Share your playlists with your friend
+          <img src="/img/home-share.jpg" class="img-polaroid" />
+        </a>
+      </div>
+    </div>
+
+    <hr class="login" />
+
+    <div class="container login">
+      <div class="row">
+        <div class="span12">
+          <h2>The player</h2>
+          <img src="/img/home-player.jpg" class="img-polaroid" />
+        </div>
+      </div>
+    </div>
+    
+    <hr class="login" />
+
+    <div class="container login">
+      <div class="row">
+        <div class="span12 login-footer">
+          &copy 26plays 2013
+        </div>
+      </div>
     </div>
 
   {{/if}}

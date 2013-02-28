@@ -3,6 +3,7 @@
 Template.loginTemplate.rendered = function(){
   var $bg = $('#login-background')
     , $vid = $('.video-home', $bg)
+    , $window = $(window)
     , initW = $vid.width()
     , initH = $vid.height()
     ;
@@ -13,6 +14,7 @@ Template.loginTemplate.rendered = function(){
   });
 
   function resize(){
+    $bg.height($window.height()-210);
     var w = $bg.width()
       , h = $bg.height()
       , newWidth

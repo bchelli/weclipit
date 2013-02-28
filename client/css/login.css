@@ -1,9 +1,7 @@
 #login-background {
-  position: absolute;
-  left:0;
-  top:0;
+  position: relative;
   width:100%;
-  height:100%;
+  height:500px;
 /*
   background:url(/img/home.jpg) no-repeat center center;
   background-size: cover;
@@ -28,33 +26,45 @@
   left:50%;
   width:700px;
   height:100px;
-  margin-top:-50px;
-  margin-left:-430px;
+  margin-top:-100px;
+  margin-left:-350px;
+  text-align: center;
+  font-family: 'Quicksand', sans-serif;
 }
+
 #login-box{
   position:absolute;
   top:50%;
   left:50%;
-  width:220px;
-  height:100px;
-  margin-top:-65px;
-  margin-left:170px;
-
-  padding: 15px;
-
-  background: white;
-  background: rgba(255, 255, 255, 0.8);
-
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-  
+  width:400px;
+  margin-top:50px;
+  margin-left:-200px;
   text-align: center;
+  font-size:24px;
+  font-family: 'Quicksand', sans-serif;
 }
+  #login-buttons .login-image {top: 16px;left: 16px;}
+  #login-buttons .text-besides-image {margin: 0 15px 0 32px;}
+  #login-buttons .login-button {padding:8px;border-color: #0c9db7;}
+  #login-buttons-facebook {background-color: #0c9db7 !important;}
 
-#login-box h4 {
-  margin-top: 5px;
-}
+
+hr.login{margin:50px 0;}
+
+.container.login{margin-top:20px;margin-bottom:20px;font-family: 'Quicksand', sans-serif;}
+
+  a.home-point{color:#999999;text-decoration:none;}
+  a.home-point:hover{color:#555;text-decoration:none;}
+    a.home-point h2{margin-top:0}
+
+    a.home-point img{margin:30px auto 0;display:block}
+  
+    a.home-point .home-icon{display:block;float:left;margin-right:10px;width:48px;height:48px;background:url(/img/home-icons.png) 0 0;}
+    a.home-point:hover .home-icon{background-position-y:-48px;}
+      a.home-point .home-icon.keep{background-position-x:0px;}
+      a.home-point .home-icon.play{background-position-x:-48px;}
+      a.home-point .home-icon.share{background-position-x:-96px;}
+
+
+.login-footer {text-align:center}
+

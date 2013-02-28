@@ -1,6 +1,7 @@
 body {
   padding-top: 71px;
   padding-bottom: 0;
+  background: #fefefe;
 }
 .sidebar-nav {
   padding: 9px 0;
@@ -20,6 +21,7 @@ body {
   padding-left:120px;
   line-height:50px;
   background:url(/img/logo.png) no-repeat 20px center;
+  font-family: 'Quicksand', sans-serif;
 }
 .navbar .divider-vertical {
   height:70px;
