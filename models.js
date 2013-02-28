@@ -47,6 +47,12 @@ if(Meteor.isServer){
     }
   
   // PLAYLISTS
+  , updatePlaylistName : function(playlist, name){
+      var pl = playlists.findOne({owner:Meteor.userId(),_id:playlist});
+      if(pl){
+        playlists.update({_id:playlist}, {$set:{name:name}});
+      }
+    }
   , sharePlaylist : function(playlist, users){
       var pl = playlists.findOne({owner:Meteor.userId(),_id:playlist});
       if(pl){

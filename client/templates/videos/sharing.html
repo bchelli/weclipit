@@ -2,10 +2,19 @@
   {{#with playlist}}
   <div class="video-title">
     <!img class="owner-picture" src="http://graph.facebook.com/{{owner}}/picture" />
-    <h3>{{name}}</h3>
+    <h3 id="playlist-name">{{name}}</h3>
+    <form class="form-search" id="edit-playlist-name">
+      <input type="text" value="{{name}}" />
+      <a href="#" class="valid-playlist-name btn btn-mini btn-primary">
+        <i class="icon-ok icon-white"></i>
+      </a>
+      <a href="#" class="cancel-playlist-name btn btn-mini">
+        <i class="icon-remove"></i>
+      </a>
+    </form>
   {{#if isMine}}
     <a href="#" class="playlist-share" playlist="{{_id}}"><i class="icon-share-alt"></i> Share</a>
-    <a href="#" class="playlist-edit" playlist="{{_id}}"><i class="icon-pencil"></i> Edit</a>
+    <a href="#" class="playlist-edit" playlist="{{_id}}"><i class="icon-pencil"></i> Rename</a>
   {{/if}}
     <a href="#" class="playlist-remove" playlist="{{_id}}"><i class="icon-remove"></i> Remove</a>
   </div>

@@ -54,6 +54,12 @@ Template.videosSharingTemplate.playlist = function() {
   return pl || {};
 };
 // Set Template Events
+function setNewName(){
+  var newName = $('#edit-playlist-name input').val();
+  Meteor.call('updatePlaylistName', Session.get('playlist'), newName);
+  $('#edit-playlist-name').hide();
+  $('#playlist-name').html(newName).show();
+}
 Template.videosSharingTemplate.events({
   'click .playlist-remove': function (event, template) {
     $('#remove-playlist-modal')
@@ -62,6 +68,25 @@ Template.videosSharingTemplate.events({
       })
       .modal();
     $('#remove-playlist-submit').attr('playlist', event.currentTarget.getAttribute('playlist'));
+    return false;
+  }
+, 'click .playlist-edit': function (event, template) {
+    $('#edit-playlist-name').show();
+    $('#edit-playlist-name input').focus();
+    $('#playlist-name').hide();
+    return false;
+  }
+, 'click .cancel-playlist-name': function (event, template) {
+    $('#edit-playlist-name').hide();
+    $('#playlist-name').show();
+    return false;
+  }
+, 'submit #edit-playlist-name': function (event, template) {
+    setNewName();
+    return false;
+  }
+, 'click .valid-playlist-name': function (event, template) {
+    setNewName();
     return false;
   }
 , 'click .playlist-share': function (event, template) {
