@@ -189,12 +189,14 @@ Template.playerTemplate.rendered = function() {
           });
         },
         "onStateChange": function(newState){
+          var refresh = function(){
+            setProgressPosition('playing', Math.floor(100*newPlayer.getCurrentTime()/newPlayer.getDuration()));
+            setProgressPosition('loaded', Math.floor(100*newPlayer.getVideoLoadedFraction()));
+            setVideoPlayed(newPlayer.getCurrentTime(), newPlayer.getDuration(), $('#player').attr('data-title'));
+          };
+          refresh();
           if(newState.data==1){
-            setRefreshProgression(function(){
-              setProgressPosition('playing', Math.floor(100*newPlayer.getCurrentTime()/newPlayer.getDuration()));
-              setProgressPosition('loaded', Math.floor(100*newPlayer.getVideoLoadedFraction()));
-              setVideoPlayed(newPlayer.getCurrentTime(), newPlayer.getDuration(), $('#player').attr('data-title'));
-            });
+            setRefreshProgression(refresh);
           }
           if(newState.data==0){
             Template.playerTemplate.playerGoTo('next');
