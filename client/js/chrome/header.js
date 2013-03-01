@@ -13,6 +13,10 @@ Template.headerTemplate.isPlaying = function(){
   return Session.get('page')==='playlist' && !!pl && pl.playlist === Session.get('playlist');
 };
 
+Template.headerTemplate.playPauseClass = function(){
+  return Session.get('pause') ? 'icon-play' : 'icon-pause';
+};
+
 Template.headerTemplate.events({
   'click #progress-play': function(ev){
     var $pp = $('#progress-play')

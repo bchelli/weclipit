@@ -2,7 +2,13 @@
   {{#with playlist}}
   <div class="video-title">
     <!img class="owner-picture" src="http://graph.facebook.com/{{owner}}/picture" />
-    <h3 id="playlist-name">{{name}}</h3>
+    <h3 id="playlist-name">
+      {{name}}
+    {{#if isMine}}
+    {{else}}
+      <span>(shared playlist)</span>
+    {{/if}}
+    </h3>
     <form class="form-search" id="edit-playlist-name">
       <input type="text" value="{{name}}" />
       <a href="#" class="valid-playlist-name btn btn-mini btn-primary">
@@ -13,10 +19,12 @@
       </a>
     </form>
   {{#if isMine}}
-    <a href="#" class="playlist-share" playlist="{{_id}}"><i class="icon-share-alt"></i> Share</a>
-    <a href="#" class="playlist-edit" playlist="{{_id}}"><i class="icon-pencil"></i> Rename</a>
+    <a href="#" class="playlist-share" playlist="{{_id}}"><i class="icon-share-alt"></i> Share this playlist</a>
+    <a href="#" class="playlist-edit" playlist="{{_id}}"><i class="icon-pencil"></i> Rename this playlist</a>
+    <a href="#" class="playlist-remove" playlist="{{_id}}"><i class="icon-remove"></i> Delete this playlist</a>
+  {{else}}
+    <a href="#" class="playlist-remove" playlist="{{_id}}"><i class="icon-remove"></i> Unfollow this playlist</a>
   {{/if}}
-    <a href="#" class="playlist-remove" playlist="{{_id}}"><i class="icon-remove"></i> Remove</a>
   </div>
   {{/with}}
   {{#if playlist.canAccess.length}}

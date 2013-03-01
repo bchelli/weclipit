@@ -2,8 +2,9 @@
   <div class="video-title">
     <h3>Videos</h3>
   {{#if rightTo "canAddVideo" playlist myUser}}
-    <a href="#" id="add-video-from-search"><i class="icon-search"></i> Search a new video</a>
-    <a href="#" id="add-video-from-url"><i class="icon-plus-sign"></i> Add video URL</a><br /><br />
+    <span>Add video from:</span>
+    <a href="#" id="add-video-from-search"><i class="icon-plus-sign"></i> YouTube</a>
+    <a href="#" id="add-video-from-url"><i class="icon-plus-sign"></i> URL</a><br /><br />
   {{/if}}
   </div>
   {{#if hasVideo}}

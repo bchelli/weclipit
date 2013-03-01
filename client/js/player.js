@@ -116,16 +116,35 @@ Template.playerTemplate.rendered = function() {
     setProgressPosition('playing', position);
     Template.playerTemplate.seekToPlayer(position);
   };
+  var pause = function(){}
+    , play = function(){}
+    ;
+  Template.playerTemplate.playerPlayPauseToogle = function(){
+    var pauseStatus = !Session.get('pause');
+    if(pauseStatus){
+      pause();
+    } else {
+      play();
+    }
+    Session.set('pause', pauseStatus);
+  };
 
   setVideoPlayed(0,0,'Loading . . .');
   setRefreshProgression();
   setProgressPosition('playing', 0);
   setProgressPosition('loaded', 0);
+  Session.set('pause', false);
 
   var vimeo = document.getElementById('vimeo-player');
   if(vimeo){
     var player = $f(vimeo);
     player.addEvent('ready', function() {
+      pause = function(){
+        player.api("pause");
+      }
+      play = function(){
+        player.api("play");
+      }
       player.api("play");
       player.addEvent('finish', function(){
         Template.playerTemplate.playerGoTo('next');
@@ -183,6 +202,12 @@ Template.playerTemplate.rendered = function() {
         }
       }
     });
+    pause = function(){
+      newPlayer.pauseVideo();
+    }
+    play = function(){
+      newPlayer.playVideo();
+    }
   }
 
   updateFullscreen()
