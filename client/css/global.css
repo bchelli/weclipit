@@ -6,24 +6,22 @@ body {
 .sidebar-nav {
   padding: 9px 0;
 }
-.navbar{
-}
-.navbar .nav > li > a {
+.navbar.header .nav > li > a {
   line-height: 50px;
 }
-.navbar .nav li.dropdown > .dropdown-toggle .caret{
+.navbar.header .nav li.dropdown > .dropdown-toggle .caret{
   margin-top:25px;
 }
 .header-profile-picture{
   height:30px;
 }
-.navbar .brand{
+.navbar.header .brand{
   padding-left:120px;
   line-height:50px;
   background:url(/img/logo.png) no-repeat 20px center;
   font-family: 'Quicksand', sans-serif;
 }
-.navbar .divider-vertical {
+.navbar.header .divider-vertical {
   height:70px;
 }
 #progress-play {
@@ -38,6 +36,12 @@ body {
 }
 #progress-play .bar.loaded{
   background:#555;
+}
+#progress-play.progress .bar {
+  -webkit-transition:none;
+     -moz-transition:none;
+       -o-transition:none;
+          transition:none;
 }
 #video-played {
   margin: 17px 15px 0;
