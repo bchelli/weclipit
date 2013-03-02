@@ -1,28 +1,20 @@
 <template name="mainContentTemplate">
   <div id="playlistContainer">
     <div id="playlistContent">
+
     {{#if isPage 'home'}}
       {{> homeTemplate}}
     {{/if}}
 
-    {{#if isPage 'search'}}
-      {{> searchTemplate}}
+    {{#if isPage 'playlist'}}
+    <div id="playerContent">
+      {{> playerTemplate}}
+    </div>
+    <div id="videosContent">
+      {{> videosTemplate}}
+    </div><!--/.well -->
     {{/if}}
 
-    {{#if isPage 'playlist'}}
-      {{#if isPlaying}}
-      <div id="playerContent">
-        {{> playerTemplate}}
-      </div>
-      <div class="videos-content isPlaying">
-        {{> videosTemplate}}
-      </div><!--/.well -->
-      {{else}}
-      <div class="videos-content">
-        {{> videosTemplate}}
-      </div><!--/.well -->
-      {{/if}}
-    {{/if}}
     </div>
   </div><!--/span-->
 </template>

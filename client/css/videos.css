@@ -1,6 +1,6 @@
 
-#playlistContainer .videos-content{height:100%;overflow:scroll;padding:0 20px;}
-#playlistContainer .videos-content.isPlaying {height:50%;}
+#videosContent{height:100%;overflow:scroll;padding:0 20px;}
+#videosContent.isPlaying {height:50%;}
 
 .video {cursor: pointer;}
   .video td.videos-likes {width:30px;text-align:center;font-size:11px;line-height:12px;}

@@ -74,6 +74,20 @@ Template.playerTemplate.getPositionInterval = null;
 
 Template.playerTemplate.rendered = function() {
 
+  var update = function () {
+    var ctx = new Meteor.deps.Context();  // invalidation context
+    ctx.onInvalidate(update);             // rerun update() on invalidation
+    ctx.run(function () {
+      var isPlaying = Session.get("playing");
+      if(isPlaying){
+        $('#playerContent,#videosContent').addClass('isPlaying');
+      } else {
+        $('#playerContent,#videosContent').removeClass('isPlaying');
+      }
+    });
+  };
+  update();
+
   function formatTime(time){
     time = Math.floor(time);
     var sec = time % 60
