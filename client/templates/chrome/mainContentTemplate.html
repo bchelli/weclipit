@@ -1,5 +1,5 @@
 <template name="mainContentTemplate">
-  <div class="span9" id="playlistContainer">
+  <div id="playlistContainer">
     <div id="playlistContent">
     {{#if isPage 'home'}}
       {{> homeTemplate}}
@@ -10,7 +10,18 @@
     {{/if}}
 
     {{#if isPage 'playlist'}}
-      {{> videosTemplate}}
+      {{#if isPlaying}}
+      <div id="playerContent">
+        {{> playerTemplate}}
+      </div>
+      <div class="videos-content isPlaying">
+        {{> videosTemplate}}
+      </div><!--/.well -->
+      {{else}}
+      <div class="videos-content">
+        {{> videosTemplate}}
+      </div><!--/.well -->
+      {{/if}}
     {{/if}}
     </div>
   </div><!--/span-->

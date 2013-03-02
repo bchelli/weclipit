@@ -1,9 +1,3 @@
-
-Template.leftMenuTemplate.isPlaying = function(){
-  var pl = Session.get('playing');
-  return !!pl && pl.playlist === Session.get('playlist');
-};
-
 (function(){
   var $window = $(window);
   var resizeWindow = function(){
@@ -24,3 +18,4 @@ Template.leftMenuTemplate.isPlaying = function(){
     $window.unbind('resize', onResize);
   }
 })();
+

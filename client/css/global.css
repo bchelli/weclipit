@@ -8,6 +8,7 @@ body {
 }
 .navbar.header .nav > li > a {
   line-height: 50px;
+  padding: 10px;
 }
 .navbar.header .nav li.dropdown > .dropdown-toggle .caret{
   margin-top:25px;
@@ -84,8 +85,12 @@ footer.navbar .navbar-inner {
 #menuContainer{
   background-color: #f5f5f5;
   border-right:1px solid #ddd;
+  width:200px;
+  float:left;
 }
-
+#playlistContainer {
+  margin-left:200px;
+}
 #menuContainer,
 #playlistContainer {
   display:block;
@@ -97,13 +102,4 @@ footer.navbar .navbar-inner {
   margin: 0;
   padding: 0;
   overflow: auto;
-}
-
-#playerContent{
-  height:23.076923076923077%;
-  overflow:hidden;
-}
-
-#menuContainer .sidebar-nav.isPlaying {
-  height:76.923076934076923%;
 }
