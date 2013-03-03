@@ -34,4 +34,24 @@ Template.headerTemplate.events({
     Meteor.logout();
     return false;
   }
+, 'click .backward': function(ev){
+    Template.playerTemplate.playerGoTo('prev');
+    return false;
+  }
+, 'click .stop': function(ev){
+    Template.playerTemplate.playerStop();
+    return false;
+  }
+, 'click .play-pause': function(ev){
+    Template.playerTemplate.playerPlayPauseToogle();
+    return false;
+  }
+, 'click .forward': function(ev){
+    Template.playerTemplate.playerGoTo('next');
+    return false;
+  }
+, 'click .fullscreen': function(ev){
+    Template.playerTemplate.toogleFullscreen();
+    return false;
+  }
 });

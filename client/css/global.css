@@ -32,6 +32,9 @@ body {
   cursor:pointer;
   background: #444;
 }
+#progress-play .bar{
+  filter:none;
+}
 #progress-play .bar.playing{
   background:#0c9db7;
 }
