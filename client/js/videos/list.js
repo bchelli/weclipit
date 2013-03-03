@@ -21,9 +21,6 @@ Template.videosListTemplate.helpers({
 , liked: function(){
     return this.likes && this.likes.indexOf(Meteor.userId())!==-1 ? 'icon-star' : 'icon-star-empty';
   }
-, hasVideo: function(){
-    return !!this.videos.findOne();
-  }
 });
 
 // Set Template Variables

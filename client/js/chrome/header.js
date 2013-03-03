@@ -27,7 +27,11 @@ Template.headerTemplate.events({
     return false;
   }
 , 'click .brand': function(ev){
-    homeRouter.openHome();
+    homeRouter.goToPage('home');
+    return false;
+  }
+, 'click .logout': function(ev){
+    Meteor.logout();
     return false;
   }
 });
