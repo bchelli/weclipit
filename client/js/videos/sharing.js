@@ -42,7 +42,7 @@ Template.videosSharingTemplate.helpers({
     var fbId = myUser && myUser.services && myUser.services.facebook && myUser.services.facebook.id ? myUser.services.facebook.id : 0
       , result = playlist.owner === myUser._id
       ;
-    if(!result && playlist[right] && playlist[right].indexOf) result = playlist[right].indexOf(fbId)!==-1;
+    if(!result && playlist[right]) result = _.contains(playlist[right], fbId);
     if(!result && videoOwner) result = videoOwner === myUser._id;
     return result;
   }

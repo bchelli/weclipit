@@ -14,12 +14,12 @@ Template.videosListTemplate.helpers({
     var fbId = myUser && myUser.services && myUser.services.facebook && myUser.services.facebook.id ? myUser.services.facebook.id : 0
       , result = playlist.owner === myUser._id
       ;
-    if(!result && playlist[right] && playlist[right].indexOf) result = playlist[right].indexOf(fbId)!==-1;
+    if(!result && playlist[right]) result = _.contains(playlist[right], fbId);
     if(!result && videoOwner) result = videoOwner === myUser._id;
     return result;
   }
 , liked: function(){
-    return this.likes && this.likes.indexOf(Meteor.userId())!==-1 ? 'icon-star' : 'icon-star-empty';
+    return this.likes && _.contains(this.likes, Meteor.userId()) ? 'icon-star' : 'icon-star-empty';
   }
 });
 
@@ -78,7 +78,7 @@ Template.videosListTemplate.events({
   }
 , 'click .like-video': function (event, template) {
     var videoId = event.currentTarget.getAttribute('video')
-      , status = !videos.findOne({_id:videoId}).likes || videos.findOne({_id:videoId}).likes.indexOf(Meteor.userId())===-1
+      , status = !videos.findOne({_id:videoId}).likes || !_.contains(videos.findOne({_id:videoId}).likes, Meteor.userId())
       ;
     Meteor.call('likeVideo', videoId, status);
     return false;
