@@ -120,14 +120,15 @@ Template.playerTemplate.rendered = function() {
     var ctx = new Meteor.deps.Context();  // invalidation context
     ctx.onInvalidate(update);             // rerun update() on invalidation
     ctx.run(function () {
-      setVideoPlayed(0,0,'Loading . . .');
-      setProgressPosition('playing', 0);
-      setProgressPosition('loaded', 0);
-      Session.set('pause', false);
+      if(player && player.destroy) player.destroy();
+      $('#player-content').html('');
       var isPlaying = Session.get("playing");
       if(isPlaying){
         $('#playerContent,#videosContent').addClass('isPlaying');
-        if(player && player.destroy) player.destroy();
+        setVideoPlayed(0,0,'Loading . . .');
+        setProgressPosition('playing', 0);
+        setProgressPosition('loaded', 0);
+        Session.set('pause', false);
         var pl = Session.get('playing');
         if(pl){
           var video = videos.findOne({_id:pl.video,playlist:pl.playlist}, {reactive:false});
