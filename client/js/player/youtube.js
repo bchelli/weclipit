@@ -44,7 +44,7 @@ App.player.youtube = function(playerId, events){
       "onStateChange": function(newState){
         refresh();
         if(newState.data==1){
-          Meteor.clearInterval(this.getPositionInterval);
+          Meteor.clearInterval(that.getPositionInterval);
           that.getPositionInterval = Meteor.setInterval(refresh, 1000);
         }
         if(newState.data==0){
