@@ -30,6 +30,8 @@ Template.playerTemplate.toogleFullscreen = function(){
   updateFullscreen();
 }
 Template.playerTemplate.playerStop = function(){
+  Session.set('fullscreen', false);
+  updateFullscreen();
   playlistsRouter.setPlaylist(Session.get('playing').playlist);
 };
 Template.playerTemplate.playerGoTo = function(direction){
@@ -125,11 +127,11 @@ Template.playerTemplate.rendered = function() {
       var isPlaying = Session.get("playing");
       if(isPlaying){
         $('#playerContent,#videosContent').addClass('isPlaying');
+        if(player && player.destroy) player.destroy();
         var pl = Session.get('playing');
         if(pl){
           var video = videos.findOne({_id:pl.video,playlist:pl.playlist}, {reactive:false});
           if(video){
-            if(player && player.destroy) player.destroy();
             $('#player').attr('data-title', video.data.title);
             if(video.provider === 'vimeo'){
               $('#player-content').html('<iframe id="vimeo-player" src="http://player.vimeo.com/video/'+video.providerId+'?api=1&title=0&byline=0&portrait=0&player_id=vimeo-player" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
