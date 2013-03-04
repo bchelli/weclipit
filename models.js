@@ -108,6 +108,20 @@ if(Meteor.isServer){
     }
   
   // VIDEOS
+  , searchYoutubeVideos: function(query){
+      var fiber = Fiber.current
+        , videosYoutube = []
+        ;
+      Meteor.http.get('https://gdata.youtube.com/feeds/api/videos?q='+encodeURIComponent(query)+'&alt=json', function(err, res){
+        if(!err){
+          videosYoutube = res && res.data && res.data.feed && res.data.feed.entry ? res.data.feed.entry : [];
+        }
+        fiber.run();
+      });
+      Fiber.yield();
+      console.log(videosYoutube);
+      return videosYoutube;
+    }
   , addVideo : function(playlist, url){
       var fiber = Fiber.current;
       Meteor.http.get(
