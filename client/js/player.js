@@ -11,23 +11,6 @@ Template.playerTemplate.helpers({
   }
 });
 
-(function(){
-  var resizeTO;
-  var $window = $(window);
-  var onResize = function(){
-    clearTimeout(resizeTO);
-    resizeTO = setTimeout(updateFullscreen, 100);
-  };
-  Template.playerTemplate.rendered = function() {
-    $window.bind('resize', onResize);
-    resizeWindow();
-  };
-  
-  Template.playerTemplate.destroyed = function() {
-    $window.unbind('resize', onResize);
-  }
-})();
-
 function updateFullscreen(){
   if(Session.get('fullscreen')){
     var wH = $(window).height();
@@ -70,7 +53,7 @@ Template.playerTemplate.playerGoTo = function(direction){
   }
 };
 
-Template.playerTemplate.getPositionInterval = null;
+var player;
 
 Template.playerTemplate.rendered = function() {
 
@@ -114,68 +97,47 @@ Template.playerTemplate.rendered = function() {
     $('#progress-play .bar.loaded').width(Math.max(loaded-playing, 0)+'%');
   }
 
-  function setRefreshProgression(fn){
-    Meteor.clearInterval(Template.playerTemplate.getPositionInterval);
-    if(!!fn){
-      Template.playerTemplate.getPositionInterval = Meteor.setInterval(fn, 1000);
-    }
-  }
-
   function setSeeker(fn){
     Template.playerTemplate.seekToPlayer = fn;
   }
 
   Template.playerTemplate.seekTo = function(position){
-    setRefreshProgression();
     setProgressPosition('playing', position);
-    Template.playerTemplate.seekToPlayer(position);
+    player.seekTo(position);
   };
-  var pause = function(){}
-    , play = function(){}
-    ;
+
   Template.playerTemplate.playerPlayPauseToogle = function(){
     var pauseStatus = !Session.get('pause');
     if(pauseStatus){
-      pause();
+      player.pause();
     } else {
-      play();
+      player.play();
     }
     Session.set('pause', pauseStatus);
   };
 
   setVideoPlayed(0,0,'Loading . . .');
-  setRefreshProgression();
   setProgressPosition('playing', 0);
   setProgressPosition('loaded', 0);
   Session.set('pause', false);
 
+
+  var events = {
+    end:function(){
+      Template.playerTemplate.playerGoTo('next');
+    }
+  , progress:function(obj){
+      setProgressPosition('loaded', obj.loadPercent);
+      setProgressPosition('playing', obj.playPercent);
+      setVideoPlayed(obj.seconds, obj.duration, $('#player').attr('data-title'));
+    }
+  };
+
+  if(player && player.destroy) player.destroy();
+
   var vimeo = document.getElementById('vimeo-player');
   if(vimeo){
-    var player = $f(vimeo);
-    player.addEvent('ready', function() {
-      pause = function(){
-        player.api("pause");
-      }
-      play = function(){
-        player.api("play");
-      }
-      player.api("play");
-      player.addEvent('finish', function(){
-        Template.playerTemplate.playerGoTo('next');
-      });
-      player.addEvent('loadProgress', function(obj){
-        setProgressPosition('loaded', Math.floor(100*obj.percent));
-      });
-      player.addEvent('playProgress', function(obj){
-        setProgressPosition('playing', Math.floor(100*obj.percent));
-        setVideoPlayed(obj.seconds, obj.duration, $('#player').attr('data-title'));
-      });
-      setSeeker(function(percent){
-        player.api('getDuration', function(duration){
-          player.api('seekTo', Math.floor(duration*percent/100));
-        });
-      });
-    });
+    player = new App.player.vimeo('vimeo-player', events);
   }
 
   var youtube = document.getElementById('youtube-player');
@@ -185,48 +147,24 @@ Template.playerTemplate.rendered = function() {
         Template.playerTemplate.rendered();
       }, 100);
       return;
-    }
-    var newPlayer = new YT.Player("youtube-player", {
-      "videoId": youtube.getAttribute("providerId"),
-      "playerVars": {
-        "controls":0
-      , "iv_load_policy":3
-      , "modestbranding":0
-      , "rel":0
-      , "showinfo":0
-      },
-      "events": {
-        "onReady": function(){
-          newPlayer.playVideo();
-          setSeeker(function(percent){
-            newPlayer.seekTo(Math.floor(newPlayer.getDuration()*percent/100), true);
-          });
-        },
-        "onStateChange": function(newState){
-          var refresh = function(){
-            setProgressPosition('playing', Math.floor(100*newPlayer.getCurrentTime()/newPlayer.getDuration()));
-            setProgressPosition('loaded', Math.floor(100*newPlayer.getVideoLoadedFraction()));
-            setVideoPlayed(newPlayer.getCurrentTime(), newPlayer.getDuration(), $('#player').attr('data-title'));
-          };
-          refresh();
-          if(newState.data==1){
-            setRefreshProgression(refresh);
-          }
-          if(newState.data==0){
-            Template.playerTemplate.playerGoTo('next');
-          }
-        }
-      }
-    });
-    pause = function(){
-      newPlayer.pauseVideo();
-    }
-    play = function(){
-      newPlayer.playVideo();
+    } else {
+      player = new App.player.youtube('youtube-player', events);
     }
   }
 
-  updateFullscreen()
+
+  var resizeTO;
+  var $window = $(window);
+  var onResize = function(){
+    clearTimeout(resizeTO);
+    resizeTO = setTimeout(updateFullscreen, 100);
+  };
+  $window.bind('resize', onResize);
+  updateFullscreen();
+  
+  Template.playerTemplate.destroyed = function() {
+    $window.unbind('resize', onResize);
+  }
 
 };
 
