@@ -57,20 +57,6 @@ var player;
 
 Template.playerTemplate.rendered = function() {
 
-  var update = function () {
-    var ctx = new Meteor.deps.Context();  // invalidation context
-    ctx.onInvalidate(update);             // rerun update() on invalidation
-    ctx.run(function () {
-      var isPlaying = Session.get("playing");
-      if(isPlaying){
-        $('#playerContent,#videosContent').addClass('isPlaying');
-      } else {
-        $('#playerContent,#videosContent').removeClass('isPlaying');
-      }
-    });
-  };
-  update();
-
   function formatTime(time){
     time = Math.floor(time);
     var sec = time % 60
@@ -116,12 +102,6 @@ Template.playerTemplate.rendered = function() {
     Session.set('pause', pauseStatus);
   };
 
-  setVideoPlayed(0,0,'Loading . . .');
-  setProgressPosition('playing', 0);
-  setProgressPosition('loaded', 0);
-  Session.set('pause', false);
-
-
   var events = {
     end:function(){
       Template.playerTemplate.playerGoTo('next');
@@ -133,17 +113,40 @@ Template.playerTemplate.rendered = function() {
     }
   };
 
-  if(player && player.destroy) player.destroy();
 
-  var vimeo = document.getElementById('vimeo-player');
-  if(vimeo){
-    player = new App.player.vimeo('vimeo-player', events);
-  }
-
-  var youtube = document.getElementById('youtube-player');
-  if(youtube){
-    player = new App.player.youtube('youtube-player', events);
-  }
+  var update = function () {
+    var ctx = new Meteor.deps.Context();  // invalidation context
+    ctx.onInvalidate(update);             // rerun update() on invalidation
+    ctx.run(function () {
+      setVideoPlayed(0,0,'Loading . . .');
+      setProgressPosition('playing', 0);
+      setProgressPosition('loaded', 0);
+      Session.set('pause', false);
+      var isPlaying = Session.get("playing");
+      if(isPlaying){
+        $('#playerContent,#videosContent').addClass('isPlaying');
+        var pl = Session.get('playing');
+        if(pl){
+          var video = videos.findOne({_id:pl.video,playlist:pl.playlist}, {reactive:false});
+          if(video){
+            if(player && player.destroy) player.destroy();
+            $('#player').attr('data-title', video.data.title);
+            if(video.provider === 'vimeo'){
+              $('#player-content').html('<iframe id="vimeo-player" src="http://player.vimeo.com/video/'+video.providerId+'?api=1&title=0&byline=0&portrait=0&player_id=vimeo-player" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
+              player = new App.player.vimeo('vimeo-player', events);
+            }
+            if(video.provider === 'youtube') {
+              $('#player-content').html('<div id="youtube-player" providerId="'+video.providerId+'"></div>');
+              player = new App.player.youtube('youtube-player', events);
+            }
+          }
+        }
+      } else {
+        $('#playerContent,#videosContent').removeClass('isPlaying');
+      }
+    });
+  };
+  update();
 
 
   var resizeTO;
@@ -160,15 +163,3 @@ Template.playerTemplate.rendered = function() {
   }
 
 };
-
-// Set Template Variables
-Template.playerTemplate.video = function() {
-  var pl = Session.get('playing');
-  if(!pl) return {};
-  return videos.findOne({_id:pl.video,playlist:pl.playlist}, {reactive:false});
-};
-
-Template.playerTemplate.isPlaying = function(){
-  var pl = Session.get('playing');
-  return Session.get('page')==='playlist' && !!pl && pl.playlist === Session.get('playlist');
-}

@@ -65,6 +65,7 @@ App.player.youtube.prototype = {
     this.player.seekTo(Math.floor(this.player.getDuration()*percent/100), true);
   }
 , destroy: function(){
+    delete this.player;
     Meteor.clearInterval(this.getPositionInterval);
   }
 };

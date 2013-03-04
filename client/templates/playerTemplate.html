@@ -1,18 +1,6 @@
 <template name="playerTemplate">
-  {{#if isPlaying}}
-    {{#with video}}
-    <div id="player" data-title="{{data.title}}">
-  
-      {{#if isType "vimeo"}}
-        <iframe id="vimeo-player" src="http://player.vimeo.com/video/{{providerId}}?api=1&title=0&byline=0&portrait=0&player_id=vimeo-player" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
-      {{/if}}
-  
-      {{#if isType "youtube"}}
-        <div id="youtube-player" providerId="{{providerId}}"></div>
-      {{/if}}
-  
-      <div id="player-over"></div>
-    </div>
-    {{/with}}
-  {{/if}}
+  <div id="player">
+    <div id="player-content"></div>
+    <div id="player-over"></div>
+  </div>
 </template>

@@ -51,6 +51,7 @@ App.player.vimeo.prototype = {
     this.player.api('seekTo', this.context.duration*percent/100);
   }
 , destroy: function(){
+    delete this.player;
   }
 };
 
