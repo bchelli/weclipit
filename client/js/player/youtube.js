@@ -66,7 +66,7 @@ App.player.youtube.prototype = {
   }
 , destroy: function(){
     if(this.player && this.player.stopVideo) this.player.stopVideo();
-    this.player.destroy();
+    if(this.player && this.player.destroy) this.player.destroy();
     delete this.player;
     Meteor.clearInterval(this.getPositionInterval);
   }
