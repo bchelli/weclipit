@@ -65,7 +65,7 @@ App.player.youtube.prototype = {
     this.player.seekTo(Math.floor(this.player.getDuration()*percent/100), true);
   }
 , destroy: function(){
-    this.player.stopVideo();
+    if(this.player && this.player.stopVideo) this.player.stopVideo();
     this.player.destroy();
     delete this.player;
     Meteor.clearInterval(this.getPositionInterval);
