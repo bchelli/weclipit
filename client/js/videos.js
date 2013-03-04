@@ -40,6 +40,7 @@ Template.videosTemplate.events({
     Meteor.call('removePlaylist', event.currentTarget.getAttribute('playlist'));
     $('#remove-playlist-modal').modal('hide');
     homeRouter.openHome();
+    return false;
   }
 , 'keyup #filter-share-users-list': function (event, template) {
     Template.videosTemplate.filterFriends($('#filter-share-users-list').val());
@@ -63,6 +64,7 @@ Template.videosTemplate.events({
       Meteor.call('sharePlaylist', $('#share-playlist-modal').attr('playlist'), changes);
     }
     $('#share-playlist-modal').modal('hide');
+    return false;
   }
 , 'click .friendToogle': function (event, template) {
     var index = $(event.currentTarget).attr('data-index')
@@ -102,6 +104,7 @@ Template.videosTemplate.events({
       .addClass('video-added')
       ;
     Meteor.call('addVideo', Session.get('playlist'), $el.attr('data-url'));
+    return false;
   }
 , 'submit #add-video-modal form': function (event, template) {
     Meteor.call('addVideo', Session.get('playlist'), $('#add-video-url').val(), function(){
@@ -112,6 +115,7 @@ Template.videosTemplate.events({
 , 'click #remove-video-submit': function (event, template) {
     Meteor.call('removeVideo', event.currentTarget.getAttribute('video'));
     $('#remove-video-modal').modal('hide');
+    return false;
   }
 });
 
