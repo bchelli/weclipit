@@ -11,6 +11,22 @@ Template.playerTemplate.helpers({
   }
 });
 
+var playPauseTO = null;
+Template.playerTemplate.events({
+  'dblclick #player-over': function(){
+    Meteor.clearTimeout(playPauseTO);
+    Template.playerTemplate.toogleFullscreen();
+    return false;
+  }
+, 'click #player-over': function(){
+    Meteor.clearTimeout(playPauseTO);
+    playPauseTO = Meteor.setTimeout(function(){
+      Template.playerTemplate.playerPlayPauseToogle();
+    }, 500);
+    return false;
+  }
+});
+
 function updateFullscreen(){
   if(Session.get('fullscreen')){
     var wH = $(window).height();
