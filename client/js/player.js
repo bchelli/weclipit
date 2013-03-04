@@ -142,14 +142,7 @@ Template.playerTemplate.rendered = function() {
 
   var youtube = document.getElementById('youtube-player');
   if(youtube){
-    if(!YT || !YT.Player) {
-      Meteor.setTimeout(function(){
-        Template.playerTemplate.rendered();
-      }, 100);
-      return;
-    } else {
-      player = new App.player.youtube('youtube-player', events);
-    }
+    player = new App.player.youtube('youtube-player', events);
   }
 
 

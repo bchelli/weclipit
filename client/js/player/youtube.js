@@ -26,7 +26,7 @@ App.player.youtube = function(playerId, events){
     if(events && events.progress) events.progress(that.context);
   };
 
-  this.getPositionInterval = null;
+  that.getPositionInterval = null;
 
   that.player = new YT.Player(playerId, {
     "videoId": youtube.getAttribute("providerId"),
@@ -45,7 +45,7 @@ App.player.youtube = function(playerId, events){
         refresh();
         if(newState.data==1){
           Meteor.clearInterval(this.getPositionInterval);
-          this.getPositionInterval = Meteor.setInterval(refresh, 1000);
+          that.getPositionInterval = Meteor.setInterval(refresh, 1000);
         }
         if(newState.data==0){
           if(events && events.end) events.end();
