@@ -133,10 +133,10 @@ if(Meteor.isServer){
               ;
             switch(provider){
               case 'vimeo':
-                var regExp = /http:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/;
+                var regExp = /http(s)?:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/;
                 var match = url.match(regExp);
                 if (match) {
-                  providerId = match[2];
+                  providerId = match[3];
                 }
                 break;
               case 'youtube':
