@@ -85,6 +85,9 @@ footer.navbar .navbar-inner {
   line-height:35px;
   padding:0 15px;
 }
+footer.navbar a{
+  color:#777;
+}
 #menuContainer{
   background-color: #f5f5f5;
   border-right:1px solid #ddd;
@@ -105,4 +108,14 @@ footer.navbar .navbar-inner {
   margin: 0;
   padding: 0;
   overflow: auto;
+}
+
+
+#facebook-like{
+  border: none;
+  overflow: hidden;
+  width: 250px;
+  height: 22px;
+  vertical-align: middle;
+  margin-left: 15px;
 }
