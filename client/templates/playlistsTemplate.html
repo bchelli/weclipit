@@ -17,8 +17,7 @@
   {{/each}}
     <li class="nav-header">Shared Playlists</li>
   {{#each playlists}}
-    {{#if isMine}}
-    {{else}}
+    {{#if isShared}}
     <li class="{{active}}">
       <a class="playlist" href="#" playlist="{{_id}}">
         <i class="icon-list"></i>
