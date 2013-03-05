@@ -4,13 +4,11 @@ var videos = new Meteor.Collection('videos');
 
 if(Meteor.isClient){
   Meteor.autorun(function () {
-    Meteor.subscribe('playlists');
-    Meteor.subscribe('userData');
-
     var pl = Session.get('playlist');
-    if (pl) {
-      Meteor.subscribe('videos', pl);
-    }
+
+    Meteor.subscribe('userData');
+    Meteor.subscribe('playlists', pl);
+    Meteor.subscribe('videos', pl);
   });
 }
 
@@ -75,6 +73,13 @@ if(Meteor.isServer){
             });
           }
         }
+      }
+    }
+  , followPlaylist : function(playlist){
+      var pl = playlists.findOne({_id:playlist});
+      if(pl){
+        var userId = Meteor.user().services.facebook.id;
+        playlists.update({_id:playlist}, {$addToSet: {canAccess:userId}});
       }
     }
   , removePlaylist : function(playlist){

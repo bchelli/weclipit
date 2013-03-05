@@ -23,7 +23,11 @@
     <a href="#" class="playlist-edit" playlist="{{_id}}"><i class="icon-pencil"></i> Rename this playlist</a>
     <a href="#" class="playlist-remove" playlist="{{_id}}"><i class="icon-remove"></i> Delete this playlist</a>
   {{else}}
-    <a href="#" class="playlist-remove" playlist="{{_id}}"><i class="icon-remove"></i> Unfollow this playlist</a>
+    {{#if rightTo "canAccess" playlist myUser}}
+      <a href="#" class="playlist-remove" playlist="{{_id}}"><i class="icon-remove"></i> Unfollow this playlist</a>
+    {{else}}
+      <a href="#" class="playlist-follow" playlist="{{_id}}"><i class="icon-ok"></i> Follow this playlist</a>
+    {{/if}}
   {{/if}}
   </div>
   {{/with}}

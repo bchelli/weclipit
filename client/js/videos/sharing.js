@@ -47,12 +47,16 @@ Template.videosSharingTemplate.helpers({
     return result;
   }
 });
-
 Template.videosSharingTemplate.playlist = function() {
   var pl = playlists.findOne({_id:Session.get('playlist')});
   if(pl) pl.canAccess = _.shuffle(pl.canAccess || []);
   return pl || {};
 };
+Template.videosSharingTemplate.myUser = function() {
+  var u = Meteor.users.findOne({_id:Meteor.userId()});
+  return u || {};
+};
+
 // Set Template Events
 function setNewName(){
   var newName = $('#edit-playlist-name input').val();
@@ -68,6 +72,10 @@ Template.videosSharingTemplate.events({
       })
       .modal();
     $('#remove-playlist-submit').attr('playlist', event.currentTarget.getAttribute('playlist'));
+    return false;
+  }
+, 'click .playlist-follow': function (event, template) {
+    Meteor.call('followPlaylist', event.currentTarget.getAttribute('playlist'));
     return false;
   }
 , 'click .playlist-edit': function (event, template) {

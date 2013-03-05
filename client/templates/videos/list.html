@@ -4,8 +4,11 @@
   {{#if rightTo "canAddVideo" playlist myUser}}
     <span>Add video from:</span>
     <a href="#" id="add-video-from-search"><i class="icon-plus-sign"></i> YouTube</a>
-    <a href="#" id="add-video-from-url"><i class="icon-plus-sign"></i> URL</a><br /><br />
+    <a href="#" id="add-video-from-url"><i class="icon-plus-sign"></i> URL</a>
+  {{else}}
+    <span>You cannot add video into this playlist</span>
   {{/if}}
+    <br /><br />
   </div>
   {{#if videos.count}}
     <table class="table table-condensed videos-list">
