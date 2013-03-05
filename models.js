@@ -119,7 +119,6 @@ if(Meteor.isServer){
         fiber.run();
       });
       Fiber.yield();
-      console.log(videosYoutube);
       return videosYoutube;
     }
   , addVideo : function(playlist, url){
