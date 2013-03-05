@@ -1,26 +1,59 @@
 <template name="homeTemplate">
-  <div class="page">
-    <h2>Welcome</h2>
-    <p>Welcome to 26plays the first playlist tool where you can create playlists from Youtube and Vimeo to privately share them with your friends</p>
-    <h3>Left menu</h3>
-    <p>
-      On the left menu, you can see two type of playlists:
-      <ul>
-        <li><b>My Playlists</b>: which contains all your playlists</li>
-        <li><b>Shared Playlists</b>: which contains all the playlists shared with you by your facebook friends</li>
-      </ul>
-    </p>
-    <h3>Getting Started</h3>
-    <p>In the left menu under <b>"My Playlists"</b> you can find a <b>"Create a new Playlist"</b> link, click on it to start your 26plays experience</p>
-    <p>
-      Here are some examples of playlist utilization:
-      <ul>
-        <li>Music playlist</li>
-        <li>Fun video to share</li>
-        <li>Guitar Class</li>
-        <li>Products to buy</li>
-        <li>...</li>
-      </ul>
-    </p>
+  <div class="gs">
+
+    <div class="well">
+      <h1>26playing 101</h1>
+      <h4>Here are the basics of getting started on 26plays.</h4>
+      <img src="/img/getting-started-screen.png" class="gs-splash" />
+    </div>
+
+    <div class="gs-block clearfix first">
+      <img src="/img/gs-create-playlist.jpg" class="gs-block-preview img-polaroid">
+      <h2 class="gs-block-title">
+        <i class="gs-block-icon gs-block-icon-create"></i> 
+        Create a playlist
+      </h2>
+      <div class="gs-block-content">
+        In the left menu, you can click on <b>"Create a new Playlist"</b> to create your first playlist. This playlist is only accessible by you, until you share it.<br />
+        eg: Guitar Class, Trailers 4 this WE, Rock music, . . .
+      </div>
+    </div>
+    
+    <div class="gs-block clearfix">
+      <img src="/img/gs-search-video.jpg" class="gs-block-preview img-polaroid right">
+      <h2 class="gs-block-title">
+        <i class="gs-block-icon gs-block-icon-search"></i> 
+        Search a video
+      </h2>
+      <div class="gs-block-content">
+        Once in your playlist, under the <b>"Videos"</b> section, you can click on <b>"Youtube"</b> to search videos and add them to your playlist.<br />
+        When your search is done, just click on the videos to add them to your playlist.
+      </div>
+    </div>
+    
+    <div class="gs-block clearfix">
+      <img src="/img/gs-play-video.jpg" class="gs-block-preview img-polaroid">
+      <h2 class="gs-block-title">
+        <i class="gs-block-icon gs-block-icon-play"></i> 
+        Play your playlist
+      </h2>
+      <div class="gs-block-content">
+        Once your videos added to your playlist, just click on the first and let the show begin.<br />
+        Now the video is playing, on the top of the website you can see controls appear.
+      </div>
+    </div>
+
+    <div class="gs-block clearfix">
+      <img src="/img/gs-share-playlist.jpg" class="gs-block-preview img-polaroid right">
+      <h2 class="gs-block-title">
+        <i class="gs-block-icon gs-block-icon-share"></i> 
+        Share your playlist
+      </h2>
+      <div class="gs-block-content">
+        In your playlist, under the title section click on <b>"Share this playlist"</b> to open the sharing popup.<br />
+        Select all the contacts you wants to allow to access this playlist.
+      </div>
+    </div>
+    
   </div>
 </template>
