@@ -9,6 +9,5 @@ Meteor.publish('playlists', function(playlist){
   if(user && user.services && user.services.facebook && user.services.facebook.id){
     query.$or.push({canAccess : user.services.facebook.id});
   }
-  console.log(query);
   return playlists.find(query, {sort:[['name', 'asc']]});
 });
