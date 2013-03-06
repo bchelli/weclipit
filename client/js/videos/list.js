@@ -27,7 +27,7 @@ Template.videosListTemplate.helpers({
 Template.videosListTemplate.videos = function() {
   var pl = Session.get('playlist');
   if (!pl) return {};
-  return videos.find({playlist:pl}, {sort:[['nbLikes','desc'],['data.title','asc']]});
+  return videos.find({playlist:pl}, {sort:[['nbLikes','desc'],['createdAt','asc'], ['data.title', 'asc']]});
 };
 Template.videosListTemplate.playlist = function() {
   var pl = playlists.findOne({_id:Session.get('playlist')});

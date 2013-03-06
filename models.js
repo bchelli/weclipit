@@ -17,7 +17,7 @@ if(Meteor.isServer){
   Meteor.methods({
   // PLAYER
     playNext : function(playing){
-      var v = videos.find({playlist:playing.playlist}, {sort:[['nbLikes','desc'],['data.title','asc']]}).fetch()
+      var v = videos.find({playlist:playing.playlist}, {sort:[['nbLikes','desc'],['createdAt','asc'], ['data.title', 'asc']]}).fetch()
         , videoFound = false
         , firstVideoId = ""
         ;
@@ -32,7 +32,7 @@ if(Meteor.isServer){
     }
   
   , playPrevious : function(playing){
-      var v = videos.find({playlist:playing.playlist}, {sort:[['nbLikes','desc'],['data.title','asc']]}).fetch()
+      var v = videos.find({playlist:playing.playlist}, {sort:[['nbLikes','desc'],['createdAt','asc'], ['data.title', 'asc']]}).fetch()
         , lastVideoId = v[v.length-1]._id
         ;
   
@@ -163,6 +163,7 @@ if(Meteor.isServer){
               , likes:      []
               , nbLikes:    0
               , data:       res.data
+              , createdAt:  (new Date()).getTime()
               });
             }
           }
