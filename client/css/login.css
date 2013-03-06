@@ -49,8 +49,6 @@
   #login-buttons-facebook {background-color: #0c9db7 !important;}
 
 
-hr.login{margin:50px 0;}
-
 .container.login{margin-top:20px;margin-bottom:20px;font-family: 'Quicksand', sans-serif;}
 
   a.home-point{color:#999999;text-decoration:none;}
@@ -66,5 +64,6 @@ hr.login{margin:50px 0;}
       a.home-point .home-icon.share{background-position-x:-96px;}
 
 
-.login-footer {text-align:center;margin-bottom:50px}
+.login-img-footer {text-align:center;font-family: 'Quicksand', sans-serif;background:#f5f5f5;padding-top:30px;margin-top:50px;border-top:1px solid #ccc;}
+.login-footer {text-align:center;padding:50px 0;background:#333;color:#ccc;border-top:1px solid #000;}
 
