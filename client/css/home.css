@@ -8,7 +8,7 @@
   .gs .well {padding:50px 0 0;margin-bottom:50px;text-align:center;}
     .gs-splash{margin-top:30px}
 
-.gs-block{width:700px;margin:0 auto 50px;border-top:1px solid #eee;padding-top:50px}
+.gs-block{width:700px;margin:0 auto;border-top:1px solid #eee;padding:50px 0}
 .gs-block.first{border-top:none}
   .gs-block-title{}
   .gs-block-preview{width:170px;float:left;margin-right:30px;}
@@ -18,7 +18,8 @@
   .gs-block b {font-weight:normal;color:#0c9db7;}
 
   .gs-block-icon{display:block;float:left;margin-right:10px;width:48px;height:48px;background:url(/img/getting-started-icons.png) 0 0;}
-  .gs-block-icon-create{}
-  .gs-block-icon-play{background-position-x:-48px;}
-  .gs-block-icon-share{background-position-x:-96px;}
-  .gs-block-icon-search{background-position-x:-144px;}
+  .gs-block:hover .gs-block-icon{background-position-y:-48px;}
+    .gs-block-icon-create{background-position-x:0px;}
+    .gs-block-icon-play{background-position-x:-48px;}
+    .gs-block-icon-share{background-position-x:-96px;}
+    .gs-block-icon-search{background-position-x:-144px;}
