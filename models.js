@@ -127,6 +127,18 @@ if(Meteor.isServer){
       return videosYoutube;
     }
   , addVideo : function(playlist, url){
+      var userId = Meteor.userId()
+        , fbId = Meteor.user().services.facebook.id
+        , grantRight = false
+        , pl = playlists.findOne({_id:playlist})
+        ;
+
+      if(pl.owner === userId) grantRight = true;
+
+      if(!grantRight && _.contains(pl.canAddVideo, fbId)) grantRight = true;
+
+      if(!grantRight) return;
+
       var fiber = Fiber.current;
       Meteor.http.get(
         "http://api.embed.ly/1/oembed?key=41f79dded6d843f68d00896d0fc1500d&url="+encodeURIComponent(url)
@@ -196,7 +208,22 @@ if(Meteor.isServer){
       }
     }
   , removeVideo : function(video){
-      videos.remove({_id:video});
+      var vid = videos.findOne({_id:video});
+      if(vid){
+        var userId = Meteor.userId()
+          , fbId = Meteor.user().services.facebook.id
+          , grantRight = false
+          ;
+
+        if(vid.owner === userId) grantRight = true;
+
+        if(!grantRight){
+          var pl = playlists.findOne({_id:vid.playlist});
+          if(_.contains(pl.canRemoveVideo, fbId)) grantRight = true;
+        }
+
+        if(grantRight) videos.remove({_id:video});
+      }
     }
   , getUsers : function(){
       /// SECURITY WHOLE

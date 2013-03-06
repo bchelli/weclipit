@@ -29,11 +29,11 @@
             </div>
           </td>
           <td class="videos-playing">
-            <a href="#" class="remove-video" video="{{_id}}">
             {{#if rightTo "canRemoveVideo" playlist myUser owner}}
-            <i class="icon-remove"></i>
-            {{/if}}
+            <a href="#" class="remove-video" video="{{_id}}">
+              <i class="icon-remove"></i>
             </a>
+            {{/if}}
           </td>
         </tr>
       {{/each}}
