@@ -119,3 +119,18 @@ footer.navbar a{
   vertical-align: middle;
   margin-left: 15px;
 }
+
+.ue-tab-container{
+  bottom:5px !important;
+  right:5px !important;
+}
+  .ue-tab-container .ue-bottom {
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: 0 0 !important;
+  }
+  .ue-tab-container .ue-bottom:hover {
+    padding-bottom: 0 !important;
+    background: #075f6f !important;
+  }
+
