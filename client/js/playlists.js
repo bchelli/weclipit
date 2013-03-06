@@ -7,7 +7,7 @@
 
 // Set Template Variables
 Template.playlistsTemplate.playlists = function() {
-  return playlists.find();
+  return playlists.find({}, {sort:[['name', 'asc']]});
 };
 
 // Set Template Helpers
