@@ -97,20 +97,17 @@ if(Meteor.isServer){
               , canAddVideo:    userId
               }
             });
-            console.error('https://graph.facebook.com/'+u.services.facebook.id+'/twentysixplays:share',{
-              params:{
-                'access_token':u.services.facebook.accessToken
-              , 'video_playlist':Meteor.absoluteUrl('playlist/'+playlist)
+            Meteor.facebook.api(
+              '/'+u.services.facebook.id+'/twentysixplays:share'
+            , 'POST'
+            , {
+                'video_playlist':Meteor.absoluteUrl('playlist/'+playlist)
               , 'profile':userId
               }
-            });
-            Meteor.http.post('https://graph.facebook.com/'+u.services.facebook.id+'/twentysixplays:share',{
-              params:{
-                'access_token':u.services.facebook.accessToken
-              , 'video_playlist':Meteor.absoluteUrl('playlist/'+playlist)
-              , 'profile':userId
+            , function(){
+                console.log(arguments);
               }
-            });
+            );
           } else {
             playlists.update({_id:playlist}, {
               $pull: {

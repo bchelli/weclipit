@@ -1,5 +1,7 @@
 if(Meteor.isServer) {
   (function () {
+    var querystring = __meteor_bootstrap__.require('querystring');
+
     if (!Meteor.facebook) {	 
       Meteor.facebook = {};
     }
@@ -15,6 +17,58 @@ if(Meteor.isServer) {
         Meteor.facebook._options[i].push(options[i]);
       }
     };
+
+    Meteor.facebook.accessToken = function(){
+      var config = Accounts.loginServiceConfiguration.findOne({service: 'facebook'});
+
+      if (!config) throw new Accounts.ConfigError("Service not configured");
+
+      // Request an access token
+      var result = Meteor.http.get(
+        "https://graph.facebook.com/oauth/access_token", {
+          params: {
+            client_id: config.appId,
+            client_secret: config.secret,
+            grant_type:'client_credentials'
+          }
+        }
+      );
+
+      if (result.error) throw result.error;
+
+      var response = result.content;
+  
+      // Errors come back as JSON but success looks like a query encoded in a url
+      var error_response;
+      try {
+        // Just try to parse so that we know if we failed or not,
+        // while storing the parsed results
+        error_response = JSON.parse(response);
+      } catch (e) {
+        error_response = null;
+      }
+  
+      if (error_response) throw new Meteor.Error(500, "Error trying to get access token from Facebook", error_response);
+      else {
+        // Success!  Extract the facebook access token and expiration
+        // time from the response
+        var parsedResponse = querystring.parse(response);
+        var fbAccessToken = parsedResponse.access_token;
+        var fbExpires = parsedResponse.expires;
+  
+        if (!fbAccessToken) throw new Meteor.Error(500, "Couldn't find access token in HTTP response.");
+        return {
+          accessToken: fbAccessToken,
+          expiresIn: fbExpires
+        };
+      }
+
+    }
+
+    Meteor.facebook.api = function(action, method, params, callback){
+      params.access_token = Meteor.facebook.accessToken().accessToken;
+      Meteor.http.call(method.toUpperCase(), 'https://graph.facebook.com'+action,{params:params}, callback);
+    }
 
     __meteor_bootstrap__.app.use(function(req, res, next) {
 

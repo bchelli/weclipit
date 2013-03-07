@@ -1,4 +1,9 @@
 
+Accounts.ui.config({
+  requestPermissions: {
+    facebook: ['publish_actions']
+  }
+});
 
 Template.loginTemplate.rendered = function(){
   var $bg = $('#login-background')
