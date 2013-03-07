@@ -7,6 +7,24 @@ if(Meteor.isServer){
     }
   });
 
+  // Website
+  Meteor.facebook.use({
+    openGraphTags:function(req){
+      var url = __meteor_bootstrap__.require('url'); 
+      var parts = url.parse(req.url).pathname.split('/');
+      var absoluteUrl = Meteor.absoluteUrl(req.url.substr(0,1)=='/' ? req.url.substr(1) : req.url);
+      if(parts.length == 2 && parts[1] === ''){
+        return {
+          'og:type':'website'
+        , 'og:url':Meteor.absoluteUrl()
+        , 'og:title':'26 Plays'
+        , 'og:image':Meteor.absoluteUrl('img/logo.png')
+        , 'og:description':'Keep, play and share your videos with your friends'
+        };
+      }
+    }
+  });
+
   // playlist
   Meteor.facebook.use({
     openGraphTags:function(req){
