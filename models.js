@@ -14,6 +14,16 @@ if(Meteor.isClient){
 
 if(Meteor.isServer){
 
+  function publicUserInfo(user){
+    var result = {};
+    result._id = user._id;
+    result.profile = user.profile;
+    result.services = {};
+    result.services.facebook = {};
+    result.services.facebook.id = user.services.facebook.id;
+    return result;
+  }
+
   Meteor.methods({
   // PLAYER
     playNext : function(playing){
@@ -100,7 +110,9 @@ if(Meteor.isServer){
       }
     }
   , createPlaylist : function(name){
-      var userId = Meteor.userId();
+      var userId = Meteor.userId()
+        , user = publicUserInfo(Meteor.user())
+        ;
       if(userId){
         playlists.insert({
           name:           name
@@ -108,6 +120,7 @@ if(Meteor.isServer){
         , canAccess:      []
         , canAddVideo:    []
         , canRemoveVideo: []
+        , ownerData:      user
         });
       }
     }
@@ -128,7 +141,8 @@ if(Meteor.isServer){
     }
   , addVideo : function(playlist, url){
       var userId = Meteor.userId()
-        , fbId = Meteor.user().services.facebook.id
+        , user = publicUserInfo(Meteor.user())
+        , fbId = user.services.facebook.id
         , grantRight = false
         , pl = playlists.findOne({_id:playlist})
         ;
@@ -176,6 +190,7 @@ if(Meteor.isServer){
               , nbLikes:    0
               , data:       res.data
               , createdAt:  (new Date()).getTime()
+              , ownerData:      user
               });
             }
           }
