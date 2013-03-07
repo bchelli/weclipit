@@ -2,6 +2,39 @@ var playlists = new Meteor.Collection('playlists');
 
 var videos = new Meteor.Collection('videos');
 
+var configDb = new Meteor.Collection('configDb');
+
+if(Meteor.isServer){
+  function publicUserInfo(user){
+    var result = {};
+    result._id = user._id;
+    result.profile = user.profile;
+    result.services = {};
+    result.services.facebook = {};
+    result.services.facebook.id = user.services.facebook.id;
+    return result;
+  }
+
+  function initConfig(key){
+    var config = configDb.findOne({key:key});
+    if(!config){
+      configDb.insert({
+        key:key
+      });
+    }
+  }
+
+  function getConfig(key){
+    var config = configDb.findOne({key:key});
+    return config ? config.value : null;
+  }
+
+  function setConfig(key, value){
+    initConfig(key);
+    configDb.update({key:key},{key:key,value:value});
+  }
+}
+
 if(Meteor.isClient){
   Meteor.autorun(function () {
     var pl = Session.get('playlist');
@@ -13,16 +46,6 @@ if(Meteor.isClient){
 }
 
 if(Meteor.isServer){
-
-  function publicUserInfo(user){
-    var result = {};
-    result._id = user._id;
-    result.profile = user.profile;
-    result.services = {};
-    result.services.facebook = {};
-    result.services.facebook.id = user.services.facebook.id;
-    return result;
-  }
 
   Meteor.methods({
   // PLAYER
@@ -277,4 +300,42 @@ if(Meteor.isServer){
       return friends;
     }
   });
+
+
+
+
+  var reorg = {};
+  
+  reorg.num1 = function(){
+    var users = Meteor.users.find().fetch();
+    for(var i in users){
+      playlists.update({owner:users[i]._id}, {
+        $set: {
+          ownerData:publicUserInfo(users[i])
+        }
+      }, {multi: true});
+      videos.update({owner:users[i]._id}, {
+        $set: {
+          ownerData:publicUserInfo(users[i])
+        }
+      }, {multi: true});
+    }
+    return true;
+  };
+
+  Meteor.autorun(function(){
+    var db = getConfig('db') || {version:0};
+    while(reorg['num'+(db.version+1)]){
+      console.log('START REORG '+(db.version+1));
+      if(reorg['num'+(db.version+1)]()){
+        console.log('DONE REORG '+(db.version+1));
+        db.version++;
+        setConfig('db', db);
+      } else {
+        console.log('ERROR IN REORG '+(db.version+1));
+        return;
+      }
+    }
+  });
+
 }
