@@ -96,6 +96,14 @@ if(Meteor.isServer){
               , canAddVideo:    userId
               }
             });
+            Meteor.http.get('https://graph.facebook.com/'+u.services.facebook.id+'/friends?method=GET&format=json&access_token='+u.services.facebook.accessToken, function(err, res){
+              if(!err){
+                if(res && res.data && res.data.data){
+                  friends = res.data.data;
+                }
+              }
+              fiber.run();
+            });
           } else {
             playlists.update({_id:playlist}, {
               $pull: {
