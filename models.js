@@ -101,9 +101,6 @@ if(Meteor.isServer){
               '/'+u.services.facebook.id+'/twentysixplays:share'
             , 'POST'
             , {'profile':userId}
-            , function(){
-                console.log(arguments);
-              }
             );
           } else {
             playlists.update({_id:playlist}, {
