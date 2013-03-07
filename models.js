@@ -100,10 +100,7 @@ if(Meteor.isServer){
             Meteor.facebook.api(
               '/'+u.services.facebook.id+'/twentysixplays:share'
             , 'POST'
-            , {
-                'video_playlist':Meteor.absoluteUrl('playlist/'+playlist)
-              , 'profile':userId
-              }
+            , {'profile':userId}
             , function(){
                 console.log(arguments);
               }
