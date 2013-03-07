@@ -18,8 +18,11 @@
   .gs-block b {font-weight:normal;color:#0c9db7;}
 
   .gs-block-icon{display:block;float:left;margin-right:10px;width:48px;height:48px;background:url(/img/getting-started-icons.png) 0 0;}
-  .gs-block:hover .gs-block-icon{background-position-y:-48px;}
-    .gs-block-icon-create{background-position-x:0px;}
-    .gs-block-icon-play{background-position-x:-48px;}
-    .gs-block-icon-share{background-position-x:-96px;}
-    .gs-block-icon-search{background-position-x:-144px;}
+    .gs-block-icon-create{background-position:0 0;}
+      .gs-block:hover .gs-block-icon-create{background-position:0 -48px;}
+    .gs-block-icon-play{background-position:-48px 0;}
+      .gs-block:hover .gs-block-icon-play{background-position:-48px -48px;}
+    .gs-block-icon-share{background-position:-96px 0;}
+      .gs-block:hover .gs-block-icon-share{background-position:-96px -48px;}
+    .gs-block-icon-search{background-position:-144px 0;}
+      .gs-block:hover .gs-block-icon-search{background-position:-144px -48px;}

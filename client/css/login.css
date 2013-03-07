@@ -58,10 +58,12 @@
     a.home-point img{margin:30px auto 0;display:block}
   
     a.home-point .home-icon{display:block;float:left;margin-right:10px;width:48px;height:48px;background:url(/img/home-icons.png) 0 0;}
-    a.home-point:hover .home-icon{background-position-y:-48px;}
-      a.home-point .home-icon.keep{background-position-x:0px;}
-      a.home-point .home-icon.play{background-position-x:-48px;}
-      a.home-point .home-icon.share{background-position-x:-96px;}
+      a.home-point .home-icon.keep{background-position:0 0;}
+        a.home-point:hover .home-icon.keep{background-position:0 -48px;}
+      a.home-point .home-icon.play{background-position:-48px 0;}
+        a.home-point:hover .home-icon.play{background-position:-48px -48px;}
+      a.home-point .home-icon.share{background-position:-96px 0;}
+        a.home-point:hover .home-icon.share{background-position:-96px -48px;}
 
 
 .login-img-footer {text-align:center;font-family: 'Quicksand', sans-serif;background:#f5f5f5;padding-top:30px;margin-top:50px;border-top:1px solid #ccc;color:#999;}
