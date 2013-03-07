@@ -87,6 +87,7 @@ if(Meteor.isServer){
   , sharePlaylist : function(playlist, users){
       var pl = playlists.findOne({owner:Meteor.userId(),_id:playlist});
       if(pl){
+        var u = Meteor.user();
         for(var i in users){
           var userId = users[i].id;
           if(users[i].status){
