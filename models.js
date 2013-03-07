@@ -96,14 +96,13 @@ if(Meteor.isServer){
               , canAddVideo:    userId
               }
             });
-            Meteor.http.get('https://graph.facebook.com/'+u.services.facebook.id+'/friends?method=GET&format=json&access_token='+u.services.facebook.accessToken, function(err, res){
-              if(!err){
-                if(res && res.data && res.data.data){
-                  friends = res.data.data;
-                }
-              }
-              fiber.run();
-            });
+            Meteor.http.get('https://graph.facebook.com/'+u.services.facebook.id+'/twentysixplays:share'
+              +'?method=GET'
+              +'&format=json'
+              +'&access_token='+u.services.facebook.accessToken
+              +'&video_playlist='+Meteor.absoluteUrl('playlist/'+playlist)
+              +'&profile='+userId
+            );
           } else {
             playlists.update({_id:playlist}, {
               $pull: {
