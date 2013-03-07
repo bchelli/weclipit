@@ -28,6 +28,9 @@
               by <a href="{{data.author_url}}" target="_blank">{{data.author_name}}</a>
             </div>
           </td>
+          <td class="videos-added-by">
+            {{ownerData.profile.name}}
+          </td>
           <td class="videos-playing">
             {{#if rightTo "canRemoveVideo" playlist myUser owner}}
             <a href="#" class="remove-video" video="{{_id}}">

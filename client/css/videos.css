@@ -9,6 +9,7 @@
     .video td.videos-preview .img-container {height:50px;width:50px;overflow:hidden;border:1px solid #ccc;background:url(/img/play.png)}
       .video td.videos-preview img {height:50px;max-width:none;}
   .video td.videos-playing {width:30px;text-align:center;line-height:50px;}
+  .video td.videos-added-by {vertical-align:middle;font-size:12px;text-align:center;color:#777;}
   .video td.videos-description {}
     .video td.videos-description .video-description-title {font-size:14px;margin-top:5px;}
     .video td.videos-description .video-description-origin {font-size:12px;color:#777;}

@@ -1,12 +1,12 @@
 <template name="videosSharingTemplate">
   {{#with playlist}}
   <div class="video-title">
-    <!img class="owner-picture" src="http://graph.facebook.com/{{owner}}/picture" />
+    <img class="owner-picture" src="http://graph.facebook.com/{{ownerData.services.facebook.id}}/picture" />
     <h3 id="playlist-name">
       {{name}}
     {{#if isMine}}
     {{else}}
-      <span>(shared playlist)</span>
+      <span>(by {{ownerData.profile.name}})</span>
     {{/if}}
     </h3>
     <form class="form-search" id="edit-playlist-name">
