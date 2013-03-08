@@ -200,10 +200,16 @@ if(Meteor.isServer){
                 }
                 break;
               case 'youtube':
-                var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
-                var match = url.match(regExp);
-                if (match && match[7].length===11){
-                  providerId = match[7];
+                var urlParsed = __meteor_bootstrap__.require('url').parse(url);
+                var query = __meteor_bootstrap__.require('querystring').parse(urlParsed.query || '');
+                if(query.v){
+                  providerId = query.v;
+                } else {
+                  var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+                  var match = url.match(regExp);
+                  if (match && match[7].length===11){
+                    providerId = match[7];
+                  }
                 }
                 break;
             }
