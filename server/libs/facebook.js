@@ -73,7 +73,7 @@ if(Meteor.isServer) {
     __meteor_bootstrap__.app.use(function(req, res, next) {
 
       // IS ACTUALLY FACEBOOK
-      if (req.headers['user-agent'].indexOf('facebookexternalhit') !== -1) {
+      if (true || req.headers['user-agent'].indexOf('facebookexternalhit') !== -1) {
 
         res.writeHead(200, {'Content-Type': 'text/html'});
 
@@ -86,7 +86,7 @@ if(Meteor.isServer) {
               var head = Meteor.facebook._options.openGraphTags[ogt](req);
               if (head) {
                 for(var i in head){
-                  res.write('<meta property="'+i+'" content="'+head[i]+'" />');
+                  res.write('<meta property="'+head[i].property+'" content="'+head[i].content+'" />');
                 }
               }
             }
