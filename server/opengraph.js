@@ -1,5 +1,17 @@
 if(Meteor.isServer){
 
+  function getFacebookVideoUrl(video){
+    switch(video.provider){
+      case 'youtube':
+        return 'http://www.youtube.com/v/'+video.providerId+'?version=3&amp;autohide=1';
+        break;
+      case 'vimeo':
+        return 'http://vimeo.com/moogaloop.swf?clip_id='+video.providerId;
+        break;
+    }
+    return false;
+  }
+
   // Set Facebook APP ID
   Meteor.facebook.use({
     openGraphTags:function(req){
@@ -48,7 +60,7 @@ if(Meteor.isServer){
           for(var i in videoList){
             result.push({
               "property":"og:video"
-            , "content":videoList[i].url
+            , "content":getFacebookVideoUrl(videoList[i])
             });
           }
         }
@@ -74,7 +86,7 @@ if(Meteor.isServer){
           , {"property":'og:url',         "content":absoluteUrl}
           , {"property":'og:title',       "content":video.data.title}
           , {"property":'og:image',       "content":video.data.thumbnail_url}
-          , {"property":'og:video',       "content":video.url}
+          , {"property":'og:video',       "content":getFacebookVideoUrl(video)}
           , {"property":'og:description', "content":video.data.description}
           ];
         }
