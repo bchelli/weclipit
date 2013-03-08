@@ -36,18 +36,21 @@ if(Meteor.isServer){
           , playlist = playlists.findOne({_id:playlistId})
           , videoList = videos.find({playlist:playlistId}).fetch()
           ;
-        var result = [
-          {"property":'og:type',        "content":'twentysixplays:video_playlist'}
-        , {"property":'og:url',         "content":absoluteUrl}
-        , {"property":'og:title',       "content":playlist.name}
-        , {"property":'og:image',       "content":Meteor.absoluteUrl('img/logo.png')}
-        , {"property":'og:description', "content":playlist.name+' by '+playlist.ownerData.profile.name}
-        ];
-        for(var i in videoList){
-          result.push({
-            "property":"og:video"
-          , "content":videoList[i].url
-          });
+        var result = [];
+        if(playlist){
+          result.push({"property":'og:type',        "content":'twentysixplays:video_playlist'});
+          result.push({"property":'og:url',         "content":absoluteUrl});
+          result.push({"property":'og:title',       "content":playlist.name});
+          result.push({"property":'og:image',       "content":Meteor.absoluteUrl('img/logo.png')});
+          result.push({"property":'og:description', "content":playlist.name+' by '+playlist.ownerData.profile.name});
+        }
+        if(videoList){
+          for(var i in videoList){
+            result.push({
+              "property":"og:video"
+            , "content":videoList[i].url
+            });
+          }
         }
         return result;
       }
@@ -64,14 +67,17 @@ if(Meteor.isServer){
         var videoId = parts[4]
           , video = videos.findOne({video:videoId})
           ;
-        return [
-          {"property":'og:type',        "content":'video.other'}
-        , {"property":'og:url',         "content":absoluteUrl}
-        , {"property":'og:title',       "content":video.data.title}
-        , {"property":'og:image',       "content":video.data.thumbnail_url}
-        , {"property":'og:video',       "content":video.url}
-        , {"property":'og:description', "content":video.data.description}
-        ];
+        if(video){
+          return [
+            {"property":'og:type',        "content":'video.other'}
+          , {"property":'og:url',         "content":absoluteUrl}
+          , {"property":'og:title',       "content":video.data.title}
+          , {"property":'og:image',       "content":video.data.thumbnail_url}
+          , {"property":'og:video',       "content":video.url}
+          , {"property":'og:description', "content":video.data.description}
+          ];
+        }
+        return [];
       }
     }
   });
