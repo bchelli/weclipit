@@ -18,7 +18,9 @@ if(Meteor.isServer) {
 
     __meteor_bootstrap__.app.use(function(req, res, next) {
 
-      // IS ACTUALLY FACEBOOK
+      // IS ACTUALLY TWITTER
+      console.error(req.headers['user-agent']);
+      //if (req.headers['user-agent'].toLowerCase().indexOf('twitterbot') !== -1) {
       if (req.headers['user-agent'] === 'Twitterbot') {
 
         res.writeHead(200, {'Content-Type': 'text/html'});
