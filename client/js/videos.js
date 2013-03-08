@@ -87,6 +87,7 @@ Template.videosTemplate.events({
                 + '  <td class="videos-preview"><div class="img-container"><img src="'+videosYoutube[i].media$group.media$thumbnail[0].url+'" /></div></td>'
                 + '  <td class="videos-description">'
                 + '    <div class="video-description-title">'+videosYoutube[i].title.$t+'</div>'
+                + '    <div class="video-description-origin">'+formatTime(videosYoutube[i].media$group.yt$duration.seconds)+'</div>'
                 + '  </td>'
                 + '</tr>'
                 ;
