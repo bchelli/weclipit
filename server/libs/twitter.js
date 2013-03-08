@@ -19,9 +19,7 @@ if(Meteor.isServer) {
     __meteor_bootstrap__.app.use(function(req, res, next) {
 
       // IS ACTUALLY TWITTER
-      console.error(req.headers['user-agent']);
-      //if (req.headers['user-agent'].toLowerCase().indexOf('twitterbot') !== -1) {
-      if (req.headers['user-agent'] === 'Twitterbot') {
+      if (req.headers['user-agent'].indexOf('Twitterbot') !== -1) {
 
         res.writeHead(200, {'Content-Type': 'text/html'});
 
