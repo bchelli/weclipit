@@ -65,8 +65,9 @@ if(Meteor.isServer){
       var absoluteUrl = Meteor.absoluteUrl(req.url.substr(0,1)=='/' ? req.url.substr(1) : req.url);
       if(parts.length == 5 && parts[1] === 'playlist' && parts[3] === 'video'){
         var videoId = parts[4]
-          , video = videos.findOne({video:videoId})
+          , video = videos.findOne({_id:videoId})
           ;
+        console.log(video);
         if(video){
           return [
             {"property":'og:type',        "content":'video.other'}
