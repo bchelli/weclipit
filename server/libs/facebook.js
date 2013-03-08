@@ -73,7 +73,7 @@ if(Meteor.isServer) {
     __meteor_bootstrap__.app.use(function(req, res, next) {
 
       // IS ACTUALLY FACEBOOK
-      if (true || req.headers['user-agent'].indexOf('facebookexternalhit') !== -1) {
+      if (req.headers['user-agent'].indexOf('facebookexternalhit') !== -1) {
 
         res.writeHead(200, {'Content-Type': 'text/html'});
 
