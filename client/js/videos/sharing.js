@@ -26,6 +26,8 @@
   Template.videosSharingTemplate.rendered = function() {
     $window.bind('resize', onResize);
     resizeWindow();
+    addthis.toolbox('.addthis_toolbox');
+    addthis.counter('.addthis_counter');
   };
   
   Template.videosSharingTemplate.destroyed = function() {
@@ -51,6 +53,13 @@ Template.videosSharingTemplate.playlist = function() {
   var pl = playlists.findOne({_id:Session.get('playlist')});
   if(pl) pl.canAccess = _.shuffle(pl.canAccess || []);
   return pl || {};
+};
+Template.videosSharingTemplate.playlistUrl = function() {
+  var pl = playlists.findOne({_id:Session.get('playlist')})
+    , url = ''
+    ;
+  if(pl && pl._id) url = Meteor.absoluteUrl('playlist/'+pl._id);
+  return url;
 };
 Template.videosSharingTemplate.myUser = function() {
   var u = Meteor.users.findOne({_id:Meteor.userId()});

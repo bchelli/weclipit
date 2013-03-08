@@ -1,5 +1,14 @@
 <template name="videosSharingTemplate">
   {{#with playlist}}
+  <!-- AddThis Button BEGIN -->
+  <div class="addthis_toolbox addthis_default_style addthis_32x32_style" addthis:url="{{playlistUrl}}" addthis:title="{{name}}">
+    <a class="addthis_button addthis_button_facebook"></a>
+    <a class="addthis_button addthis_button_twitter"></a>
+    <a class="addthis_button addthis_button_email"></a>
+    <a class="addthis_button addthis_button_compact"></a>
+    <a class="addthis_counter addthis_bubble_style"></a>
+  </div>
+  <!-- AddThis Button END -->
   <div class="video-title">
     <img class="owner-picture" src="http://graph.facebook.com/{{ownerData.services.facebook.id}}/picture" />
     <h3 id="playlist-name">
