@@ -33,7 +33,7 @@ if(Meteor.isServer) {
                 var head = Meteor.twitter._options.openGraphTags[ogt](req);
                 if (head) {
                   for(var i in head){
-                    res.write('<meta property="'+head[i].property+'" content="'+head[i].content+'" />');
+                    res.write('<meta property="'+_.escape(head[i].property)+'" content="'+_.escape(head[i].content)+'" />');
                   }
                 }
               }
