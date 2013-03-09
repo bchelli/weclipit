@@ -72,33 +72,36 @@ if(Meteor.isServer) {
 
     __meteor_bootstrap__.app.use(function(req, res, next) {
 
-      // IS ACTUALLY FACEBOOK
-      if (req.headers['user-agent'].indexOf('facebookexternalhit') !== -1) {
-
-        res.writeHead(200, {'Content-Type': 'text/html'});
-
-        Fiber(function () {
-
-          // GENERATE OPEN GRAPH TAGS
-          if (Meteor.facebook._options.openGraphTags) {
-            res.write('<head>');
-            for(var ogt in Meteor.facebook._options.openGraphTags){
-              var head = Meteor.facebook._options.openGraphTags[ogt](req);
-              if (head) {
-                for(var i in head){
-                  res.write('<meta property="'+head[i].property+'" content="'+head[i].content+'" />');
+      try {
+        // IS ACTUALLY FACEBOOK
+        if (req.headers['user-agent'].indexOf('facebookexternalhit') !== -1) {
+  
+          res.writeHead(200, {'Content-Type': 'text/html'});
+  
+          Fiber(function () {
+  
+            // GENERATE OPEN GRAPH TAGS
+            if (Meteor.facebook._options.openGraphTags) {
+              res.write('<head>');
+              for(var ogt in Meteor.facebook._options.openGraphTags){
+                var head = Meteor.facebook._options.openGraphTags[ogt](req);
+                if (head) {
+                  for(var i in head){
+                    res.write('<meta property="'+head[i].property+'" content="'+head[i].content+'" />');
+                  }
                 }
               }
+              res.write('</head>');
             }
-            res.write('</head>');
-          }
-
-          res.end();
-
-        }).run();
-
-      } else {
-        next();   
+  
+            res.end();
+  
+          }).run();
+        } else {
+          next();   
+        }
+      } catch (e) {
+        next();
       }
     });
   })();
