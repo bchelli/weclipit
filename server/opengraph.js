@@ -129,7 +129,6 @@ if(Meteor.isServer){
   function isVideo(req){
     var url = __meteor_bootstrap__.require('url'); 
     var parts = url.parse(req.url).pathname.split('/');
-    var absoluteUrl = Meteor.absoluteUrl(req.url.substr(0,1)=='/' ? req.url.substr(1) : req.url);
     if(parts.length == 5 && parts[1] === 'playlist' && parts[3] === 'video'){
       return parts[4];
     }
@@ -140,7 +139,7 @@ if(Meteor.isServer){
       var videoId = isVideo(req);
       if(videoId){
         var video = videos.findOne({_id:videoId});
-        console.log(video);
+        var absoluteUrl = Meteor.absoluteUrl(req.url.substr(0,1)=='/' ? req.url.substr(1) : req.url);
         if(video){
           return [
             {"property":'twitter:type',        "content":'player'}
@@ -161,7 +160,7 @@ if(Meteor.isServer){
       var videoId = isVideo(req);
       if(videoId){
         var video = videos.findOne({_id:videoId});
-        console.log(video);
+        var absoluteUrl = Meteor.absoluteUrl(req.url.substr(0,1)=='/' ? req.url.substr(1) : req.url);
         if(video){
           return [
             {"property":'og:type',        "content":'video.other'}
