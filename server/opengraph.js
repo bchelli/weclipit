@@ -86,7 +86,7 @@ if(Meteor.isServer){
           ;
         if(playlist){
           return [
-            {"property":'twitter:type',        "content":'summary'}
+            {"property":'twitter:card',        "content":'summary'}
           , {"property":'twitter:site',        "content":"@26plays"}
           , {"property":'twitter:url',         "content":absoluteUrl}
           , {"property":'twitter:title',       "content":playlist.name}
@@ -142,12 +142,15 @@ if(Meteor.isServer){
         var absoluteUrl = Meteor.absoluteUrl(req.url.substr(0,1)=='/' ? req.url.substr(1) : req.url);
         if(video){
           return [
-            {"property":'twitter:type',        "content":'player'}
-          , {"property":'twitter:site',        "content":"@26plays"}
-          , {"property":'twitter:url',         "content":absoluteUrl}
-          , {"property":'twitter:title',       "content":video.data.title}
-          , {"property":'twitter:player',      "content":getTwitterVideoUrl(video)}
-          , {"property":'twitter:description', "content":video.data.description}
+            {"property":'twitter:card',         "content":'player'}
+          , {"property":'twitter:site',         "content":"@26plays"}
+          , {"property":'twitter:url',          "content":absoluteUrl}
+          , {"property":'twitter:title',        "content":video.data.title}
+          , {"property":'twitter:image',        "content":video.data.thumbnail_url}
+          , {"property":'twitter:player',       "content":getTwitterVideoUrl(video)}
+          , {"property":'twitter:player:width', "content":video.data.width}
+          , {"property":'twitter:player:height',"content":video.data.height}
+          , {"property":'twitter:description',  "content":video.data.description}
           ];
         }
       }
@@ -162,7 +165,7 @@ if(Meteor.isServer){
         var absoluteUrl = Meteor.absoluteUrl(req.url.substr(0,1)=='/' ? req.url.substr(1) : req.url);
         if(video){
           return [
-            {"property":'og:type',        "content":'video.other'}
+            {"property":'og:type',        "content":'video'}
           , {"property":'og:url',         "content":absoluteUrl}
           , {"property":'og:title',       "content":video.data.title}
           , {"property":'og:image',       "content":video.data.thumbnail_url}
