@@ -146,7 +146,6 @@ if(Meteor.isServer){
           , {"property":'twitter:site',        "content":"@26plays"}
           , {"property":'twitter:url',         "content":absoluteUrl}
           , {"property":'twitter:title',       "content":video.data.title}
-          , {"property":'twitter:image',       "content":video.data.thumbnail_url}
           , {"property":'twitter:player',      "content":getTwitterVideoUrl(video)}
           , {"property":'twitter:description', "content":video.data.description}
           ];
