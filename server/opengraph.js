@@ -46,7 +46,7 @@ if(Meteor.isServer){
         , {"property":'twitter:site',         "content":"@26plays"}
         , {"property":'twitter:url',          "content":Meteor.absoluteUrl()}
         , {"property":'twitter:title',        "content":'26 Plays'}
-        , {"property":'twitter:image',        "content":Meteor.absoluteUrl('img/logo.png')}
+        , {"property":'twitter:image',        "content":Meteor.absoluteUrl('img/playlist-og.jpg')}
         , {"property":'twitter:description',  "content":'Keep, play and share your videos with your friends'}
         ];
       }
@@ -60,7 +60,7 @@ if(Meteor.isServer){
           {"property":'og:type',        "content":'website'}
         , {"property":'og:url',         "content":Meteor.absoluteUrl()}
         , {"property":'og:title',       "content":'26 Plays'}
-        , {"property":'og:image',       "content":Meteor.absoluteUrl('img/logo.png')}
+        , {"property":'og:image',       "content":Meteor.absoluteUrl('img/playlist-og.jpg')}
         , {"property":'og:description', "content":'Keep, play and share your videos with your friends'}
         ];
       }
@@ -90,7 +90,7 @@ if(Meteor.isServer){
           , {"property":'twitter:site',        "content":"@26plays"}
           , {"property":'twitter:url',         "content":absoluteUrl}
           , {"property":'twitter:title',       "content":playlist.name}
-          , {"property":'twitter:image',       "content":Meteor.absoluteUrl('img/logo.png')}
+          , {"property":'twitter:image',       "content":Meteor.absoluteUrl('img/playlist-og.jpg')}
           , {"property":'twitter:description', "content":playlist.name+' by '+playlist.ownerData.profile.name}
           ];
         }
@@ -111,7 +111,7 @@ if(Meteor.isServer){
           result.push({"property":'og:type',        "content":'twentysixplays:video_playlist'});
           result.push({"property":'og:url',         "content":absoluteUrl});
           result.push({"property":'og:title',       "content":playlist.name});
-          result.push({"property":'og:image',       "content":Meteor.absoluteUrl('img/logo.png')});
+          result.push({"property":'og:image',       "content":Meteor.absoluteUrl('img/playlist-og.jpg')});
           result.push({"property":'og:description', "content":playlist.name+' by '+playlist.ownerData.profile.name});
         }
         if(videoList){
