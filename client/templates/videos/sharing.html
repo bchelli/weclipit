@@ -33,9 +33,9 @@
     <a href="#" class="playlist-remove" playlist="{{_id}}"><i class="icon-remove"></i> Delete this playlist</a>
   {{else}}
     {{#if rightTo "canAccess" playlist myUser}}
-      <a href="#" class="playlist-remove" playlist="{{_id}}"><i class="icon-remove"></i> Unfollow this playlist</a>
+      <a href="#" class="playlist-remove" playlist="{{_id}}"><i class="icon-remove"></i> Remove from my shared playlist</a>
     {{else}}
-      <a href="#" class="playlist-follow" playlist="{{_id}}"><i class="icon-ok"></i> Follow this playlist</a>
+      <a href="#" class="playlist-follow" playlist="{{_id}}"><i class="icon-ok"></i> Add to my shared playlist</a>
     {{/if}}
   {{/if}}
   </div>
