@@ -1,6 +1,8 @@
 if(Meteor.isServer) {
   (function () {
-    var querystring = __meteor_bootstrap__.require('querystring');
+    var querystring = __meteor_bootstrap__.require('querystring')
+      , useragent = __meteor_bootstrap__.require('useragent')
+      ;
 
     if (!Meteor.facebook) {	 
       Meteor.facebook = {};
@@ -74,7 +76,8 @@ if(Meteor.isServer) {
 
       try {
         // IS ACTUALLY FACEBOOK
-        if (req.headers['user-agent'].indexOf('facebookexternalhit') !== -1) {
+        var ua = useragent.parse(req.headers['user-agent']);
+        if (ua.family === 'FacebookBot') {
   
           res.writeHead(200, {'Content-Type': 'text/html'});
   

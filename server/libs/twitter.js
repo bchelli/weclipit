@@ -1,5 +1,7 @@
 if(Meteor.isServer) {
   (function () {
+    var useragent = __meteor_bootstrap__.require('useragent');
+
     if (!Meteor.twitter) {	 
       Meteor.twitter = {};
     }
@@ -20,7 +22,8 @@ if(Meteor.isServer) {
 
       try {
         // IS ACTUALLY TWITTER
-        if (req.headers['user-agent'].indexOf('Twitterbot') !== -1) {
+        var ua = useragent.parse(req.headers['user-agent']);
+        if (ua.family === 'TwitterBot') {
   
           res.writeHead(200, {'Content-Type': 'text/html'});
   
