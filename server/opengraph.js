@@ -38,6 +38,19 @@ if(Meteor.isServer){
     var absoluteUrl = Meteor.absoluteUrl(req.url.substr(0,1)=='/' ? req.url.substr(1) : req.url);
     return (parts.length == 2 && parts[1] === '');
   }
+  Meteor.crawler.use({
+    metas:function(req){
+      if(isWebsite(req)){
+        return [
+          {"property":'title',        "content":'26 Plays'}
+        , {"property":'keywords',     "content":'26,play,26plays,26 plays,playlist,video'}
+        , {"property":'description',  "content":'Keep, play and share your videos with your friends'}
+        , {"property":'canonical',    "content":Meteor.absoluteUrl()}
+        ];
+      }
+      return [];
+    }
+  });
   Meteor.twitter.use({
     openGraphTags:function(req){
       if(isWebsite(req)){
@@ -77,6 +90,25 @@ if(Meteor.isServer){
     }
     return false;
   }
+  Meteor.crawler.use({
+    metas:function(req){
+      var playlistId = isPlaylist(req);
+      if(playlistId){
+        var playlist = playlists.findOne({_id:playlistId})
+          , absoluteUrl = Meteor.absoluteUrl(req.url.substr(0,1)=='/' ? req.url.substr(1) : req.url)
+          ;
+        if(playlist){
+          return [
+            {"property":'title',        "content":'Playlist: '+playlist.name+' - 26 Plays'}
+          , {"property":'keywords',     "content":'26,play,26plays,26 plays,playlist,video'}
+          , {"property":'description',  "content":'Keep, play and share your videos with your friends'}
+          , {"property":'canonical',    "content":absoluteUrl}
+          ];
+        }
+      }
+      return [];
+    }
+  });
   Meteor.twitter.use({
     openGraphTags:function(req){
       var playlistId = isPlaylist(req);
@@ -134,6 +166,24 @@ if(Meteor.isServer){
     }
     return false;
   }
+  Meteor.crawler.use({
+    metas:function(req){
+      var videoId = isVideo(req);
+      if(videoId){
+        var video = videos.findOne({_id:videoId});
+        var absoluteUrl = Meteor.absoluteUrl(req.url.substr(0,1)=='/' ? req.url.substr(1) : req.url);
+        if(video){
+          return [
+            {"property":'title',        "content":'Video: '+video.data.title+' - 26 Plays'}
+          , {"property":'keywords',     "content":'26,play,26plays,26 plays,playlist,video'}
+          , {"property":'description',  "content":'Keep, play and share your videos with your friends'}
+          , {"property":'canonical',    "content":absoluteUrl}
+          ];
+        }
+      }
+      return [];
+    }
+  });
   Meteor.twitter.use({
     openGraphTags:function(req){
       var videoId = isVideo(req);
