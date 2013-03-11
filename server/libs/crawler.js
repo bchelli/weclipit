@@ -23,7 +23,6 @@ if(Meteor.isServer) {
       try {
         // IS ACTUALLY crawler
         var ua = useragent.parse(req.headers['user-agent']);
-        console.log(ua);
         if (ua.family === 'Spider' || ua.family === 'Googlebot') {
   
           res.writeHead(200, {'Content-Type': 'text/html'});
