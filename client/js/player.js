@@ -51,24 +51,23 @@ Template.playerTemplate.playerStop = function(){
   playlistsRouter.setPlaylist(Session.get('playing').playlist);
 };
 Template.playerTemplate.playerGoTo = function(direction){
-  var fctn = "";
-  switch(direction){
-    default:
-    case 'next':
-      fctn = "playNext";
-      break;
-    case 'prev':
-      fctn = "playPrevious";
-      break;
-  }
-  if(fctn!==""){
-    Meteor.call(fctn, Session.get('playing'), function(err, nextToPlay){
-      if(err) Template.playerTemplate.playerStop();
-      else {
-        videosRouter.openVideo(nextToPlay.playlist, nextToPlay.video);
-      }
-    });
-  }
+  var playing = Session.get('playing')
+    , v = videos.find({playlist:playing.playlist}, {sort:Session.get('video-sort')}).fetch()
+    , position = -1
+    ;
+  // find the position
+  _.some(v, function(video, index){
+    if(video._id === playing.video){
+      position = index;
+      return true;
+    }
+    return false;
+  });
+  if(direction === 'next') position++;
+  if(direction === 'prev') position--;
+  if(position<0) position = v.length - 1;
+  if(position>=v.length) position = 0;
+  videosRouter.openVideo(v[position].playlist, v[position]._id);
 };
 
 var player;

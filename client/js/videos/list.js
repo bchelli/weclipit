@@ -4,6 +4,29 @@
  * Responsible for the fetching of the selected playlist's videos
  *     + the rendering of the videosTemplate
  */
+Meteor.autorun(function(){
+  if(!Session.get('video-sort')){
+    setSortBy('time-down');
+  }
+});
+
+function setSortBy(sortBy){
+  switch(sortBy){
+    case 'time-down':
+      Session.set('video-sort', [['createdAt','desc'], ['data.title', 'asc']]);
+      Session.set('video-sort-by', sortBy)
+      break;
+    case 'time-up':
+      Session.set('video-sort', [['createdAt','asc'], ['data.title', 'asc']]);
+      Session.set('video-sort-by', sortBy)
+      break;
+    case 'like-down':
+      Session.set('video-sort', [['nbLikes','desc'],['createdAt','asc'], ['data.title', 'asc']]);
+      Session.set('video-sort-by', sortBy)
+      break;
+  }
+}
+
 // Set Template Helpers
 Template.videosListTemplate.helpers({
   isPlaying: function () {
@@ -21,13 +44,25 @@ Template.videosListTemplate.helpers({
 , liked: function(){
     return this.likes && _.contains(this.likes, Meteor.userId()) ? 'icon-star' : 'icon-star-empty';
   }
+, sortedBy: function(sortBy){
+    return Session.get('video-sort-by') === sortBy ? 'active' : '';
+  }
+, formatTime: function(time){
+    var delta = (new Date()).getTime() - time;
+    if(_.isNaN(delta)) return '?';
+    if(delta >= 1000*60*60*24*365) return Math.floor(delta / (1000*60*60*24*365))+' year(s)';
+    if(delta >= 1000*60*60*24*30) return Math.floor(delta / (1000*60*60*24*30))+' month(s)';
+    if(delta >= 1000*60*60*24) return Math.floor(delta / (1000*60*60*24))+' day(s)';
+    if(delta >= 1000*60*60) return Math.floor(delta / (1000*60*60))+' hour(s)';
+    return Math.floor(delta / (1000*60))+' minute(s)';
+  }
 });
 
 // Set Template Variables
 Template.videosListTemplate.videos = function() {
   var pl = Session.get('playlist');
   if (!pl) return {};
-  return videos.find({playlist:pl}, {sort:[['nbLikes','desc'],['createdAt','asc'], ['data.title', 'asc']]});
+  return videos.find({playlist:pl}, {sort:Session.get('video-sort')});
 };
 Template.videosListTemplate.playlist = function() {
   var pl = playlists.findOne({_id:Session.get('playlist')});
@@ -81,6 +116,10 @@ Template.videosListTemplate.events({
       , status = !videos.findOne({_id:videoId}).likes || !_.contains(videos.findOne({_id:videoId}).likes, Meteor.userId())
       ;
     Meteor.call('likeVideo', videoId, status);
+    return false;
+  }
+, 'click .sort-by': function(event, template){
+    setSortBy(event.currentTarget.getAttribute('data-sort-by'));
     return false;
   }
 });

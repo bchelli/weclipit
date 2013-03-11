@@ -1,5 +1,10 @@
 <template name="videosListTemplate">
   <div class="video-title">
+    <div class="btn-group sort-by-container">
+      <button class="btn btn-mini sort-by {{sortedBy "time-down"}}" data-sort-by="time-down"><i class="icon-plus-sign"></i> <i class="icon-chevron-down"></i></button>
+      <button class="btn btn-mini sort-by {{sortedBy "time-up"}}" data-sort-by="time-up"><i class="icon-plus-sign"></i> <i class="icon-chevron-up"></i></button>
+      <button class="btn btn-mini sort-by {{sortedBy "like-down"}}" data-sort-by="like-down"><i class="icon-star"></i> <i class="icon-chevron-down"></i></button>
+    </div>
     <h3>Videos</h3>
   {{#if rightTo "canAddVideo" playlist myUser}}
     <span>Add video from:</span>
@@ -30,6 +35,9 @@
           </td>
           <td class="videos-added-by">
             {{ownerData.profile.name}}
+          </td>
+          <td class="videos-added-by">
+            {{formatTime createdAt}} ago
           </td>
           <td class="videos-playing">
             {{#if rightTo "canRemoveVideo" playlist myUser owner}}
