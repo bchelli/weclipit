@@ -51,7 +51,7 @@ Template.videosSharingTemplate.helpers({
 });
 Template.videosSharingTemplate.playlist = function() {
   var pl = playlists.findOne({_id:Session.get('playlist')});
-  if(pl) pl.canAccess = _.shuffle(pl.canAccess || []);
+  if(pl) pl.canAddVideo = _.shuffle(pl.canAddVideo || []);
   return pl || {};
 };
 Template.videosSharingTemplate.playlistUrl = function() {
@@ -71,7 +71,7 @@ function setNewName(){
   var newName = $('#edit-playlist-name input').val();
   Meteor.call('updatePlaylistName', Session.get('playlist'), newName);
   $('#edit-playlist-name').hide();
-  $('#playlist-name').html(newName).show();
+  $('#playlist-name .playlistName').html(newName).show();
 }
 Template.videosSharingTemplate.events({
   'click .playlist-remove': function (event, template) {
@@ -120,7 +120,7 @@ Template.videosSharingTemplate.events({
       _.each(Template.videosTemplate.friends, function(friend, index){
         result += '<tr id="friend-'+index+'">'
                 + '  <td class="span1" style="text-align:center">'
-                + '    <input type="checkbox" id="friend-'+index+'-canAccess" class="friend-canAccess" '+(friend.canAccess?'checked ':'')+' />'
+                + '    <input type="checkbox" id="friend-'+index+'-canAddVideo" class="friend-canAddVideo" '+(friend.canAddVideo?'checked ':'')+' />'
                 + '  </td>'
                 + '  <td class="span1 friendToogle" data-index="'+index+'"><img src="http://graph.facebook.com/'+friend.id+'/picture" /></td>'
                 + '  <td class="friendToogle" data-index="'+index+'">'
