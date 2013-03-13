@@ -43,6 +43,7 @@
   .video-title a,.video-title span{font-size: 12px;padding-right:10px}
   .video-title h3 span.playlistName{font-size:inherit;font-weight:inherit;padding-right:0;}
   .video-title .dropdown span{padding-right:0}
+  .fullscreen .video-title .dropdown {display:none}
 
 .playlist-title h3{margin-left:65px;}
 
@@ -56,7 +57,6 @@ h2.no-video {text-align:center;color:#ddd;padding:30px 0;}
   .sort-by-container span{padding-right:0}
 
 .privacy {margin-left:-12px;}
-.fullscreen .privacy {display:none}
   .privacy span{padding-right:0}
 
 .share-icon{display:block;float:left;width:16px;height:16px;margin:-2px 5px 0 0;background:url(/img/share-icons.png) no-repeat;}
