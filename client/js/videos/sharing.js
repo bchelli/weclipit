@@ -24,9 +24,15 @@
     resizeTO = setTimeout(resizeWindow, 100);
   };
   Template.videosSharingTemplate.rendered = function() {
+    $('.sharing-button').each(function(){
+      var $el = $(this)
+        , cssClass = 'addthis_button_'+$el.attr('data-addthis-btn')
+        ;
+      $el.addClass(cssClass);
+    });
+    addthis.toolbox('.privacy');
     $window.bind('resize', onResize);
     resizeWindow();
-    addthis.button('.addthis_button');
   };
   
   Template.videosSharingTemplate.destroyed = function() {
