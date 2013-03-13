@@ -42,6 +42,7 @@
   .video-title h3 span{font-size:0.7em;font-weight:normal;}
   .video-title a,.video-title span{font-size: 12px;padding-right:10px}
   .video-title h3 span.playlistName{font-size:inherit;font-weight:inherit;padding-right:0;}
+  .video-title .dropdown span{padding-right:0}
 
 .playlist-title h3{margin-left:65px;}
 

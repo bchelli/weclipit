@@ -25,6 +25,37 @@
       <li>
         <a href="#" class="playlist-edit" playlist="{{_id}}"><i class="icon-pencil"></i> Rename this playlist</a>
       </li>
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+          <i class="icon-plus-sign"></i>
+          {{#if privateTo "private"}}
+            Only you
+          {{/if}}
+          {{#if privateTo "public"}}
+            Everyone
+          {{/if}}
+            can add videos
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a class="set-privacy" data-privacy="private">
+          {{#if privateTo "private"}}
+            <i class="icon-ok"></i>
+          {{else}}
+            <i class="icon-"></i>
+          {{/if}}
+            Only you
+          </a></li>
+          <li><a class="set-privacy" data-privacy="public">
+          {{#if privateTo "public"}}
+            <i class="icon-ok"></i>
+          {{else}}
+            <i class="icon-"></i>
+          {{/if}}
+            Everyone
+          </a></li>
+        </ul>
+      </li>
       <li>
         <a href="#" class="playlist-remove" playlist="{{_id}}"><i class="icon-remove"></i> Delete this playlist</a>
       </li>
@@ -60,38 +91,6 @@
         <i class="share-icon email"></i>
         <span class="text">by email</span>
       </a></li>
-    {{#if rightTo "isOwner" playlist myUser}}
-      <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-          {{#if privateTo "private"}}
-            Only you
-          {{/if}}
-          {{#if privateTo "public"}}
-            Everyone
-          {{/if}}
-            can add videos
-          <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-          <li><a class="set-privacy" data-privacy="private">
-          {{#if privateTo "private"}}
-            <i class="icon-ok"></i>
-          {{else}}
-            <i class="icon-"></i>
-          {{/if}}
-            Only you
-          </a></li>
-          <li><a class="set-privacy" data-privacy="public">
-          {{#if privateTo "public"}}
-            <i class="icon-ok"></i>
-          {{else}}
-            <i class="icon-"></i>
-          {{/if}}
-            Everyone
-          </a></li>
-        </ul>
-      </li>
-    {{/if}}
     </ul>
   </div>
 

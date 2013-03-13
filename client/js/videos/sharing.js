@@ -140,7 +140,7 @@ Template.videosSharingTemplate.events({
       .modal();
     return false;
   }
-, 'click .privacy .set-privacy': function(){
+, 'click .set-privacy': function(){
     var privacy = event.currentTarget.getAttribute('data-privacy');
     Meteor.call('setPrivacy', Session.get('playlist'), privacy);
   }
