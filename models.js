@@ -50,8 +50,22 @@ if(Meteor.isServer){
     result._id = user._id;
     result.profile = user.profile;
     result.services = {};
-    result.services.facebook = {};
-    result.services.facebook.id = user.services.facebook.id;
+    // Add Facebook if available
+    if(user && user.services && user.services.facebook && user.services.facebook.id){
+      result.services.facebook = {};
+      result.services.facebook.id = user.services.facebook.id;
+    }
+    // Add Twitter if available
+    if(user && user.services && user.services.twitter && user.services.twitter.id){
+      result.services.twitter = {};
+      result.services.twitter.id = user.services.twitter.id;
+      result.services.twitter.screenName = user.services.twitter.screenName;
+    }
+    // Add Google if available
+    if(user && user.services && user.services.google && user.services.google.id){
+      result.services.google = {};
+      result.services.google.id = user.services.google.id;
+    }
     return result;
   }
 

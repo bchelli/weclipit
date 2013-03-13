@@ -36,18 +36,26 @@
   position:absolute;
   top:50%;
   left:50%;
-  width:400px;
+  width:300px;
   margin-top:50px;
-  margin-left:-200px;
+  margin-left:-150px;
   text-align: center;
   font-size:24px;
   font-family: 'Quicksand', sans-serif;
+  padding:0;
+  background: #0c9db7;
+  border:none;
 }
+  #login-buttons{display:block;}
+    #login-buttons .login-link-text{display:block;padding:10px 0;color:#fff;text-decoration:none;}
+    #login-buttons .login-link-text:hover{color:#fff;text-decoration:none;}
+    #login-dropdown-list{width:298px}
+/*
   #login-buttons .login-image {top: 16px;left: 16px;}
   #login-buttons .text-besides-image {margin: 0 15px 0 32px;}
   #login-buttons .login-button {padding:8px;border-color: #0c9db7;}
   #login-buttons-facebook {background-color: #0c9db7 !important;}
-
+*/
 
 .container.login{margin-top:20px;margin-bottom:20px;font-family: 'Quicksand', sans-serif;}
 

@@ -10,3 +10,5 @@ http
 accounts-base
 accounts-facebook
 accounts-ui
+accounts-twitter
+accounts-google

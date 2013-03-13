@@ -7,7 +7,9 @@ Meteor.publish("userData", function () {
   , {
       fields: {
         'services.facebook.id': 1
-      , 'services.facebook.name': 1
+      , 'services.twitter.id': 1
+      , 'services.twitter.screenName': 1
+      , 'services.google.id': 1
       }
     }
   );
