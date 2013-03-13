@@ -1,10 +1,27 @@
 <template name="videosListTemplate">
   <div class="video-title">
-    <div class="btn-group sort-by-container">
-      <button class="btn btn-mini sort-by {{sortedBy "time-down"}}" data-sort-by="time-down"><i class="icon-plus-sign"></i> <i class="icon-chevron-down"></i></button>
-      <button class="btn btn-mini sort-by {{sortedBy "time-up"}}" data-sort-by="time-up"><i class="icon-plus-sign"></i> <i class="icon-chevron-up"></i></button>
-      <button class="btn btn-mini sort-by {{sortedBy "like-down"}}" data-sort-by="like-down"><i class="icon-star"></i> <i class="icon-chevron-down"></i></button>
-    </div>
+    <ul class="nav nav-pills sort-by-container pull-right">
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+          Sort by: 
+          {{#if sortedBy "time-down"}}
+            Date desc
+          {{/if}}
+          {{#if sortedBy "time-up"}}
+            Date asc
+          {{/if}}
+          {{#if sortedBy "like-down"}}
+            Nb likes
+          {{/if}}
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu pull-right">
+          <li><a class="sort-by" data-sort-by="time-down">Date desc</a></li>
+          <li><a class="sort-by" data-sort-by="time-up">Date asc</a></li>
+          <li><a class="sort-by" data-sort-by="like-down">Nb likes</a></li>
+        </ul>
+      </li>
+    </ul>
     <h3>Videos</h3>
   {{#if rightTo "canAddVideo" playlist myUser}}
     <span>Add video from:</span>
@@ -40,7 +57,7 @@
             {{formatTime createdAt}} ago
           </td>
           <td class="videos-playing">
-            {{#if rightTo "canRemoveVideo" playlist myUser owner}}
+            {{#if rightTo "canRemoveVideo" playlist myUser .}}
             <a href="#" class="remove-video" video="{{_id}}">
               <i class="icon-remove"></i>
             </a>

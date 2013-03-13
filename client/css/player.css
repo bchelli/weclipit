@@ -1,5 +1,5 @@
 #playerContent{width:100%;height:0;overflow:hidden;}
 #playerContent.isPlaying{height:50%;}
 #player {width:100%;height:100%;background:#000;position:relative;}
-#player.fullscreen {position:absolute;left:0;top:71px;}
+.fullscreen #player {position:absolute;left:0;top:71px;}
   #player iframe,#player-over {width:100%;height:100%;position:absolute;}

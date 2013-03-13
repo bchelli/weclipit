@@ -30,15 +30,11 @@ Template.playerTemplate.events({
 function updateFullscreen(){
   if(Session.get('fullscreen')){
     var wH = $(window).height();
-    $('#player')
-      .css({'height':wH-108})
-      .addClass('fullscreen')
-      ;
+    $('#player').css({'height':wH-108});
+    $('body').addClass('fullscreen');
   } else {
-    $('#player')
-      .removeClass('fullscreen')
-      .css({'height':''})
-      ;
+    $('#player').css({'height':''});
+    $('body').removeClass('fullscreen');
   }
 }
 Template.playerTemplate.toogleFullscreen = function(){

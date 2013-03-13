@@ -13,10 +13,10 @@ Template.playlistsTemplate.playlists = function() {
 // Set Template Helpers
 Template.playlistsTemplate.helpers({
   isShared: function () {
-    return _.contains(this.canAccess, Meteor.user().services.facebook.id);
+    return playlists.canAccess(this);
   }
 , isMine: function () {
-    return this.owner === Meteor.userId();
+    return playlists.isOwner(this);
   }
 , active: function (page) {
     var active;

@@ -46,18 +46,18 @@ Template.videosTemplate.events({
     Template.videosTemplate.filterFriends($('#filter-share-users-list').val());
   }
 , 'click #share-playlist-select-all': function (event, template) {
-    $('.friend-canAddVideo').prop('checked', true);
+    $('.friend').prop('checked', true);
     return false;
   }
 , 'click #share-playlist-select-none': function (event, template) {
-    $('.friend-canAddVideo').prop('checked', false);
+    $('.friend').prop('checked', false);
     return false;
   }
 , 'click #share-playlist-submit': function (event, template) {
     var changes = [];
     _.each(Template.videosTemplate.friends, function(friend, index){
-      if($('#friend-'+index+'-canAddVideo').is(':checked')!=friend.canAddVideo){
-        changes.push({id:friend.id,status:!friend.canAddVideo});
+      if($('#friend-'+index).is(':checked')){
+        changes.push(friend.id);
       }
     });
     if(changes.length>0) {
@@ -68,7 +68,7 @@ Template.videosTemplate.events({
   }
 , 'click .friendToogle': function (event, template) {
     var index = $(event.currentTarget).attr('data-index')
-      , $checkbox = $('#friend-'+index+'-canAddVideo')
+      , $checkbox = $('#friend-'+index)
       ;
     $checkbox.prop('checked', !$checkbox.is(':checked'));
     return false;

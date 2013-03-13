@@ -1,0 +1,11 @@
+<template name="profilePictureSharing">
+  {{#if services.facebook}}
+    <img data-src="http://graph.facebook.com/{{services.facebook.id}}/picture" src="/img/profile_picture.png" />
+  {{/if}}
+</template>
+
+<template name="profilePicture">
+  {{#if services.facebook}}
+    <img src="http://graph.facebook.com/{{services.facebook.id}}/picture" />
+  {{/if}}
+</template>

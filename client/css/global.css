@@ -13,7 +13,7 @@ body {
 .navbar.header .nav li.dropdown > .dropdown-toggle .caret{
   margin-top:25px;
 }
-.header-profile-picture{
+.header-profile img{
   height:30px;
 }
 .navbar.header .brand{

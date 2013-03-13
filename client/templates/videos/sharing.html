@@ -1,10 +1,12 @@
 <template name="videosSharingTemplate">
   {{#with playlist}}
-  <div class="video-title">
-    <img class="owner-picture" src="http://graph.facebook.com/{{ownerData.services.facebook.id}}/picture" />
+  <div class="video-title playlist-title">
+    {{#with ownerData}}
+      {{> profilePicture}}
+    {{/with}}
     <h3 id="playlist-name">
       <span class="playlistName">{{name}}</span>
-    {{#if isMine}}
+    {{#if rightTo "isOwner" playlist myUser}}
     {{else}}
       <span>(by {{ownerData.profile.name}})</span>
     {{/if}}
@@ -18,31 +20,83 @@
         <i class="icon-remove"></i>
       </a>
     </form>
-    <!-- AddThis Button BEGIN -->
-    <div class="addthis_toolbox addthis_default_style" addthis:url="{{playlistUrl}}" addthis:title="{{name}}">
-      <a class="addthis_button addthis_button_facebook"></a>
-      <a class="addthis_button addthis_button_twitter"></a>
-      <a class="addthis_button addthis_button_email"></a>
-      <a class="addthis_counter addthis_bubble_style"></a>
-    </div>
-    <!-- AddThis Button END -->
-  {{#if isMine}}
-    <a href="#" class="playlist-share" playlist="{{_id}}"><i class="icon-share-alt"></i> Add admins</a>
-    <a href="#" class="playlist-edit" playlist="{{_id}}"><i class="icon-pencil"></i> Rename this playlist</a>
-    <a href="#" class="playlist-remove" playlist="{{_id}}"><i class="icon-remove"></i> Delete this playlist</a>
+    <ul class="nav nav-pills">
+  {{#if rightTo "isOwner" playlist myUser}}
+      <li>
+        <a href="#" class="playlist-edit" playlist="{{_id}}"><i class="icon-pencil"></i> Rename this playlist</a>
+      </li>
+      <li>
+        <a href="#" class="playlist-remove" playlist="{{_id}}"><i class="icon-remove"></i> Delete this playlist</a>
+      </li>
   {{else}}
+      <li>
     {{#if rightTo "canAccess" playlist myUser}}
-      <a href="#" class="playlist-remove" playlist="{{_id}}"><i class="icon-remove"></i> Remove from my shared playlist</a>
+        <a href="#" class="playlist-remove" playlist="{{_id}}"><i class="icon-remove"></i> Remove from my shared playlist</a>
     {{else}}
-      <a href="#" class="playlist-follow" playlist="{{_id}}"><i class="icon-ok"></i> Add to my shared playlist</a>
+        <a href="#" class="playlist-follow" playlist="{{_id}}"><i class="icon-ok"></i> Add to my shared playlist</a>
     {{/if}}
+      </li>
   {{/if}}
+    </ul>
   </div>
+
+
+  <div class="video-title share-title">
+    <h3>Share playlist</h3>
+    <ul class="nav nav-pills privacy">
+      <li><a class="addthis_button addthis_button_facebook" href="#" addthis:url="{{playlistUrl}}" addthis:title="{{name}}">
+        <i class="share-icon facebook"></i>
+        <span class="text">with your Facebook friends</span>
+      </a></li>
+      <li><a class="addthis_button addthis_button_twitter" href="#" addthis:url="{{playlistUrl}}" addthis:title="{{name}}">
+        <i class="share-icon twitter"></i>
+        <span class="text">on Twitter</span>
+      </a></li>
+      <li><a class="addthis_button addthis_button_email" href="#" addthis:url="{{playlistUrl}}" addthis:title="{{name}}">
+        <i class="share-icon email"></i>
+        <span class="text">by email</span>
+      </a></li>
+    {{#if rightTo "isOwner" playlist myUser}}
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+          {{#if privateTo "private"}}
+            Only you
+          {{/if}}
+          {{#if privateTo "public"}}
+            Everyone
+          {{/if}}
+            can add videos
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a class="set-privacy" data-privacy="private">
+          {{#if privateTo "private"}}
+            <i class="icon-ok"></i>
+          {{else}}
+            <i class="icon-"></i>
+          {{/if}}
+            Only you
+          </a></li>
+          <li><a class="set-privacy" data-privacy="public">
+          {{#if privateTo "public"}}
+            <i class="icon-ok"></i>
+          {{else}}
+            <i class="icon-"></i>
+          {{/if}}
+            Everyone
+          </a></li>
+        </ul>
+      </li>
+    {{/if}}
+    </ul>
+  </div>
+
+
   {{/with}}
-  {{#if playlist.canAddVideo.length}}
+  {{#if playlist.canAccess.length}}
   <div class="shared-users">
-  {{#each playlist.canAddVideo}}
-    <img data-src="http://graph.facebook.com/{{.}}/picture" src="/img/profile_picture.png" />
+  {{#each playlist.canAccess}}
+    {{> profilePictureSharing}}
   {{/each}}
   </div>
   {{/if}}

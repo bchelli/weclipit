@@ -26,8 +26,7 @@
   Template.videosSharingTemplate.rendered = function() {
     $window.bind('resize', onResize);
     resizeWindow();
-    addthis.toolbox('.addthis_toolbox');
-    addthis.counter('.addthis_counter');
+    addthis.button('.addthis_button');
   };
   
   Template.videosSharingTemplate.destroyed = function() {
@@ -37,21 +36,20 @@
 
 // Set Template Helpers
 Template.videosSharingTemplate.helpers({
-  isMine: function () {
-    return this.owner === Meteor.userId();
+  rightTo: function(right, playlist, myUser, video){
+    if(right === "isOwner") return playlists.isOwner(playlist, myUser);
+    if(right === "canAccess") return playlists.canAccess(playlist, myUser);
+    if(right === "canAddVideo") return playlists.canAddVideo(playlist, myUser);
+    if(right === "canRemoveVideo") return playlists.canRemoveVideo(playlist, video, myUser);
+    return false;
   }
-, rightTo: function(right, playlist, myUser, videoOwner){
-    var fbId = myUser && myUser.services && myUser.services.facebook && myUser.services.facebook.id ? myUser.services.facebook.id : 0
-      , result = playlist.owner === myUser._id
-      ;
-    if(!result && playlist[right]) result = _.contains(playlist[right], fbId);
-    if(!result && videoOwner) result = videoOwner === myUser._id;
-    return result;
+, privateTo: function(type){
+    return type === this.privacy;
   }
 });
 Template.videosSharingTemplate.playlist = function() {
   var pl = playlists.findOne({_id:Session.get('playlist')});
-  if(pl) pl.canAddVideo = _.shuffle(pl.canAddVideo || []);
+  if(pl) pl.canAccess = _.shuffle(pl.canAccess || []);
   return pl || {};
 };
 Template.videosSharingTemplate.playlistUrl = function() {
@@ -120,7 +118,7 @@ Template.videosSharingTemplate.events({
       _.each(Template.videosTemplate.friends, function(friend, index){
         result += '<tr id="friend-'+index+'">'
                 + '  <td class="span1" style="text-align:center">'
-                + '    <input type="checkbox" id="friend-'+index+'-canAddVideo" class="friend-canAddVideo" '+(friend.canAddVideo?'checked ':'')+' />'
+                + '    <input type="checkbox" id="friend-'+index+'" class="friend" />'
                 + '  </td>'
                 + '  <td class="span1 friendToogle" data-index="'+index+'"><img src="http://graph.facebook.com/'+friend.id+'/picture" /></td>'
                 + '  <td class="friendToogle" data-index="'+index+'">'
@@ -135,5 +133,9 @@ Template.videosSharingTemplate.events({
       .attr('playlist', playlist)
       .modal();
     return false;
+  }
+, 'click .privacy .set-privacy': function(){
+    var privacy = event.currentTarget.getAttribute('data-privacy');
+    Meteor.call('setPrivacy', Session.get('playlist'), privacy);
   }
 });

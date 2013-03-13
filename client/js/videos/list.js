@@ -33,19 +33,17 @@ Template.videosListTemplate.helpers({
     var pl = Session.get("playing");
     return pl && this._id === pl.video;
   }
-, rightTo: function(right, playlist, myUser, videoOwner){
-    var fbId = myUser && myUser.services && myUser.services.facebook && myUser.services.facebook.id ? myUser.services.facebook.id : 0
-      , result = playlist.owner === myUser._id
-      ;
-    if(!result && playlist[right]) result = _.contains(playlist[right], fbId);
-    if(!result && videoOwner) result = videoOwner === myUser._id;
-    return result;
+, rightTo: function(right, playlist, myUser, video){
+    if(right === "canAccess") return playlists.canAccess(playlist, myUser);
+    if(right === "canAddVideo") return playlists.canAddVideo(playlist, myUser);
+    if(right === "canRemoveVideo") return playlists.canRemoveVideo(playlist, video, myUser);
+    return false;
   }
 , liked: function(){
     return this.likes && _.contains(this.likes, Meteor.userId()) ? 'icon-star' : 'icon-star-empty';
   }
 , sortedBy: function(sortBy){
-    return Session.get('video-sort-by') === sortBy ? 'active' : '';
+    return Session.get('video-sort-by') === sortBy;
   }
 , formatTime: function(time){
     var delta = (new Date()).getTime() - time;
@@ -120,7 +118,6 @@ Template.videosListTemplate.events({
   }
 , 'click .sort-by': function(event, template){
     setSortBy(event.currentTarget.getAttribute('data-sort-by'));
-    return false;
   }
 });
 

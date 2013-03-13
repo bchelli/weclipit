@@ -4,6 +4,46 @@ var videos = new Meteor.Collection('videos');
 
 var configDb = new Meteor.Collection('configDb');
 
+
+
+videos.isOwner = function(video, user){
+  if(!user) user = Meteor.user();
+  return video
+      && user
+      && video.owner
+      && user._id
+      && video.owner === user._id;
+}
+
+playlists.isOwner = function(playlist, user){
+  if(!user) user = Meteor.user();
+  return playlist
+      && user
+      && playlist.owner
+      && user._id
+      && playlist.owner === user._id;
+}
+
+playlists.canAccess = function(playlist, user){
+  if(!user) user = Meteor.user();
+  var pos = _.find(playlist.canAccess, function(u){
+    return u._id === user._id;
+  });
+  return !_.isUndefined(pos);
+}
+
+playlists.canAddVideo = function(playlist, user){
+  if(!user) user = Meteor.user();
+  return playlists.isOwner(playlist, user) || playlist && playlist.privacy && playlist.privacy === 'public';
+}
+
+playlists.canRemoveVideo = function(playlist, video, user){
+  if(!user) user = Meteor.user();
+  return playlists.isOwner(playlist, user) || videos.isOwner(video, user);
+}
+
+
+
 if(Meteor.isServer){
   function publicUserInfo(user){
     var result = {};
@@ -49,7 +89,15 @@ if(Meteor.isServer){
 
   Meteor.methods({
   // PLAYLISTS
-    updatePlaylistName : function(playlist, name){
+    setPrivacy : function(playlist, privacy){
+      if(['public','private'].indexOf(privacy)!==-1){
+        var pl = playlists.findOne({owner:Meteor.userId(),_id:playlist});
+        if(pl){
+          playlists.update({_id:playlist}, {$set:{privacy:privacy}});
+        }
+      }
+    }
+  , updatePlaylistName : function(playlist, name){
       var pl = playlists.findOne({owner:Meteor.userId(),_id:playlist});
       if(pl){
         playlists.update({_id:playlist}, {$set:{name:name}});
@@ -60,36 +108,21 @@ if(Meteor.isServer){
       if(pl){
         var u = Meteor.user();
         for(var i in users){
-          var userId = users[i].id;
-          if(users[i].status){
-            playlists.update({_id:playlist}, {
-              $addToSet: {
-                canAccess:      userId
-              , canAddVideo:    userId
-              }
-            });
-            Meteor.facebook.api(
-              '/'+u.services.facebook.id+'/twentysixplays:share'
-            , 'POST'
-            , {'profile':userId}
-            );
-          } else {
-            playlists.update({_id:playlist}, {
-              $pull: {
-                canAccess:      userId
-              , canAddVideo:    userId
-              , canRemoveVideo: userId
-              }
-            });
-          }
+          Meteor.facebook.api(
+            '/'+u.services.facebook.id+'/twentysixplays:share'
+          , 'POST'
+          , {'profile':users[i]}
+          );
         }
       }
     }
   , followPlaylist : function(playlist){
       var pl = playlists.findOne({_id:playlist});
       if(pl){
-        var userId = Meteor.user().services.facebook.id;
-        playlists.update({_id:playlist}, {$addToSet: {canAccess:userId}});
+        var user = Meteor.user();
+        if(user){
+          playlists.update({_id:playlist}, {$addToSet: {canAccess:publicUserInfo(user)}});
+        }
       }
     }
   , removePlaylist : function(playlist){
@@ -100,11 +133,7 @@ if(Meteor.isServer){
           playlists.remove({_id:pl._id})
         } else {
           playlists.update({_id:playlist}, {
-            $pull: {
-              canAccess:      Meteor.user().services.facebook.id
-            , canAddVideo:    Meteor.user().services.facebook.id
-            , canRemoveVideo: Meteor.user().services.facebook.id
-            }
+            $pull: {canAccess:{_id:Meteor.userId()}}
           });
         }
       }
@@ -118,9 +147,8 @@ if(Meteor.isServer){
           name:           name
         , owner:          userId
         , canAccess:      []
-        , canAddVideo:    []
-        , canRemoveVideo: []
         , ownerData:      user
+        , privacy:        'private'
         });
       }
     }
@@ -130,7 +158,7 @@ if(Meteor.isServer){
       var fiber = Fiber.current
         , videosYoutube = []
         ;
-      Meteor.http.get('https://gdata.youtube.com/feeds/api/videos?q='+encodeURIComponent(query)+'&alt=json', function(err, res){
+      Meteor.http.get('http://gdata.youtube.com/feeds/api/videos?q='+encodeURIComponent(query)+'&alt=json', function(err, res){
         if(!err){
           videosYoutube = res && res.data && res.data.feed && res.data.feed.entry ? res.data.feed.entry : [];
         }
@@ -147,11 +175,7 @@ if(Meteor.isServer){
         , pl = playlists.findOne({_id:playlist})
         ;
 
-      if(pl.owner === userId) grantRight = true;
-
-      if(!grantRight && _.contains(pl.canAddVideo, fbId)) grantRight = true;
-
-      if(!grantRight) return;
+      if(!playlists.canAddVideo(pl)) return;
 
       var fiber = Fiber.current;
       Meteor.http.get(
@@ -231,19 +255,9 @@ if(Meteor.isServer){
   , removeVideo : function(video){
       var vid = videos.findOne({_id:video});
       if(vid){
-        var userId = Meteor.userId()
-          , fbId = Meteor.user().services.facebook.id
-          , grantRight = false
-          ;
-
-        if(vid.owner === userId) grantRight = true;
-
-        if(!grantRight){
-          var pl = playlists.findOne({_id:vid.playlist});
-          if(_.contains(pl.canRemoveVideo, fbId)) grantRight = true;
-        }
-
-        if(grantRight) videos.remove({_id:video});
+        var pl = playlists.findOne({_id:vid.playlist});
+        if(!playlists.canRemoveVideo(pl, vid)) return;
+        videos.remove({_id:video});
       }
     }
   , getUsers : function(){
@@ -272,13 +286,6 @@ if(Meteor.isServer){
           fiber.run();
         });
         Fiber.yield();
-        
-        var rights = ['canAccess', 'canAddVideo', 'canRemoveVideo'];
-        for(var i in friends){
-          for(var r in rights){
-            friends[i][rights[r]] = !!pl[rights[r]] && pl[rights[r]].indexOf(friends[i].id)!==-1;
-          }
-        }
       }
       return friends;
     }
@@ -321,6 +328,48 @@ if(Meteor.isServer){
       }
     }
 
+    return true;
+  };
+
+  reorg.num3 = function(){
+    playlists.update({}, {
+      $set: {privacy:'private'}
+    }, {multi: true});
+    return true;
+  };
+
+  reorg.num4 = function(){
+    playlists.update({}, {
+      $unset: {canAddVideo:'',canRemoveVideo:''}
+    }, {multi: true});
+    return true;
+  };
+
+  reorg.num5 = function(){
+    var pls = playlists.find().fetch()
+      , users = {}
+      ;
+    _.each(pls, function(pl){
+      var canAccess = [];
+      _.each(pl.canAccess, function(fbId){
+        if(_.isString(fbId)){
+          // facebook account
+          if(!users[fbId]) {
+            var u = Meteor.users.findOne({"services.facebook.id":fbId});
+            if(!_.isUndefined(u)){
+              users[fbId] = publicUserInfo(u);
+            }
+          }
+          if(!_.isUndefined(u)){
+            canAccess.push(users[fbId]);
+          }
+        } else {
+          // user account
+          canAccess.push(fbId);
+        }
+      });
+      if(canAccess.length >= 0) playlists.update({_id:pl._id}, {$set:{canAccess:canAccess}});
+    });
     return true;
   };
 
