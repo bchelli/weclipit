@@ -9,8 +9,19 @@
         </button>
         <a class="brand" href="/">26 plays</a>
         <div class="nav-collapse collapse">
+          <ul class="nav pull-right">
+            <li class="dropdown">
+              {{#with user}}
+              <a href="#" class="dropdown-toggle header-profile" data-toggle="dropdown">{{> profilePicture}} {{profile.name}} <b class="caret"></b></a>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+                <li><a href="#" class="logout">logout</a></li>
+              </ul>
+              {{/with}}
+            </li>
+          </ul>
           {{#if isPlaying}}
-          <ul class="nav">
+          <ul class="nav player-controls">
+            <li class="divider-vertical"></li>
             <li><a href="#" class="backward"><i class="icon-white icon-fast-backward"></i></a></li>
             <li><a href="#" class="stop"><i class="icon-white icon-stop"></i></a></li>
             <li><a href="#" class="play-pause" id="player-play-pause-toogle"><i class="icon-white {{playPauseClass}}"></i></a></li>
@@ -23,18 +34,9 @@
               </div>
             </li>
             <li><a href="#" class="fullscreen"><i class="icon-white icon-fullscreen"></i></a></li>
+            <li class="divider-vertical"></li>
           </ul>
           {{/if}}
-          <ul class="nav pull-right">
-            <li class="dropdown">
-              {{#with user}}
-              <a href="#" class="dropdown-toggle header-profile" data-toggle="dropdown">{{> profilePicture}} {{profile.name}} <b class="caret"></b></a>
-              <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
-                <li><a href="#" class="logout">logout</a></li>
-              </ul>
-              {{/with}}
-            </li>
-          </ul>
         </div><!--/.nav-collapse -->
       </div>
     </div>

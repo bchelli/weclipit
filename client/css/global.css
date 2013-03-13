@@ -17,9 +17,9 @@ body {
   height:30px;
 }
 .navbar.header .brand{
-  padding-left:120px;
+  padding-left:80px;
   line-height:50px;
-  background:url(/img/logo.png) no-repeat 20px center;
+  background:url(/img/logo-50px.png) no-repeat 20px center;
   font-family: 'Quicksand', sans-serif;
 }
 .navbar.header .divider-vertical {
@@ -134,3 +134,20 @@ footer.navbar a{
     background: #075f6f !important;
   }
 
+
+
+.navbar .nav.player-controls{
+  float:none;
+  width:540px;
+  left:50%;
+  top:0;
+  margin-left:-270px;
+  height: 70px;
+  position: absolute;
+  background:#333;
+}
+
+.navbar .divider-vertical{
+  border-left: 1px solid #222;
+  border-right: 1px solid #444;
+}
