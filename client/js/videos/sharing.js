@@ -110,36 +110,6 @@ Template.videosSharingTemplate.events({
     setNewName();
     return false;
   }
-, 'click .playlist-share': function (event, template) {
-    var $list = $('#share-users-list')
-      , playlist = event.currentTarget.getAttribute('playlist')
-      ;
-    $('#filter-share-users-list').val('');
-    $list.html('<h1 class="loading">LOADING . . .</h1>');
-    Meteor.call('getPlaylistFriendsSharing', playlist, function(err, res){
-      Template.videosTemplate.friends = res;
-      var result = ''
-        , $list = $('#share-users-list')
-        ;
-      _.each(Template.videosTemplate.friends, function(friend, index){
-        result += '<tr id="friend-'+index+'">'
-                + '  <td class="span1" style="text-align:center">'
-                + '    <input type="checkbox" id="friend-'+index+'" class="friend" />'
-                + '  </td>'
-                + '  <td class="span1 friendToogle" data-index="'+index+'"><img src="http://graph.facebook.com/'+friend.id+'/picture" /></td>'
-                + '  <td class="friendToogle" data-index="'+index+'">'
-                + '    '+friend.name
-                + '  </td>'
-                + '</tr>';
-      });
-      $list.html('<table class="table table-striped table-condensed">'+result+'</table>');
-      Template.videosTemplate.filterFriends('');
-    });
-    $('#share-playlist-modal')
-      .attr('playlist', playlist)
-      .modal();
-    return false;
-  }
 , 'click .set-privacy': function(){
     var privacy = event.currentTarget.getAttribute('data-privacy');
     Meteor.call('setPrivacy', Session.get('playlist'), privacy);

@@ -282,27 +282,6 @@ if(Meteor.isServer){
       }
       return res;
     }
-  , getPlaylistFriendsSharing : function(playlist){
-      var pl = playlists.findOne({owner:Meteor.userId(),_id:playlist})
-        , friends
-        ;
-      if(pl){
-        var u = Meteor.user()
-          , fiber = Fiber.current
-          ;
-  
-        Meteor.http.get('https://graph.facebook.com/'+u.services.facebook.id+'/friends?method=GET&format=json&access_token='+u.services.facebook.accessToken, function(err, res){
-          if(!err){
-            if(res && res.data && res.data.data){
-              friends = res.data.data;
-            }
-          }
-          fiber.run();
-        });
-        Fiber.yield();
-      }
-      return friends;
-    }
   });
 
 
