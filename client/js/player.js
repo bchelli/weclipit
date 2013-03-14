@@ -128,9 +128,7 @@ Template.playerTemplate.rendered = function() {
 
 
   var update = function () {
-    var ctx = new Meteor.deps.Context();  // invalidation context
-    ctx.onInvalidate(update);             // rerun update() on invalidation
-    ctx.run(function () {
+    Deps.autorun(function(){
       if(player && player.destroy) player.destroy();
       $('#player-content').html('');
       var isPlaying = Session.get("playing");
