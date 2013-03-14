@@ -58,11 +58,13 @@ Template.videosListTemplate.helpers({
 
 // Set Template Variables
 Template.videosListTemplate.videos = function() {
+  if(!Session.get('playlist')) return {};
   var pl = Session.get('playlist');
   if (!pl) return {};
   return videos.find({playlist:pl}, {sort:Session.get('video-sort')});
 };
 Template.videosListTemplate.playlist = function() {
+  if(!Session.get('playlist')) return {};
   var pl = playlists.findOne({_id:Session.get('playlist')});
   if(pl) pl.canAccess = _.shuffle(pl.canAccess || []);
   return pl || {};

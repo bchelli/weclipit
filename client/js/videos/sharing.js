@@ -54,11 +54,13 @@ Template.videosSharingTemplate.helpers({
   }
 });
 Template.videosSharingTemplate.playlist = function() {
+  if(!Session.get('playlist')) return {};
   var pl = playlists.findOne({_id:Session.get('playlist')});
   if(pl) pl.canAccess = _.shuffle(pl.canAccess || []);
   return pl || {};
 };
 Template.videosSharingTemplate.playlistUrl = function() {
+  if(!Session.get('playlist')) return {};
   var pl = playlists.findOne({_id:Session.get('playlist')})
     , url = ''
     ;
