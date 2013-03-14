@@ -189,56 +189,55 @@ if(Meteor.isServer){
         , fbId = user.services.facebook.id
         , grantRight = false
         , pl = playlists.findOne({_id:playlist})
+        , regExpVimeo = /http(s)?:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/
+        , regExpYoutube = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/
+        , provider = ''
+        , providerId = ''
+        , oEmbedUrl = ''
+        , match
         ;
 
       if(!playlists.canAddVideo(pl)) return;
 
+      if(match = url.match(regExpVimeo)){
+        // is vimeo
+        provider = 'vimeo';
+        oEmbedUrl = 'http://vimeo.com/api/oembed.json?url='+encodeURIComponent(url)
+        providerId = match[3];
+      } else if(match = url.match(regExpYoutube)) {
+        // is youtube
+        provider = 'youtube';
+        oEmbedUrl = 'http://www.youtube.com/oembed?url='+encodeURIComponent(url)+'&format=json'
+        providerId = match[1];
+      } else {
+        // unknown
+        return;
+      }
+
       var fiber = Fiber.current;
+
       Meteor.http.get(
-        "http://api.embed.ly/1/oembed?key=41f79dded6d843f68d00896d0fc1500d&url="+encodeURIComponent(url)
+        oEmbedUrl
       , function(err, res){
           if(!err){
-            
-            var provider = res.data.provider_name.toLowerCase()
-              , providerId = ''
-              ;
-            switch(provider){
-              case 'vimeo':
-                var regExp = /http(s)?:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/;
-                var match = url.match(regExp);
-                if (match) {
-                  providerId = match[3];
-                }
-                break;
-              case 'youtube':
-                var urlParsed = __meteor_bootstrap__.require('url').parse(url);
-                var query = __meteor_bootstrap__.require('querystring').parse(urlParsed.query || '');
-                if(query.v){
-                  providerId = query.v;
-                } else {
-                  var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
-                  var match = url.match(regExp);
-                  if (match && match[7].length===11){
-                    providerId = match[7];
-                  }
-                }
-                break;
+            var acceptedFields = ['author_name','author_url','height','html','provider_name','provider_url','thumbnail_height','thumbnail_url','thumbnail_width','title','type','version','width'];
+            var resultData = {};
+            for(var i=0,l=acceptedFields.length;i<l;i++){
+              if(res.data[acceptedFields[i]]) resultData[acceptedFields[i]] = res.data[acceptedFields[i]];
             }
   
-            if(providerId !== ''){
-              videos.insert({
-                url:        url
-              , owner:      Meteor.userId()
-              , playlist:   playlist
-              , provider:   provider
-              , providerId: providerId
-              , likes:      []
-              , nbLikes:    0
-              , data:       res.data
-              , createdAt:  (new Date()).getTime()
-              , ownerData:      user
-              });
-            }
+            videos.insert({
+              url:        url
+            , owner:      Meteor.userId()
+            , playlist:   playlist
+            , provider:   provider
+            , providerId: providerId
+            , likes:      []
+            , nbLikes:    0
+            , data:       resultData
+            , createdAt:  (new Date()).getTime()
+            , ownerData:      user
+            });
           }
           fiber.run();
         }
