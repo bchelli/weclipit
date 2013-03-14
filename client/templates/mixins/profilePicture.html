@@ -8,7 +8,7 @@
       {{#if services.google}}
         <img data-src="https://profiles.google.com/s2/photos/profile/{{services.google.id}}" src="/img/profile_picture.png" />
       {{else}}
-        <img data-src="/img/profile_picture.png" src="/img/profile_picture.png" />
+        <img data-src="{{profile.gravatar}}" src="/img/profile_picture.png" />
       {{/if}}
     {{/if}}
   {{/if}}
@@ -24,7 +24,7 @@
       {{#if services.google}}
         <img src="https://profiles.google.com/s2/photos/profile/{{services.google.id}}" />
       {{else}}
-        <img src="/img/profile_picture.png" />
+        <img src="{{profile.gravatar}}" />
       {{/if}}
     {{/if}}
   {{/if}}

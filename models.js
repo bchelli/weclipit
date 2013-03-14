@@ -106,6 +106,18 @@ if(Meteor.isClient){
 
 if(Meteor.isServer){
 
+  Accounts.onCreateUser(function(options, user) {
+    if (options.profile) user.profile = options.profile;
+    if(user.emails && user.emails.length>0){
+      var crypto = __meteor_bootstrap__.require('crypto');
+      var md5 = crypto.createHash('md5');
+      md5.update(user.emails[0].address.trim().toLowerCase());
+      if(!user.profile) user.profile = {};
+      user.profile.gravatar = '//www.gravatar.com/avatar/'+md5.digest('hex');
+    }
+    return user;
+  });
+
   Meteor.methods({
   // PLAYLISTS
     setName : function(name){
