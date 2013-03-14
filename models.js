@@ -106,6 +106,9 @@ if(Meteor.isClient){
 
 if(Meteor.isServer){
 
+  Accounts.emailTemplates.siteName = "26plays";
+  Accounts.emailTemplates.from = "26 Plays <contact@26plays.com>";
+
   Accounts.onCreateUser(function(options, user) {
     if (options.profile) user.profile = options.profile;
     if(user.emails && user.emails.length>0){
