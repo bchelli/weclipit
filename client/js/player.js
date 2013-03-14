@@ -27,57 +27,29 @@ Template.playerTemplate.events({
   }
 });
 
-function updateFullscreen(){
-  if(Session.get('fullscreen')){
-    var wH = $(window).height();
-    $('#player').css({'height':wH-108});
-    $('body').addClass('fullscreen');
-  } else {
-    $('#player').css({'height':''});
-    $('body').removeClass('fullscreen');
-  }
-}
-Template.playerTemplate.toogleFullscreen = function(){
-  Session.set('fullscreen', !Session.get('fullscreen'));
-  updateFullscreen();
-}
-Template.playerTemplate.playerStop = function(){
-  Session.set('fullscreen', false);
-  updateFullscreen();
-  playlistsRouter.setPlaylist(Session.get('playing').playlist);
-};
-Template.playerTemplate.playerGoTo = function(direction){
-  var playing = Session.get('playing')
-    , v = videos.find({playlist:playing.playlist}, {sort:Session.get('video-sort')}).fetch()
-    , position = -1
-    ;
-  // find the position
-  _.some(v, function(video, index){
-    if(video._id === playing.video){
-      position = index;
-      return true;
+(function(){
+
+  var player;
+  
+  function updateFullscreen(){
+    if(Session.get('fullscreen')){
+      var wH = $(window).height();
+      $('#player').css({'height':wH-108});
+      $('body').addClass('fullscreen');
+    } else {
+      $('#player').css({'height':''});
+      $('body').removeClass('fullscreen');
     }
-    return false;
-  });
-  if(direction === 'next') position++;
-  if(direction === 'prev') position--;
-  if(position<0) position = v.length - 1;
-  if(position>=v.length) position = 0;
-  videosRouter.openVideo(v[position].playlist, v[position]._id);
-};
+  }
 
-var player;
-
-function formatTime(time){
-  time = Math.floor(time);
-  var sec = time % 60
-    , min = Math.floor(time/60)
-    ;
-  if(sec<10) sec = '0'+sec;
-  return min+':'+sec;
-}
-
-Template.playerTemplate.rendered = function() {
+  function formatTime(time){
+    time = Math.floor(time);
+    var sec = time % 60
+      , min = Math.floor(time/60)
+      ;
+    if(sec<10) sec = '0'+sec;
+    return min+':'+sec;
+  }
 
   function setVideoPlayed(position, total, title){
     var $vp = $('#video-played');
@@ -127,39 +99,65 @@ Template.playerTemplate.rendered = function() {
   };
 
 
-  var update = function () {
-    Deps.autorun(function(){
-      if(player && player.destroy) player.destroy();
-      $('#player-content').html('');
-      var isPlaying = Session.get("playing");
-      if(isPlaying){
-        $('#playerContent,#videosContent').addClass('isPlaying');
-        setVideoPlayed(0,0,'Loading . . .');
-        setProgressPosition('playing', 0);
-        setProgressPosition('loaded', 0);
-        Session.set('pause', false);
-        var pl = Session.get('playing');
-        if(pl){
-          var video = videos.findOne({_id:pl.video,playlist:pl.playlist}, {reactive:false});
-          if(video){
-            $('#player').attr('data-title', video.data.title);
-            if(video.provider === 'vimeo'){
-              $('#player-content').html('<iframe id="vimeo-player" src="http://player.vimeo.com/video/'+video.providerId+'?api=1&title=0&byline=0&portrait=0&player_id=vimeo-player" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
-              player = new App.player.vimeo('vimeo-player', events);
-            }
-            if(video.provider === 'youtube') {
-              $('#player-content').html('<div id="youtube-player" providerId="'+video.providerId+'"></div>');
-              player = new App.player.youtube('youtube-player', events);
-            }
+  Template.playerTemplate.toogleFullscreen = function(){
+    Session.set('fullscreen', !Session.get('fullscreen'));
+    updateFullscreen();
+  }
+  Template.playerTemplate.playerStop = function(){
+    Session.set('fullscreen', false);
+    updateFullscreen();
+    playlistsRouter.setPlaylist(Session.get('playing').playlist);
+  };
+  Template.playerTemplate.playerGoTo = function(direction){
+    var playing = Session.get('playing')
+      , v = videos.find({playlist:playing.playlist}, {sort:Session.get('video-sort')}).fetch()
+      , position = -1
+      ;
+    // find the position
+    _.some(v, function(video, index){
+      if(video._id === playing.video){
+        position = index;
+        return true;
+      }
+      return false;
+    });
+    if(direction === 'next') position++;
+    if(direction === 'prev') position--;
+    if(position<0) position = v.length - 1;
+    if(position>=v.length) position = 0;
+    videosRouter.openVideo(v[position].playlist, v[position]._id);
+  };
+
+  // Manage Change playing state
+  Deps.autorun(function(){
+    if(player && player.destroy) player.destroy();
+    $('#player-content').html('');
+    var isPlaying = Session.get("playing");
+    if(isPlaying){
+      $('#playerContent,#videosContent').addClass('isPlaying');
+      setVideoPlayed(0,0,'Loading . . .');
+      setProgressPosition('playing', 0);
+      setProgressPosition('loaded', 0);
+      Session.set('pause', false);
+      var pl = Session.get('playing');
+      if(pl){
+        var video = videos.findOne({_id:pl.video,playlist:pl.playlist}, {reactive:false});
+        if(video){
+          $('#player').attr('data-title', video.data.title);
+          if(video.provider === 'vimeo'){
+            $('#player-content').html('<iframe id="vimeo-player" src="http://player.vimeo.com/video/'+video.providerId+'?api=1&title=0&byline=0&portrait=0&player_id=vimeo-player" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
+            player = new App.player.vimeo('vimeo-player', events);
+          }
+          if(video.provider === 'youtube') {
+            $('#player-content').html('<div id="youtube-player" providerId="'+video.providerId+'"></div>');
+            player = new App.player.youtube('youtube-player', events);
           }
         }
-      } else {
-        $('#playerContent,#videosContent').removeClass('isPlaying');
       }
-    });
-  };
-  update();
-
+    } else {
+      $('#playerContent,#videosContent').removeClass('isPlaying');
+    }
+  });
 
   var resizeTO;
   var $window = $(window);
@@ -173,5 +171,4 @@ Template.playerTemplate.rendered = function() {
   Template.playerTemplate.destroyed = function() {
     $window.unbind('resize', onResize);
   }
-
-};
+})();

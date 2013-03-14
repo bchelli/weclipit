@@ -90,12 +90,14 @@ if(Meteor.isServer){
 }
 
 if(Meteor.isClient){
-  Meteor.autorun(function () {
+  // manage subscriptions
+  Deps.autorun(function () {
     var pl = Session.get('playlist');
-
-    Meteor.subscribe('userData');
     Meteor.subscribe('playlists', pl);
     Meteor.subscribe('videos', pl);
+  });
+  Deps.autorun(function () {
+    Meteor.subscribe('userData');
   });
 }
 
@@ -366,7 +368,8 @@ if(Meteor.isServer){
     return true;
   };
 
-  Meteor.autorun(function(){
+  // RUN Reoganisation on startup
+  Meteor.startup(function(){
     var db = getConfig('db') || {version:0};
     while(reorg['num'+(db.version+1)]){
       console.log('START REORG '+(db.version+1));
