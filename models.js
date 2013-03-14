@@ -112,6 +112,8 @@ if(Meteor.isServer){
       var uid = Meteor.userId();
       if(name.length>=3 && uid){
         Meteor.users.update({_id:uid}, {$set:{'profile.name':name}});
+        videos.update({owner:uid}, {$set:{'ownerData.profile.name':name}}, {multi: true});
+        playlist.update({owner:uid}, {$set:{'ownerData.profile.name':name}}, {multi: true});
       }
     }
   // PLAYLISTS
