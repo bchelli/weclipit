@@ -49,6 +49,7 @@ Template.videosTemplate.events({
     return false;
   }
 , 'submit #add-video-modal form': function (event, template) {
+    $('#add-video-btn').button('loading');
     Meteor.call('addVideo', Session.get('playlist'), $('#add-video-url').val(), function(){
       $('#add-video-modal').modal('hide');
     });
