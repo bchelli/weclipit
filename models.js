@@ -110,11 +110,14 @@ if(Meteor.isServer){
   // PLAYLISTS
     setName : function(name){
       var uid = Meteor.userId();
-      if(name.length>=3 && uid){
-        Meteor.users.update({_id:uid}, {$set:{'profile.name':name}});
-        videos.update({owner:uid}, {$set:{'ownerData.profile.name':name}}, {multi: true});
-        playlist.update({owner:uid}, {$set:{'ownerData.profile.name':name}}, {multi: true});
-      }
+
+      if(!uid) throw new Meteor.Error(401, 'Not logged in user');
+
+      if(!name || name.length<3) throw new Meteor.Error(406, 'Name must be 3 characters or longer');
+
+      Meteor.users.update({_id:uid}, {$set:{'profile.name':name}});
+      videos.update({owner:uid}, {$set:{'ownerData.profile.name':name}}, {multi: true});
+      playlists.update({owner:uid}, {$set:{'ownerData.profile.name':name}}, {multi: true});
     }
   // PLAYLISTS
   , setPrivacy : function(playlist, privacy){

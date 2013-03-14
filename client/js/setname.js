@@ -1,12 +1,12 @@
 
 Template.setNameTemplate.events = {
-  'submit form':function(){
+  'submit form':function(ev, template){
     var name = $('#your-name').val();
-    if(name.length<3){
-      
-    } else {
-      Meteor.call('setName', name);
-    }
+    Meteor.call('setName', name, function(err){
+      if(err){
+        $('#set-name-error').html(err.reason);
+      }
+    });
     return false;
   }
 };

@@ -1,11 +1,12 @@
 <template name="setNameTemplate">
   <div class="hero-unit set-user-name">
     <h2>Set your name</h2>
+    <p>This name will be used to identify you to your friends (on shared videos/playlists)</p>
     <form>
       <fieldset>
         <input type="text" placeholder="your name" id="your-name" />
-        <br />
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <p id="set-name-error" class="text-error"></p>
+        <button type="submit" class="btn btn-primary btn-large">Submit</button>
       </fieldset>
     </form>
   </div>
