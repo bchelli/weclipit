@@ -26,7 +26,7 @@
   left:50%;
   width:700px;
   height:100px;
-  margin-top:-100px;
+  margin-top:-165px;
   margin-left:-350px;
   text-align: center;
   font-family: 'Quicksand', sans-serif;
@@ -36,9 +36,9 @@
   position:absolute;
   top:50%;
   left:50%;
-  width:300px;
-  margin-top:50px;
-  margin-left:-150px;
+  width:350px;
+  margin-top:-22px;
+  margin-left:-175px;
   text-align: center;
   font-size:24px;
   font-family: 'Quicksand', sans-serif;
@@ -46,16 +46,13 @@
   background: #0c9db7;
   border:none;
 }
-  #login-buttons{display:block;}
+  #login-buttons{display:block;position:relative;}
     #login-buttons .login-link-text{display:block;padding:10px 0;color:#fff;text-decoration:none;}
     #login-buttons .login-link-text:hover{color:#fff;text-decoration:none;}
-    #login-dropdown-list{width:298px}
-/*
-  #login-buttons .login-image {top: 16px;left: 16px;}
-  #login-buttons .text-besides-image {margin: 0 15px 0 32px;}
-  #login-buttons .login-button {padding:8px;border-color: #0c9db7;}
-  #login-buttons-facebook {background-color: #0c9db7 !important;}
-*/
+    #login-dropdown-list{width:348px;background:#F7F7F7}
+    #login-buttons .login-close-text-clear {clear:none;}
+    #login-buttons .login-text-and-button {margin: 20px 15px;}
+    #login-buttons .login-close-text{position:absolute;right:5px;top:5px;overflow:hidden;text-indent:-3000em;line-height: 2000em;padding:0;width: 14px;height: 14px;background: url("/client/vendors/bootstrap/2.3.0/img/glyphicons-halflings.png") -312px 0;}
 
 .container.login{margin-top:20px;margin-bottom:20px;font-family: 'Quicksand', sans-serif;}
 

@@ -1,18 +1,15 @@
 
-Accounts.ui.config({
-  requestPermissions: {
-    facebook: ['publish_actions']
-  }
-});
+var initW, initH;
 
 Template.loginTemplate.rendered = function(){
   var $bg = $('#login-background')
     , $vid = $('.video-home', $bg)
     , $window = $(window)
-    , initW = $vid.width()
-    , initH = $vid.height()
     , vimeoPlayerHome = document.getElementById('vimeoplayer-home')
     ;
+
+  if(!initW) initW = $vid.width()
+  if(!initH) initH = $vid.height()
 
   if(vimeoPlayerHome){
     var player = $f(vimeoPlayerHome);
