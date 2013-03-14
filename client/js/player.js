@@ -27,6 +27,15 @@ Template.playerTemplate.events({
   }
 });
 
+function formatTime(time){
+  time = Math.floor(time);
+  var sec = time % 60
+    , min = Math.floor(time/60)
+    ;
+  if(sec<10) sec = '0'+sec;
+  return min+':'+sec;
+}
+
 (function(){
 
   var player;
@@ -40,15 +49,6 @@ Template.playerTemplate.events({
       $('#player').css({'height':''});
       $('body').removeClass('fullscreen');
     }
-  }
-
-  function formatTime(time){
-    time = Math.floor(time);
-    var sec = time % 60
-      , min = Math.floor(time/60)
-      ;
-    if(sec<10) sec = '0'+sec;
-    return min+':'+sec;
   }
 
   function setVideoPlayed(position, total, title){

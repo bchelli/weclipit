@@ -5,6 +5,13 @@ var pageFactory = function(page){
   }
 };
 
+Template.loggedTemplate.helpers({
+  'hasName':function(){
+    var u = Meteor.user();
+    return u && u.profile && u.profile.name;
+  }
+});
+
 // Create a router for playlists
 var HomeRouter = Backbone.Router.extend({
   routes: {

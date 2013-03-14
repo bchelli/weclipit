@@ -99,13 +99,23 @@ if(Meteor.isClient){
   Deps.autorun(function () {
     Meteor.subscribe('userData');
   });
+  Accounts.ui.config({
+    passwordSignupFields: 'EMAIL_ONLY'
+  });
 }
 
 if(Meteor.isServer){
 
   Meteor.methods({
   // PLAYLISTS
-    setPrivacy : function(playlist, privacy){
+    setName : function(name){
+      var uid = Meteor.userId();
+      if(name.length>=3 && uid){
+        Meteor.users.update({_id:uid}, {$set:{'profile.name':name}});
+      }
+    }
+  // PLAYLISTS
+  , setPrivacy : function(playlist, privacy){
       if(['public','private'].indexOf(privacy)!==-1){
         var pl = playlists.findOne({owner:Meteor.userId(),_id:playlist});
         if(pl){
@@ -184,11 +194,7 @@ if(Meteor.isServer){
       return videosYoutube;
     }
   , addVideo : function(playlist, url){
-      var userId = Meteor.userId()
-        , user = publicUserInfo(Meteor.user())
-        , fbId = user.services.facebook.id
-        , grantRight = false
-        , pl = playlists.findOne({_id:playlist})
+      var pl = playlists.findOne({_id:playlist})
         , regExpVimeo = /http(s)?:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/
         , regExpYoutube = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/
         , provider = ''
@@ -236,7 +242,7 @@ if(Meteor.isServer){
             , nbLikes:    0
             , data:       resultData
             , createdAt:  (new Date()).getTime()
-            , ownerData:      user
+            , ownerData:  publicUserInfo(Meteor.user())
             });
           }
           fiber.run();

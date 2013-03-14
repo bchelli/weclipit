@@ -12,7 +12,14 @@
           <ul class="nav pull-right">
             <li class="dropdown">
               {{#with user}}
-              <a href="#" class="dropdown-toggle header-profile" data-toggle="dropdown">{{> profilePicture}} {{profile.name}} <b class="caret"></b></a>
+              <a href="#" class="dropdown-toggle header-profile" data-toggle="dropdown">
+                {{> profilePicture}}
+                {{#if profile.name}}
+                  {{profile.name}}
+                {{else}}
+                  My account
+                {{/if}}
+              <b class="caret"></b></a>
               <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
                 <li><a href="#" class="logout">logout</a></li>
               </ul>

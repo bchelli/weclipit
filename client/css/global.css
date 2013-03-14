@@ -69,6 +69,11 @@ body {
   background-color: #3b5998 !important;
   background-image: none !important;
 }
+footer{
+  position:fixed;
+  bottom:0;
+  width:100%;
+}
 footer.navbar{
   margin-bottom:0;
   border-bottom:none;

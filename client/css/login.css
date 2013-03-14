@@ -49,10 +49,11 @@
   #login-buttons{display:block;position:relative;}
     #login-buttons .login-link-text{display:block;padding:10px 0;color:#fff;text-decoration:none;}
     #login-buttons .login-link-text:hover{color:#fff;text-decoration:none;}
-    #login-dropdown-list{width:348px;background:#F7F7F7}
+    #login-dropdown-list{width:408px;background:#F7F7F7;top:-177px;left:-31px;}
     #login-buttons .login-close-text-clear {clear:none;}
     #login-buttons .login-text-and-button {margin: 20px 15px;}
     #login-buttons .login-close-text{position:absolute;right:5px;top:5px;overflow:hidden;text-indent:-3000em;line-height: 2000em;padding:0;width: 14px;height: 14px;background: url("/client/vendors/bootstrap/2.3.0/img/glyphicons-halflings.png") -312px 0;}
+    #login-buttons .login-form {margin:0 15px;}
 
 .container.login{margin-top:20px;margin-bottom:20px;font-family: 'Quicksand', sans-serif;}
 
