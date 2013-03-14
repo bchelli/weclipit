@@ -113,7 +113,7 @@ if(Meteor.isServer){
       var md5 = crypto.createHash('md5');
       md5.update(user.emails[0].address.trim().toLowerCase());
       if(!user.profile) user.profile = {};
-      user.profile.gravatar = '//www.gravatar.com/avatar/'+md5.digest('hex');
+      user.profile.gravatarHash = md5.digest('hex');
     }
     return user;
   });
