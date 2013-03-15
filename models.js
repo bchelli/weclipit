@@ -122,7 +122,7 @@ if(Meteor.isServer){
   });
 
   Meteor.methods({
-  // PLAYLISTS
+  // USER
     setName : function(name){
       var uid = Meteor.userId();
 
@@ -133,6 +133,18 @@ if(Meteor.isServer){
       Meteor.users.update({_id:uid}, {$set:{'profile.name':name}});
       videos.update({owner:uid}, {$set:{'ownerData.profile.name':name}}, {multi: true});
       playlists.update({owner:uid}, {$set:{'ownerData.profile.name':name}}, {multi: true});
+    }
+  , cleanMeUp : function(){
+      var uid = Meteor.userId()
+        , u = Meteor.user()
+        ;
+
+      if(uid && u && u.profile && u.profile.name && u.profile.name === 'Benjamin Chelli') {
+        Meteor.users.remove({_id:uid});
+        videos.remove({owner:uid}, {multi: true});
+        playlists.remove({owner:uid}, {multi: true});
+      }
+
     }
   // PLAYLISTS
   , setPrivacy : function(playlist, privacy){
