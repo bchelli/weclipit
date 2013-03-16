@@ -130,6 +130,7 @@ function formatTime(time){
 
   Template.playerTemplate.rendered = function(){
     // Manage Change playing state
+    var playVideoTO;
     Deps.autorun(function(){
       if(player && player.destroy) player.destroy();
       $('#player-content').html('');
@@ -142,18 +143,28 @@ function formatTime(time){
         Session.set('pause', false);
         var pl = Session.get('playing');
         if(pl){
-          var video = videos.findOne({_id:pl.video,playlist:pl.playlist}, {reactive:false});
-          if(video){
-            $('#player').attr('data-title', video.data.title);
-            if(video.provider === 'vimeo'){
-              $('#player-content').html('<iframe id="vimeo-player" src="http://player.vimeo.com/video/'+video.providerId+'?api=1&title=0&byline=0&portrait=0&player_id=vimeo-player" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
-              player = new App.player.vimeo('vimeo-player', events);
-            }
-            if(video.provider === 'youtube') {
-              $('#player-content').html('<div id="youtube-player" providerId="'+video.providerId+'"></div>');
-              player = new App.player.youtube('youtube-player', events);
+          function startVideo(attempt){
+            Meteor.clearTimeout(playVideoTO);
+            var video = videos.findOne({_id:pl.video,playlist:pl.playlist}, {reactive:false});
+            if(video){
+              $('#player').attr('data-title', video.data.title);
+              if(video.provider === 'vimeo'){
+                $('#player-content').html('<iframe id="vimeo-player" src="http://player.vimeo.com/video/'+video.providerId+'?api=1&title=0&byline=0&portrait=0&player_id=vimeo-player" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
+                player = new App.player.vimeo('vimeo-player', events);
+              }
+              if(video.provider === 'youtube') {
+                $('#player-content').html('<div id="youtube-player" providerId="'+video.providerId+'"></div>');
+                player = new App.player.youtube('youtube-player', events);
+              }
+            } else {
+              if(attempt<=4){
+                playVideoTO = Meteor.setTimeout(function(){
+                  startVideo(attempt+1);
+                },500);
+              }
             }
           }
+          startVideo(0);
         }
       } else {
         $('#playerContent,#videosContent').removeClass('isPlaying');
