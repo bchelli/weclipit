@@ -54,6 +54,7 @@
     #login-buttons .login-text-and-button {margin: 20px 15px;}
     #login-buttons .login-close-text{position:absolute;right:5px;top:5px;overflow:hidden;text-indent:-3000em;line-height: 2000em;padding:0;width: 14px;height: 14px;background: url("/client/vendors/bootstrap/2.3.0/img/glyphicons-halflings.png") -312px 0;}
     #login-buttons .login-form {margin:0 15px;}
+    #login-buttons .login-button, .accounts-dialog .login-button {background: #0c9db7;box-shadow: 0 0;border: none;border-radius: 0;}
 
 .container.login{margin-top:20px;margin-bottom:20px;font-family: 'Quicksand', sans-serif;}
 
