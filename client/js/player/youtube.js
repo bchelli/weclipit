@@ -65,9 +65,12 @@ App.player.youtube.prototype = {
     this.player.seekTo(Math.floor(this.player.getDuration()*percent/100), true);
   }
 , destroy: function(){
-    if(this.player && this.player.stopVideo) this.player.stopVideo();
-    if(this.player && this.player.destroy) this.player.destroy();
-    delete this.player;
+    try{
+      if(this.player && this.player.stopVideo) this.player.stopVideo();
+      if(this.player && this.player.destroy) this.player.destroy();
+      delete this.player;
+    } catch(e) {
+    }
     Meteor.clearInterval(this.getPositionInterval);
   }
 };
