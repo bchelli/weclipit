@@ -38,19 +38,6 @@ if(Meteor.isServer){
     var absoluteUrl = Meteor.absoluteUrl(req.url.substr(0,1)=='/' ? req.url.substr(1) : req.url);
     return (parts.length == 2 && parts[1] === '');
   }
-  Meteor.crawler.use({
-    metas:function(req){
-      if(isWebsite(req)){
-        return [
-          {"property":'title',        "content":'26 Plays'}
-        , {"property":'keywords',     "content":'26,play,26plays,26 plays,playlist,video'}
-        , {"property":'description',  "content":'Keep, play and share your videos with your friends'}
-        , {"property":'canonical',    "content":Meteor.absoluteUrl()}
-        ];
-      }
-      return [];
-    }
-  });
   Meteor.twitter.use({
     openGraphTags:function(req){
       if(isWebsite(req)){
