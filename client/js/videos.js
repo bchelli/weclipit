@@ -14,28 +14,69 @@ Template.videosTemplate.events({
     return false;
   }
 , 'submit #search-video-modal form': function (event, template) {
-    var query = $('#search-video-query').val();
-    $('#search-video-result').html('Loading');
-    Meteor.call('searchYoutubeVideos', query, function(err, videosYoutube){
+
+    function displaySearchResults(videos){
       var result = '';
-      for(var i=0,l=videosYoutube.length;i<l;i++){
-        var url = videosYoutube[i].link[0].href.replace('&feature=youtube_gdata', '')
-          , id = url.replace('https://www.youtube.com/watch?v=', '')
-          , inPlaylist = !!videos.findOne({'provider':'youtube','providerId':id})
-          ;
-        result += '<tr class="video not-playing '+(inPlaylist?'video-added':'video-to-add')+'" data-url="'+url+'">'
-                + '  <td class="videos-preview"><div class="img-container"><img src="'+videosYoutube[i].media$group.media$thumbnail[0].url+'" /></div></td>'
+      for(var i=0,l=videos.length;i<l;i++){
+        result += '<tr class="video not-playing '+(videos[i].inPlaylist?'video-added':'video-to-add')+'" data-url="'+videos[i].url+'">'
+                + '  <td class="videos-preview"><div class="img-container"><img src="'+videos[i].thumbnail+'" /></div></td>'
                 + '  <td class="videos-description">'
-                + '    <div class="video-description-title">'+videosYoutube[i].title.$t+'</div>'
-                + '    <div class="video-description-origin">by '+videosYoutube[i].author[0].name.$t+'</div>'
+                + '    <div class="video-description-title">'+videos[i].title+'</div>'
+                + '    <div class="video-description-origin">by '+videos[i].author+'</div>'
                 + '  </td>'
-                + '  <td class="videos-added-by">'+formatTime(videosYoutube[i].media$group.yt$duration.seconds)+'</td>'
+                + '  <td class="videos-added-by">'+formatTime(videos[i].duration)+'</td>'
                 + '</tr>'
                 ;
       }
       result = '<table class="table table-condensed videos-list"><tbody>'+result+'</tbody></table>';
       $('#search-video-result').html(result);
-    });
+    }
+
+    var query = $('#search-video-query').val()
+      , provider = $('#search-video-provider').val()
+      ;
+    $('#search-video-result').html('Loading');
+    switch(provider){
+      case 'youtube':
+        Meteor.call('searchYoutubeVideos', query, function(err, videosYoutube){
+          var videosResult = [];
+          if(!err){
+            for(var i=0,l=videosYoutube.length;i<l;i++){
+              var url = videosYoutube[i].link[0].href.replace('&feature=youtube_gdata', '')
+                , id = url.replace('https://www.youtube.com/watch?v=', '')
+                ;
+              videosResult.push({
+                url:        url
+              , inPlaylist: !!videos.findOne({'provider':'youtube','providerId':id})
+              , thumbnail:  videosYoutube[i].media$group.media$thumbnail[0].url
+              , title:      videosYoutube[i].title.$t
+              , duration:   videosYoutube[i].media$group.yt$duration.seconds
+              , author:     videosYoutube[i].author[0].name.$t
+              });
+            }
+          }
+          displaySearchResults(videosResult);
+        });
+        break;
+      case 'vimeo':
+        Meteor.call('searchVimeoVideos', query, function(err, videosVimeo){
+          var videosResult = [];
+          if(!err){
+            for(var i=0,l=videosVimeo.length;i<l;i++){
+              videosResult.push({
+                url:        'http://vimeo.com/'+videosVimeo[i].id
+              , inPlaylist: !!videos.findOne({'provider':'vimeo','providerId':videosVimeo[i].id})
+              , thumbnail:  videosVimeo[i].thumbnails.thumbnail[0]._content
+              , title:      videosVimeo[i].title
+              , duration:   videosVimeo[i].duration
+              , author:     videosVimeo[i].owner.display_name
+              });
+            }
+          }
+          displaySearchResults(videosResult);
+        });
+        break;
+    }
     $('#search-video-query').focus();
     return false;
   }

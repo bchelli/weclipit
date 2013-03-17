@@ -212,6 +212,38 @@ if(Meteor.isServer){
     }
   
   // VIDEOS
+  , searchVimeoVideos: function(query){
+      var fiber = Fiber.current
+        , videosVimeo = []
+        ;
+      var r = new Meteor.OAuthRequest({
+        options:{
+          clientId:       '72d14f2545ea06a976c21c5cbbadbf5e2846742b'
+        , clientSecret:   '6a31f40a6fe6db9dbbd0ac31f2111f4d4e3a5604'
+        , token:          'e95de822abd7785017852ec9985e700e'
+        , tokenSecret:    '08a9b7db4c0503468481750cda7324c1bf056321'
+        }
+      , method:       'GET'
+      , url:          'http://vimeo.com/api/rest/v2'
+      , query:{
+          format:           'json'
+        , method:           'vimeo.videos.search'
+        , per_page:         25
+        , query:            'Klangkarussell'
+        , embed_privacy:    'anywhere'
+        , full_response:    true
+        }
+      });
+      
+      r.call(function(err, result){
+        if(!err){
+          videosVimeo = result && result.videos && result.videos.video ? result.videos.video : [];
+        }
+        fiber.run();
+      });
+      Fiber.yield();
+      return videosVimeo;
+    }
   , searchYoutubeVideos: function(query){
       var fiber = Fiber.current
         , videosYoutube = []

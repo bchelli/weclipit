@@ -92,8 +92,9 @@ Template.videosListTemplate.events({
       .modal();
     return false;
   }
-, 'click #add-video-from-search': function (event, template) {
+, 'click .add-video-from-search': function (event, template) {
     $('#search-video-query').val('');
+    $('#search-video-provider').val(event.currentTarget.getAttribute('data-provider'));
     $('#search-video-result').html('');
     $('#search-video-modal')
       .on('shown', function(){
