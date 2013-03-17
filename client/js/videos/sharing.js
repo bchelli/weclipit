@@ -87,16 +87,19 @@ Template.videosSharingTemplate.events({
       })
       .modal();
     $('#remove-playlist-submit').attr('playlist', event.currentTarget.getAttribute('playlist'));
+    _gaq.push(['_trackEvent', 'playlist', 'remove']);
     return false;
   }
 , 'click .playlist-follow': function (event, template) {
     Meteor.call('followPlaylist', event.currentTarget.getAttribute('playlist'));
+    _gaq.push(['_trackEvent', 'playlist', 'follow']);
     return false;
   }
 , 'click .playlist-edit': function (event, template) {
     $('#edit-playlist-name').show();
     $('#edit-playlist-name input').focus();
     $('#playlist-name').hide();
+    _gaq.push(['_trackEvent', 'playlist', 'rename']);
     return false;
   }
 , 'click .cancel-playlist-name': function (event, template) {
@@ -115,5 +118,10 @@ Template.videosSharingTemplate.events({
 , 'click .set-privacy': function(){
     var privacy = event.currentTarget.getAttribute('data-privacy');
     Meteor.call('setPrivacy', Session.get('playlist'), privacy);
+    _gaq.push(['_trackEvent', 'playlist', 'privacy', privacy]);
+  }
+, 'click .sharing-button': function(){
+    var typeSharing = event.currentTarget.getAttribute('data-addthis-btn');
+    _gaq.push(['_trackEvent', 'playlist', 'share', typeSharing]);
   }
 });

@@ -90,17 +90,20 @@ Template.videosListTemplate.events({
         $('#add-video-url').focus();
       })
       .modal();
+    _gaq.push(['_trackEvent', 'video', 'search', 'url']);
     return false;
   }
 , 'click .add-video-from-search': function (event, template) {
+    var provider = event.currentTarget.getAttribute('data-provider');
     $('#search-video-query').val('');
-    $('#search-video-provider').val(event.currentTarget.getAttribute('data-provider'));
+    $('#search-video-provider').val(provider);
     $('#search-video-result').html('');
     $('#search-video-modal')
       .on('shown', function(){
         $('#search-video-query').focus();
       })
       .modal();
+    _gaq.push(['_trackEvent', 'video', 'search', provider]);
     return false;
   }
 , 'click .remove-video': function (event, template) {
@@ -110,6 +113,7 @@ Template.videosListTemplate.events({
         $('#remove-video-submit').focus();
       })
       .modal();
+    _gaq.push(['_trackEvent', 'video', 'remove']);
     return false;
   }
 , 'click .like-video': function (event, template) {
@@ -117,10 +121,13 @@ Template.videosListTemplate.events({
       , status = !videos.findOne({_id:videoId}).likes || !_.contains(videos.findOne({_id:videoId}).likes, Meteor.userId())
       ;
     Meteor.call('likeVideo', videoId, status);
+    _gaq.push(['_trackEvent', 'video', 'like']);
     return false;
   }
 , 'click .sort-by': function(event, template){
-    setSortBy(event.currentTarget.getAttribute('data-sort-by'));
+    var sortBy = event.currentTarget.getAttribute('data-sort-by');
+    setSortBy(sortBy);
+    _gaq.push(['_trackEvent', 'video', 'sort', sortBy]);
   }
 });
 
