@@ -29,3 +29,19 @@
     {{/if}}
   {{/if}}
 </template>
+
+<template name="profilePictureLarge">
+  {{#if services.facebook}}
+    <img alt="{{profile.name}}" src="//graph.facebook.com/{{services.facebook.id}}/picture?type=large" class="img-polaroid" />
+  {{else}}
+    {{#if services.twitter}}
+      <img alt="{{profile.name}}" src="//api.twitter.com/1/users/profile_image/{{services.twitter.screenName}}.bigger" class="img-polaroid" />
+    {{else}}
+      {{#if services.google}}
+        <img alt="{{profile.name}}" src="//profiles.google.com/s2/photos/profile/{{services.google.id}}" class="img-polaroid" />
+      {{else}}
+        <img alt="{{profile.name}}" src="//www.gravatar.com/avatar/{{profile.gravatarHash}}?s=200" class="img-polaroid" />
+      {{/if}}
+    {{/if}}
+  {{/if}}
+</template>

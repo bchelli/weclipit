@@ -65,13 +65,6 @@ Template.videosSharingTemplate.myUser = function() {
   return u || {};
 };
 
-// Set Template Events
-function setNewName(){
-  var newName = $('#edit-playlist-name input').val();
-  Meteor.call('updatePlaylistName', Session.get('playlist'), newName);
-  $('#edit-playlist-name').hide();
-  $('#playlist-name .playlistName').html(newName).show();
-}
 Template.videosSharingTemplate.events({
   'click .playlist-remove': function (event, template) {
     $('#remove-playlist-modal')
@@ -86,26 +79,6 @@ Template.videosSharingTemplate.events({
 , 'click .playlist-follow': function (event, template) {
     Meteor.call('followPlaylist', event.currentTarget.getAttribute('playlist'));
     _gaq.push(['_trackEvent', 'playlist', 'follow']);
-    return false;
-  }
-, 'click .playlist-edit': function (event, template) {
-    $('#edit-playlist-name').show();
-    $('#edit-playlist-name input').focus();
-    $('#playlist-name').hide();
-    _gaq.push(['_trackEvent', 'playlist', 'rename']);
-    return false;
-  }
-, 'click .cancel-playlist-name': function (event, template) {
-    $('#edit-playlist-name').hide();
-    $('#playlist-name').show();
-    return false;
-  }
-, 'submit #edit-playlist-name': function (event, template) {
-    setNewName();
-    return false;
-  }
-, 'click .valid-playlist-name': function (event, template) {
-    setNewName();
     return false;
   }
 , 'click .set-privacy': function(){

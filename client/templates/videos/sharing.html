@@ -1,35 +1,15 @@
 <template name="videosSharingTemplate">
-  {{#with playlist}}
-  <div class="video-title playlist-title">
-    {{#with ownerData}}
-      {{> profilePicture}}
+  <div class="video-title">
+    {{#with playlist.ownerData}}
+      {{> profilePictureLarge}}
+      <h5>by {{profile.name}}</h5>
     {{/with}}
-    <h3 id="playlist-name">
-      <span class="playlistName">{{name}}</span>
+    <ul class="nav nav-pills playlist-actions">
+  {{#with playlist}}
     {{#if rightTo "isOwner" playlist myUser}}
-      <ul class="nav nav-pills edit-playlist-container">
-        <li>
-          <a href="#" class="playlist-edit" playlist="{{_id}}"><i class="icon-pencil"></i></a>
-        </li>
-        <li>
-          <a href="#" class="playlist-remove" playlist="{{_id}}"><i class="icon-trash"></i></a>
-        </li>
-      </ul>
-    {{else}}
-      <span>(by {{ownerData.profile.name}})</span>
-    {{/if}}
-    </h3>
-    <form class="form-search" id="edit-playlist-name">
-      <input type="text" value="{{name}}" />
-      <a href="#" class="valid-playlist-name btn btn-mini btn-primary">
-        <i class="icon-ok icon-white"></i>
-      </a>
-      <a href="#" class="cancel-playlist-name btn btn-mini">
-        <i class="icon-remove"></i>
-      </a>
-    </form>
-    <ul class="nav nav-pills">
-  {{#if rightTo "isOwner" playlist myUser}}
+      <li>
+        <a href="#" class="playlist-remove" playlist="{{_id}}"><i class="icon-trash"></i> Remove playlist</a>
+      </li>
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
           <i class="icon-plus-sign"></i>
@@ -61,15 +41,15 @@
           </a></li>
         </ul>
       </li>
-  {{else}}
-      <li>
-    {{#if rightTo "canAccess" playlist myUser}}
-        <a href="#" class="playlist-remove" playlist="{{_id}}"><i class="icon-remove"></i> Remove from my shared playlist</a>
     {{else}}
+      <li>
+      {{#if rightTo "canAccess" playlist myUser}}
+        <a href="#" class="playlist-remove" playlist="{{_id}}"><i class="icon-remove"></i> Remove from my shared playlist</a>
+      {{else}}
         <a href="#" class="playlist-follow" playlist="{{_id}}"><i class="icon-ok"></i> Add to my shared playlist</a>
-    {{/if}}
+      {{/if}}
       </li>
-  {{/if}}
+    {{/if}}
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
           <i class="icon-share"></i> Share
@@ -94,14 +74,12 @@
           </a></li>
         </ul>
       </li>
+  {{/with}}
     </ul>
   </div>
 
-  {{/with}}
   {{#if playlist.canAccess.length}}
-  <div class="video-title share-title">
-    <h3>Followed by</h3>
-  </div>
+  <h5>Followed by</h5>
   <div class="shared-users">
   {{#each playlist.canAccess}}
     {{> profilePictureSharing}}

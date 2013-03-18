@@ -1,7 +1,11 @@
 <template name="videosTemplate">
-  {{> videosSharingTemplate}}
+  <div id="video-left-container">
+    {{> videosSharingTemplate}}
+  </div>
 
-  {{> videosListTemplate}}
+  <div id="video-right-container">
+    {{> videosListTemplate}}
+  </div>
 
   {{> remove-video-popup}}
   {{> add-video-popup}}

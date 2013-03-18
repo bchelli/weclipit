@@ -1,5 +1,5 @@
 <template name="videosListTemplate">
-  <div class="video-title">
+  <div class="video-title playlist-title">
     <ul class="nav nav-pills sort-by-container pull-right">
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -22,7 +22,27 @@
         </ul>
       </li>
     </ul>
-    <h3>Videos</h3>
+    <h3 id="playlist-name">
+      <span class="playlistName">{{playlist.name}}</span>
+    {{#if rightTo "isOwner" playlist myUser}}
+      <ul class="nav nav-pills rename-playlist-container">
+        <li>
+          <a href="#" class="playlist-edit" playlist="{{_id}}"><i class="icon-pencil"></i></a>
+        </li>
+      </ul>
+    {{/if}}
+    </h3>
+    {{#if rightTo "isOwner" playlist myUser}}
+    <form class="form-search" id="edit-playlist-name">
+      <input type="text" value="{{playlist.name}}" />
+      <a href="#" class="valid-playlist-name btn btn-mini btn-primary">
+        <i class="icon-ok icon-white"></i>
+      </a>
+      <a href="#" class="cancel-playlist-name btn btn-mini">
+        <i class="icon-remove"></i>
+      </a>
+    </form>
+    {{/if}}
   {{#if rightTo "canAddVideo" playlist myUser}}
     <span>Add video from:</span>
     <a href="#" data-provider="youtube" class="add-video-from-search"><i class="icon-plus-sign"></i> YouTube</a>

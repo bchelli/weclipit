@@ -34,6 +34,7 @@ Template.videosListTemplate.helpers({
     return pl && this._id === pl.video;
   }
 , rightTo: function(right, playlist, myUser, video){
+    if(right === "isOwner") return playlists.isOwner(playlist, myUser);
     if(right === "canAccess") return playlists.canAccess(playlist, myUser);
     if(right === "canAddVideo") return playlists.canAddVideo(playlist, myUser);
     if(right === "canRemoveVideo") return playlists.canRemoveVideo(playlist, video, myUser);
@@ -75,6 +76,16 @@ Template.videosListTemplate.myUser = function() {
 };
 
 // Set Template Events
+// Set Template Events
+function setNewName(){
+  var newName = $('#edit-playlist-name input').val();
+  Meteor.call('updatePlaylistName', Session.get('playlist'), newName);
+  $('#edit-playlist-name').hide();
+  $('#playlist-name .playlistName').html(newName);
+  $('#playlist-name').css({
+    'visibility':'visible'
+  });
+}
 Template.videosListTemplate.events({
   'click .video-playlist': function (event, template) {
     videosRouter.setVideo(event.currentTarget.getAttribute('playlist'), event.currentTarget.getAttribute('video'));
@@ -128,6 +139,30 @@ Template.videosListTemplate.events({
     var sortBy = event.currentTarget.getAttribute('data-sort-by');
     setSortBy(sortBy);
     _gaq.push(['_trackEvent', 'video', 'sort', sortBy]);
+  }
+, 'click .playlist-edit': function (event, template) {
+    $('#edit-playlist-name').show();
+    $('#edit-playlist-name input').focus();
+    $('#playlist-name').css({
+      'visibility':'hidden'
+    });
+    _gaq.push(['_trackEvent', 'playlist', 'rename']);
+    return false;
+  }
+, 'click .cancel-playlist-name': function (event, template) {
+    $('#edit-playlist-name').hide();
+    $('#playlist-name').css({
+      'visibility':'visible'
+    });
+    return false;
+  }
+, 'submit #edit-playlist-name': function (event, template) {
+    setNewName();
+    return false;
+  }
+, 'click .valid-playlist-name': function (event, template) {
+    setNewName();
+    return false;
   }
 });
 
