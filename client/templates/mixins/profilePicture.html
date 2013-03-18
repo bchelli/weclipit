@@ -32,7 +32,7 @@
 
 <template name="profilePictureLarge">
   {{#if services.facebook}}
-    <img alt="{{profile.name}}" src="//graph.facebook.com/{{services.facebook.id}}/picture?type=large" class="img-polaroid" />
+    <img alt="{{profile.name}}" src="//graph.facebook.com/{{services.facebook.id}}/picture?width=200&height=200" class="img-polaroid" />
   {{else}}
     {{#if services.twitter}}
       <img alt="{{profile.name}}" src="//api.twitter.com/1/users/profile_image/{{services.twitter.screenName}}.bigger" class="img-polaroid" />
