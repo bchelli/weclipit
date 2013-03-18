@@ -1,14 +1,14 @@
 <template name="profilePictureSharing">
   {{#if services.facebook}}
-    <img data-toggle="tooltip" data-placement="bottom" data-original-title="{{profile.name}}" data-src="//graph.facebook.com/{{services.facebook.id}}/picture" src="/img/profile_picture.png" />
+    <img data-toggle="tooltip" data-placement="top" data-original-title="{{profile.name}}" data-src="//graph.facebook.com/{{services.facebook.id}}/picture" src="/img/profile_picture.png" />
   {{else}}
     {{#if services.twitter}}
-      <img data-toggle="tooltip" data-placement="bottom" data-original-title="{{profile.name}}" data-src="//api.twitter.com/1/users/profile_image/{{services.twitter.screenName}}.normal" src="/img/profile_picture.png" />
+      <img data-toggle="tooltip" data-placement="top" data-original-title="{{profile.name}}" data-src="//api.twitter.com/1/users/profile_image/{{services.twitter.screenName}}.normal" src="/img/profile_picture.png" />
     {{else}}
       {{#if services.google}}
-        <img data-toggle="tooltip" data-placement="bottom" data-original-title="{{profile.name}}" data-src="//profiles.google.com/s2/photos/profile/{{services.google.id}}" src="/img/profile_picture.png" />
+        <img data-toggle="tooltip" data-placement="top" data-original-title="{{profile.name}}" data-src="//profiles.google.com/s2/photos/profile/{{services.google.id}}" src="/img/profile_picture.png" />
       {{else}}
-        <img data-toggle="tooltip" data-placement="bottom" data-original-title="{{profile.name}}" data-src="//www.gravatar.com/avatar/{{profile.gravatarHash}}" src="/img/profile_picture.png" />
+        <img data-toggle="tooltip" data-placement="top" data-original-title="{{profile.name}}" data-src="//www.gravatar.com/avatar/{{profile.gravatarHash}}" src="/img/profile_picture.png" />
       {{/if}}
     {{/if}}
   {{/if}}
