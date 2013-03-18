@@ -7,6 +7,14 @@
     <h3 id="playlist-name">
       <span class="playlistName">{{name}}</span>
     {{#if rightTo "isOwner" playlist myUser}}
+      <ul class="nav nav-pills edit-playlist-container">
+        <li>
+          <a href="#" class="playlist-edit" playlist="{{_id}}"><i class="icon-pencil"></i></a>
+        </li>
+        <li>
+          <a href="#" class="playlist-remove" playlist="{{_id}}"><i class="icon-trash"></i></a>
+        </li>
+      </ul>
     {{else}}
       <span>(by {{ownerData.profile.name}})</span>
     {{/if}}
@@ -22,9 +30,6 @@
     </form>
     <ul class="nav nav-pills">
   {{#if rightTo "isOwner" playlist myUser}}
-      <li>
-        <a href="#" class="playlist-edit" playlist="{{_id}}"><i class="icon-pencil"></i> Rename this playlist</a>
-      </li>
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
           <i class="icon-plus-sign"></i>
@@ -56,9 +61,6 @@
           </a></li>
         </ul>
       </li>
-      <li>
-        <a href="#" class="playlist-remove" playlist="{{_id}}"><i class="icon-remove"></i> Delete this playlist</a>
-      </li>
   {{else}}
       <li>
     {{#if rightTo "canAccess" playlist myUser}}
@@ -68,35 +70,38 @@
     {{/if}}
       </li>
   {{/if}}
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+          <i class="icon-share"></i> Share
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a class="sharing-button" data-addthis-btn="facebook" href="#" addthis:url="{{playlistUrl}}" addthis:title="{{name}}">
+            <i class="share-icon facebook"></i>
+            <span class="text">with your Facebook friends</span>
+          </a></li>
+          <li><a class="sharing-button" data-addthis-btn="twitter" href="#" addthis:url="{{playlistUrl}}" addthis:title="{{name}}">
+            <i class="share-icon twitter"></i>
+            <span class="text">on Twitter</span>
+          </a></li>
+          <li><a class="sharing-button" data-addthis-btn="google_plusone_share" href="#" addthis:url="{{playlistUrl}}" addthis:title="{{name}}">
+            <i class="share-icon google"></i>
+            <span class="text">on Google +</span>
+          </a></li>
+          <li><a class="sharing-button" data-addthis-btn="email" href="#" addthis:url="{{playlistUrl}}" addthis:title="{{name}}">
+            <i class="share-icon email"></i>
+            <span class="text">by email</span>
+          </a></li>
+        </ul>
+      </li>
     </ul>
   </div>
-
-
-  <div class="video-title share-title">
-    <h3>Share playlist</h3>
-    <ul class="nav nav-pills privacy">
-      <li><a class="sharing-button" data-addthis-btn="facebook" href="#" addthis:url="{{playlistUrl}}" addthis:title="{{name}}">
-        <i class="share-icon facebook"></i>
-        <span class="text">with your Facebook friends</span>
-      </a></li>
-      <li><a class="sharing-button" data-addthis-btn="twitter" href="#" addthis:url="{{playlistUrl}}" addthis:title="{{name}}">
-        <i class="share-icon twitter"></i>
-        <span class="text">on Twitter</span>
-      </a></li>
-      <li><a class="sharing-button" data-addthis-btn="google_plusone_share" href="#" addthis:url="{{playlistUrl}}" addthis:title="{{name}}">
-        <i class="share-icon google"></i>
-        <span class="text">on Google +</span>
-      </a></li>
-      <li><a class="sharing-button" data-addthis-btn="email" href="#" addthis:url="{{playlistUrl}}" addthis:title="{{name}}">
-        <i class="share-icon email"></i>
-        <span class="text">by email</span>
-      </a></li>
-    </ul>
-  </div>
-
 
   {{/with}}
   {{#if playlist.canAccess.length}}
+  <div class="video-title share-title">
+    <h3>Followed by</h3>
+  </div>
   <div class="shared-users">
   {{#each playlist.canAccess}}
     {{> profilePictureSharing}}

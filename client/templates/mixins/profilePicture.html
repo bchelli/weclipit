@@ -1,14 +1,14 @@
 <template name="profilePictureSharing">
   {{#if services.facebook}}
-    <img data-src="//graph.facebook.com/{{services.facebook.id}}/picture" src="/img/profile_picture.png" />
+    <img data-toggle="tooltip" data-placement="bottom" data-original-title="{{profile.name}}" data-src="//graph.facebook.com/{{services.facebook.id}}/picture" src="/img/profile_picture.png" />
   {{else}}
     {{#if services.twitter}}
-      <img data-src="//api.twitter.com/1/users/profile_image/{{services.twitter.screenName}}.normal" src="/img/profile_picture.png" />
+      <img data-toggle="tooltip" data-placement="bottom" data-original-title="{{profile.name}}" data-src="//api.twitter.com/1/users/profile_image/{{services.twitter.screenName}}.normal" src="/img/profile_picture.png" />
     {{else}}
       {{#if services.google}}
-        <img data-src="//profiles.google.com/s2/photos/profile/{{services.google.id}}" src="/img/profile_picture.png" />
+        <img data-toggle="tooltip" data-placement="bottom" data-original-title="{{profile.name}}" data-src="//profiles.google.com/s2/photos/profile/{{services.google.id}}" src="/img/profile_picture.png" />
       {{else}}
-        <img data-src="//www.gravatar.com/avatar/{{profile.gravatarHash}}" src="/img/profile_picture.png" />
+        <img data-toggle="tooltip" data-placement="bottom" data-original-title="{{profile.name}}" data-src="//www.gravatar.com/avatar/{{profile.gravatarHash}}" src="/img/profile_picture.png" />
       {{/if}}
     {{/if}}
   {{/if}}
@@ -16,15 +16,15 @@
 
 <template name="profilePicture">
   {{#if services.facebook}}
-    <img src="//graph.facebook.com/{{services.facebook.id}}/picture" />
+    <img alt="{{profile.name}}" src="//graph.facebook.com/{{services.facebook.id}}/picture" />
   {{else}}
     {{#if services.twitter}}
-      <img src="//api.twitter.com/1/users/profile_image/{{services.twitter.screenName}}.normal" />
+      <img alt="{{profile.name}}" src="//api.twitter.com/1/users/profile_image/{{services.twitter.screenName}}.normal" />
     {{else}}
       {{#if services.google}}
-        <img src="//profiles.google.com/s2/photos/profile/{{services.google.id}}" />
+        <img alt="{{profile.name}}" src="//profiles.google.com/s2/photos/profile/{{services.google.id}}" />
       {{else}}
-        <img src="//www.gravatar.com/avatar/{{profile.gravatarHash}}" />
+        <img alt="{{profile.name}}" src="//www.gravatar.com/avatar/{{profile.gravatarHash}}" />
       {{/if}}
     {{/if}}
   {{/if}}

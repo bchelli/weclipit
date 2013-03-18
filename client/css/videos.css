@@ -59,8 +59,11 @@ h2.no-video {text-align:center;color:#ddd;padding:30px 0;}
 .privacy {margin-left:-12px;}
   .privacy span{padding-right:0}
 
-.share-icon{display:block;float:left;width:16px;height:16px;margin:-2px 5px 0 0;background:url(/img/share-icons.png) no-repeat;}
+.share-icon{display:block;float:left;width:16px;height:16px;margin:2px 7px 0 -10px;background:url(/img/share-icons.png) no-repeat;}
 .share-icon.facebook{background-position:0 0;}
 .share-icon.twitter{background-position:-16px 0;}
 .share-icon.google{background-position:-32px 0;}
 .share-icon.email{background-position:-48px 0;}
+
+
+.edit-playlist-container{margin-bottom:-10px;display:inline-block;}
