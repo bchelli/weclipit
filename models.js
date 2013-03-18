@@ -229,7 +229,7 @@ if(Meteor.isServer){
           format:           'json'
         , method:           'vimeo.videos.search'
         , per_page:         25
-        , query:            'Klangkarussell'
+        , query:            query
         , embed_privacy:    'anywhere'
         , full_response:    true
         }

@@ -59,17 +59,16 @@ Meteor.OAuthRequest.prototype._getSignature = function(){
 };
 
 Meteor.OAuthRequest.prototype.call = function(callback){
-  var http = __meteor_bootstrap__.require('http')
-    , url = __meteor_bootstrap__.require('url')
-    , qs = __meteor_bootstrap__.require('querystring').stringify(this.req.query)
+  var url = __meteor_bootstrap__.require('url')
     , urlParsed = url.parse(this.req.url)
+    , qs = __meteor_bootstrap__.require('querystring').stringify(this.req.query)
+    , http = __meteor_bootstrap__.require(urlParsed.protocol.substr(0,urlParsed.protocol.length-1))
     ;
 
   this._setOauthHeaders();
 
   var options = {
     hostname: urlParsed.hostname
-  , port: 80
   , path: urlParsed.pathname+(qs===''?'':'?'+qs)
   , method: this.req.method
   , headers:{
