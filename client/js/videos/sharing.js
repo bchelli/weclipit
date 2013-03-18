@@ -24,13 +24,6 @@
     resizeTO = setTimeout(resizeWindow, 100);
   };
   Template.videosSharingTemplate.rendered = function() {
-    $('.sharing-button').each(function(){
-      var $el = $(this)
-        , cssClass = 'addthis_button_'+$el.attr('data-addthis-btn')
-        ;
-      $el.addClass(cssClass);
-    });
-    addthis.toolbox('.privacy');
     $window.bind('resize', onResize);
     resizeWindow();
   };
@@ -120,8 +113,39 @@ Template.videosSharingTemplate.events({
     Meteor.call('setPrivacy', Session.get('playlist'), privacy);
     _gaq.push(['_trackEvent', 'playlist', 'privacy', privacy]);
   }
-, 'click .sharing-button': function(){
-    var typeSharing = event.currentTarget.getAttribute('data-addthis-btn');
+, 'click .sharing-button': function(event){
+    var $target=$(event.currentTarget)
+      , typeSharing = $target.attr('data-type-sharing')
+      , width=$target.attr('data-width')
+      , height=$target.attr('data-height')
+      , u=$target.attr('data-url')
+      , t=$target.attr('data-title')
+      , leftPosition = (window.screen.width / 2) - ((width / 2) + 10)   //Allow for borders.
+      , topPosition = (window.screen.height / 2) - ((height / 2) + 50)  //Allow for title and status bars.
+      , url
+      ;
+    switch(typeSharing){
+      case 'facebook':
+        url = 'http://www.facebook.com/sharer.php?u='+encodeURIComponent(u)+'&t='+encodeURIComponent(t);
+        break;
+      case 'twitter':
+        url = 'https://twitter.com/intent/tweet?original_referer='+encodeURIComponent(u)+'&text='+encodeURIComponent(t)+'&tw_p=tweetbutton&url='+encodeURIComponent(u)+'&via=26plays';
+        break;
+      case 'google':
+        url = 'https://plus.google.com/share?url='+encodeURIComponent(u);
+        break;
+      case 'email':
+        url = 'mailto:?subject='+encodeURIComponent(t)+'&body='+encodeURIComponent(u);
+        break;
+    }
+    if(url){
+      window.open(
+        url
+      , 'sharer'
+      , "status=no,height=" + height + ",width=" + width + ",resizable=yes,left=" + leftPosition + ",top=" + topPosition + ",screenX=" + leftPosition + ",screenY=" + topPosition + ",toolbar=no,menubar=no,scrollbars=no,location=no,directories=no"
+      );
+      event.preventDefault();
+    }
     _gaq.push(['_trackEvent', 'playlist', 'share', typeSharing]);
   }
 });
