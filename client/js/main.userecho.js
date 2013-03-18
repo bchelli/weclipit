@@ -1,4 +1,4 @@
-Meteor.autorun(function(){
+Meteor.startup(function(){
   window._ues = {
     host:'26plays.userecho.com',
     forum:'18120',
