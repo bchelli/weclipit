@@ -280,7 +280,7 @@ if(Meteor.isServer){
       var pl = playlists.findOne({_id:playlist})
         , regExpVimeo = /http(s)?:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/
         , regExpYoutube = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/
-        , regExpYoutubePlaylist = /youtu[^]+list=([^&]+)/
+        , regExpYoutubePlaylist = /youtu.+list=([^&]+)/
         , provider = ''
         , providerId = ''
         , oEmbedUrl = ''
