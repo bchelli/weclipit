@@ -5,6 +5,18 @@
  *     + the rendering of the videosTemplate
  */
 
+
+Template.videosTemplate.rendered = function(){
+  $("#video-right-container").niceScroll();
+  $("#video-left-container").niceScroll();
+  Deps.autorun(function(){
+    Session.get('playing');
+    Session.get('playlist');
+    $("#video-right-container").niceScroll().resize();
+    $("#video-left-container").niceScroll().resize();
+  });
+};
+
 // Set Template Events
 Template.videosTemplate.events({
   'click #remove-playlist-submit': function (event, template) {
