@@ -212,6 +212,25 @@ if(Meteor.isServer){
     }
   
   // VIDEOS
+  , importYoutubePlaylist: function(playlist, youtubePlaylistId){
+      var fiber = Fiber.current;
+      Meteor.http.get('http://www.youtube.com/playlist?list='+encodeURIComponent(youtubePlaylistId), function(err, res){
+        if(!err){
+          var regExp = new RegExp('href="/watch?[^"]+list='+encodeURIComponent(youtubePlaylistId)+'[^"]+"', 'g')
+            , extractVideo = new RegExp('v=([^&]+)')
+            , list = res.content.match(regExp)
+            ;
+          for(var i=0,l=list.length;i<l;i++){
+            var vid = list[i].match(extractVideo);
+            if(vid && vid[1]) {
+              Meteor.call('addVideo', playlist, 'http://www.youtube.com/watch?'+vid[0]);
+            }
+          }
+        }
+        fiber.run();
+      });
+      Fiber.yield();
+    }
   , searchVimeoVideos: function(query){
       var fiber = Fiber.current
         , videosVimeo = []
@@ -261,6 +280,7 @@ if(Meteor.isServer){
       var pl = playlists.findOne({_id:playlist})
         , regExpVimeo = /http(s)?:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/
         , regExpYoutube = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/
+        , regExpYoutubePlaylist = /youtu[^]+list=([^&]+)/
         , provider = ''
         , providerId = ''
         , oEmbedUrl = ''
@@ -274,6 +294,11 @@ if(Meteor.isServer){
         provider = 'vimeo';
         oEmbedUrl = 'http://vimeo.com/api/oembed.json?url='+encodeURIComponent(url)
         providerId = match[3];
+      } else if(match = url.match(regExpYoutubePlaylist)) {
+        // is youtube
+        oEmbedUrl = 'http://www.youtube.com/oembed?url='+encodeURIComponent(url)+'&format=json'
+        Meteor.call('importYoutubePlaylist', playlist, match[1]);
+        return;
       } else if(match = url.match(regExpYoutube)) {
         // is youtube
         provider = 'youtube';
