@@ -39,13 +39,17 @@ App.player.youtube = function(playerId, events){
     },
     "events": {
       "onReady": function(){
-        that.player.playVideo();
+        if(events && events.ready) events.ready();
       },
       "onStateChange": function(newState){
         refresh();
         if(newState.data==1){
           Meteor.clearInterval(that.getPositionInterval);
           that.getPositionInterval = Meteor.setInterval(refresh, 1000);
+          if(events && events.play) events.play();
+        }
+        if(newState.data==2){
+          if(events && events.pause) events.pause();
         }
         if(newState.data==0){
           if(events && events.end) events.end();

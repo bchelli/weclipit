@@ -84,7 +84,6 @@ function formatTime(time){
     } else {
       player.play();
     }
-    Session.set('pause', pauseStatus);
   };
 
   var events = {
@@ -95,6 +94,17 @@ function formatTime(time){
       setProgressPosition('loaded', obj.loadPercent);
       setProgressPosition('playing', obj.playPercent);
       setVideoPlayed(obj.seconds, obj.duration, $('#player').attr('data-title'));
+    }
+  , ready:function(){
+      if(!$('body').hasClass('mobile')){
+        player.play();
+      }
+    }
+  , pause:function(){
+      Session.set('pause', true);
+    }
+  , play:function(){
+      Session.set('pause', false);
     }
   };
 
@@ -140,7 +150,7 @@ function formatTime(time){
         setVideoPlayed(0,0,'Loading . . .');
         setProgressPosition('playing', 0);
         setProgressPosition('loaded', 0);
-        Session.set('pause', false);
+        Session.set('pause', true);
         var pl = Session.get('playing');
         if(pl){
           function startVideo(attempt){

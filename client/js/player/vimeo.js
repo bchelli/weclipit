@@ -12,8 +12,6 @@ App.player.vimeo = function(playerId, events){
     ;
   that.player = $f(vimeo);
   that.player.addEvent('ready', function() {
-    that.player.api("play");
-    
     that.context = {
       loadPercent:0
     , playPercent:0
@@ -28,6 +26,16 @@ App.player.vimeo = function(playerId, events){
         events.end();
       });
     }
+    if(events && events.pause) {
+      that.player.addEvent('pause', function(){
+        events.pause();
+      });
+    }
+    if(events && events.play) {
+      that.player.addEvent('play', function(){
+        events.play();
+      });
+    }
     that.player.addEvent('loadProgress', function(obj){
       that.context.loadPercent = Math.floor(100*obj.percent)
       if(events && events.progress) events.progress(that.context);
@@ -38,6 +46,8 @@ App.player.vimeo = function(playerId, events){
       that.context.duration = obj.duration;
       if(events && events.progress) events.progress(that.context);
     });
+
+    if(events && events.ready) events.ready();
   });
 };
 App.player.vimeo.prototype = {

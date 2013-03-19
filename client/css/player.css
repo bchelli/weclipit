@@ -3,3 +3,4 @@
 #player {width:100%;height:100%;background:#000;position:relative;}
 .fullscreen #player {position:absolute;left:0;top:71px;}
   #player iframe,#player-over {width:100%;height:100%;position:absolute;}
+.mobile #player-over {display:none;}
