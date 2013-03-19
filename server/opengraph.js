@@ -91,7 +91,7 @@ if(Meteor.isServer){
           , {"property":'twitter:url',         "content":absoluteUrl}
           , {"property":'twitter:title',       "content":playlist.name}
           , {"property":'twitter:image',       "content":Meteor.absoluteUrl('img/playlist-og.jpg')}
-          , {"property":'twitter:description', "content":playlist.name+' by '+playlist.ownerData.profile.name}
+          , {"property":'twitter:description', "content":playlist.name+' by '+playlist.ownerData.profile.name+' on 26plays.com'}
           ];
         }
       }
@@ -112,7 +112,7 @@ if(Meteor.isServer){
           result.push({"property":'og:url',         "content":absoluteUrl});
           result.push({"property":'og:title',       "content":playlist.name});
           result.push({"property":'og:image',       "content":Meteor.absoluteUrl('img/playlist-og.jpg')});
-          result.push({"property":'og:description', "content":playlist.name+' by '+playlist.ownerData.profile.name});
+          result.push({"property":'og:description', "content":playlist.name+' by '+playlist.ownerData.profile.name+' on 26plays.com'});
         }
         if(videoList){
           for(var i in videoList){
