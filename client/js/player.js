@@ -80,9 +80,9 @@ function formatTime(time){
   Template.playerTemplate.playerPlayPauseToogle = function(){
     var pauseStatus = !Session.get('pause');
     if(pauseStatus){
-      player.pause();
+      if(player && player.pause) player.pause();
     } else {
-      player.play();
+      if(player && player.play) player.play();
     }
   };
 
@@ -97,7 +97,8 @@ function formatTime(time){
     }
   , ready:function(){
       if(!$('body').hasClass('mobile')){
-        player.play();
+        if(player && player.play) player.play();
+        else setTimeout(events.ready, 100);
       }
     }
   , pause:function(){

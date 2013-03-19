@@ -21,21 +21,21 @@ App.player.vimeo = function(playerId, events){
     
     // attach events
     // end of video
-    that.player.addEvent('finish', function(){
-      if(events && events.end) {
+    if(events && events.end) {
+      that.player.addEvent('finish', function(){
         events.end();
-      }
-    });
-    that.player.addEvent('pause', function(){
-      if(events && events.pause) {
+      });
+    }
+    if(events && events.pause) {
+      that.player.addEvent('pause', function(){
         events.pause();
-      }
-    });
-    that.player.addEvent('play', function(){
-      if(events && events.play) {
+      });
+    }
+    if(events && events.play) {
+      that.player.addEvent('play', function(){
         events.play();
-      }
-    });
+      });
+    }
     that.player.addEvent('loadProgress', function(obj){
       that.context.loadPercent = Math.floor(100*obj.percent)
       if(events && events.progress) events.progress(that.context);
@@ -52,13 +52,13 @@ App.player.vimeo = function(playerId, events){
 };
 App.player.vimeo.prototype = {
   pause: function(){
-    this.player.api("pause");
+    if(this && this.player && this.player.api) this.player.api("pause");
   }
 , play: function(){
-    this.player.api("play");
+    if(this && this.player && this.player.api) this.player.api("play");
   }
 , seekTo: function(percent){
-    this.player.api('seekTo', this.context.duration*percent/100);
+    if(this && this.player && this.player.api) this.player.api('seekTo', this.context.duration*percent/100);
   }
 , destroy: function(){
     delete this.player;

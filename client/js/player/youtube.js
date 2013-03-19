@@ -60,13 +60,13 @@ App.player.youtube = function(playerId, events){
 };
 App.player.youtube.prototype = {
   pause: function(){
-    this.player.pauseVideo();
+    if(this && this.player && this.player.pauseVideo) this.player.pauseVideo();
   }
 , play: function(){
-    this.player.playVideo();
+    if(this && this.player && this.player.playVideo) this.player.playVideo();
   }
 , seekTo: function(percent){
-    this.player.seekTo(Math.floor(this.player.getDuration()*percent/100), true);
+    if(this && this.player && this.player.seekTo) this.player.seekTo(Math.floor(this.player.getDuration()*percent/100), true);
   }
 , destroy: function(){
     try{
