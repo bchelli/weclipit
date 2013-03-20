@@ -143,7 +143,7 @@ var VideosRouter = Backbone.Router.extend({
     this.setVideo(playlist, video);
     Session.set('page', 'playlist');
     Session.set("playing", {video:video,playlist:playlist,date:(new Date()).getTime()});
-    if(!Session.set("playlist")){
+    if(!Session.get("playlist")){
       Session.set("playlist", playlist);
     }
   },

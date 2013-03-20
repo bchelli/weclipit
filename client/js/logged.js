@@ -2,6 +2,7 @@
 var pageFactory = function(page){
   return function (playlist) {
     Session.set('page', page);
+    Session.set('playing', null);
   }
 };
 

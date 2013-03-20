@@ -93,8 +93,15 @@ if(Meteor.isClient){
   // manage subscriptions
   Deps.autorun(function () {
     var pl = Session.get('playlist');
+    var playing = Session.get('playing');
+    var pls = [];
+    if(pl) pls.push(pl);
+    if(playing && playing.playlist) pls.push(playing.playlist);
+    Meteor.subscribe('videos', pls);
+  });
+  Deps.autorun(function () {
+    var pl = Session.get('playlist');
     Meteor.subscribe('playlists', pl);
-    Meteor.subscribe('videos', pl);
   });
   Deps.autorun(function () {
     Meteor.subscribe('userData');

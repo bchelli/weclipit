@@ -1,4 +1,4 @@
 
-Meteor.publish('videos', function(playlist){
-  return videos.find({playlist:playlist});
+Meteor.publish('videos', function(playlists){
+  return videos.find({playlist:{'$in':playlists}});
 });

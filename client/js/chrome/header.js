@@ -4,7 +4,7 @@ Template.headerTemplate.user = function(){
 
 Template.headerTemplate.isPlaying = function(){
   var pl = Session.get('playing');
-  return Session.get('page')==='playlist' && !!pl && pl.playlist === Session.get('playlist');
+  return Session.get('page')==='playlist' && !!pl && !!pl.playlist;
 };
 
 Template.headerTemplate.playPauseClass = function(){
