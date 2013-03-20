@@ -160,12 +160,13 @@ function formatTime(time){
             if(video){
               $('#player').attr('data-title', video.data.title);
               if(video.provider === 'vimeo'){
-                $('#player-content').html('<iframe id="vimeo-player" src="http://player.vimeo.com/video/'+video.providerId+'?api=1&title=0&byline=0&portrait=0&player_id=vimeo-player" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
-                player = new App.player.vimeo('vimeo-player', events);
+                player = new App.player.vimeo('player-content', video, events);
               }
               if(video.provider === 'youtube') {
-                $('#player-content').html('<div id="youtube-player" providerId="'+video.providerId+'"></div>');
-                player = new App.player.youtube('youtube-player', events);
+                player = new App.player.youtube('player-content', video, events);
+              }
+              if(video.provider === 'dailymotion'){
+                player = new App.player.dailymotion('player-content', video, events);
               }
             } else {
               if(attempt<=4){

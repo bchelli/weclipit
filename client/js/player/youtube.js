@@ -6,7 +6,9 @@ var App = App || {};
 App.player = App.player || {};
 
 // init Player
-App.player.youtube = function(playerId, events){
+App.player.youtube = function(playerContainer, video, events){
+  var playerId = 'youtube-player'
+  $('#'+playerContainer).html('<div id="'+playerId+'"></div>');
   var youtube = document.getElementById(playerId)
     , that = this
     ;
@@ -29,7 +31,7 @@ App.player.youtube = function(playerId, events){
   that.getPositionInterval = null;
 
   that.player = new YT.Player(playerId, {
-    "videoId": youtube.getAttribute("providerId"),
+    "videoId": video.providerId,
     "playerVars": {
       "controls":0
     , "iv_load_policy":3

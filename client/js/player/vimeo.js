@@ -6,7 +6,9 @@ var App = App || {};
 App.player = App.player || {};
 
 // init Player
-App.player.vimeo = function(playerId, events){
+App.player.vimeo = function(playerContainer, video, events){
+  var playerId = 'vimeo-player'
+  $('#'+playerContainer).html('<iframe id="'+playerId+'" src="http://player.vimeo.com/video/'+video.providerId+'?api=1&title=0&byline=0&portrait=0&player_id=vimeo-player" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
   var vimeo = document.getElementById(playerId)
     , that = this
     ;

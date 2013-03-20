@@ -281,6 +281,7 @@ if(Meteor.isServer){
         , regExpVimeo = /http(s)?:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/
         , regExpYoutube = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/
         , regExpYoutubePlaylist = /youtu.+list=([^&]+)/
+        , regExpDailymotion = /dailymotion[^\/]+\/video\/([^_]+)/
         , provider = ''
         , providerId = ''
         , oEmbedUrl = ''
@@ -294,6 +295,11 @@ if(Meteor.isServer){
         provider = 'vimeo';
         oEmbedUrl = 'http://vimeo.com/api/oembed.json?url='+encodeURIComponent(url)
         providerId = match[3];
+      } else if(match = url.match(regExpDailymotion)){
+        // is dailymotion
+        provider = 'dailymotion';
+        oEmbedUrl = 'http://www.dailymotion.com/services/oembed?format=json&url='+encodeURIComponent(url)
+        providerId = match[1];
       } else if(match = url.match(regExpYoutubePlaylist)) {
         // is youtube
         oEmbedUrl = 'http://www.youtube.com/oembed?url='+encodeURIComponent(url)+'&format=json'
