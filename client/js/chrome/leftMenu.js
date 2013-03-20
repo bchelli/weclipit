@@ -19,3 +19,6 @@
   }
 })();
 
+Template.leftMenuTemplate.isInPlaylist = function(){
+  return Session.get("page") === 'playlist' && Session.get('playlist') ? 'in-playlist' : '';
+}

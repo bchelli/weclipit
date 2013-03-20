@@ -5,6 +5,7 @@ body {
 }
 .sidebar-nav {
   padding: 9px 0;
+  width:200px;
 }
 .navbar.header .nav > li > a {
   line-height: 50px;
@@ -98,14 +99,26 @@ footer.navbar a{
   border-right:1px solid #ddd;
   width:200px;
   float:left;
+  overflow:hidden;
+  -webkit-transition: width 1s; /* Safari and Chrome */
+     -moz-transition: width 1s; /* Firefox 4 */
+       -o-transition: width 1s; /* Opera */
+          transition: width 1s;
 }
-#playlistContainer {
-  margin-left:200px;
-}
+  #menuContainer.in-playlist .nav-header,#menuContainer.in-playlist .nav-text{
+    -webkit-transition: opacity 1s; /* Safari and Chrome */
+       -moz-transition: opacity 1s; /* Firefox 4 */
+         -o-transition: opacity 1s; /* Opera */
+            transition: opacity 1s;
+  }
 #menuContainer,
 #playlistContainer {
   display:block;
 }
+  #menuContainer.in-playlist{width:45px;}
+    #menuContainer.in-playlist .nav-header,#menuContainer.in-playlist .nav-text{opacity:0;}
+  #menuContainer.in-playlist:hover{width:200px;}
+    #menuContainer.in-playlist:hover .nav-header,#menuContainer.in-playlist:hover .nav-text{opacity:1;}
 
 #playlistContent,#menuContainer .sidebar-nav {
   display: block;
