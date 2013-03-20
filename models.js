@@ -235,7 +235,7 @@ if(Meteor.isServer){
       var fiber = Fiber.current
         , videosDailymotion = []
         ;
-      Meteor.http.get('https://api.dailymotion.com/videos?search='+encodeURIComponent(query)+'&fields=duration,id,title,thumbnail_url,owner_fullname,url&limit=25', function(err, res){
+      Meteor.http.get('https://api.dailymotion.com/videos?search='+encodeURIComponent(query)+'&fields=duration,id,title,thumbnail_url,owner_fullname,url&sort=relevance&limit=25', function(err, res){
         if(!err){
           videosDailymotion = res && res.data && res.data.list ? res.data.list : [];
         }
