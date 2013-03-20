@@ -34,7 +34,7 @@ Template.videosTemplate.events({
                 + '  <td class="videos-preview"><div class="img-container"><img src="'+videos[i].thumbnail+'" /></div></td>'
                 + '  <td class="videos-description">'
                 + '    <div class="video-description-title">'+videos[i].title+'</div>'
-                + '    <div class="video-description-origin">by '+videos[i].author+'</div>'
+                + '    <div class="video-description-origin">'+(videos[i].author===''?'':'by '+videos[i].author)+'</div>'
                 + '  </td>'
                 + '  <td class="videos-added-by">'+formatTime(videos[i].duration)+'</td>'
                 + '</tr>'
@@ -49,6 +49,24 @@ Template.videosTemplate.events({
       ;
     $('#search-video-result').html('Loading');
     switch(provider){
+      case 'dailymotion':
+        Meteor.call('searchDailymotionVideos', query, function(err, videosDailymotion){
+          var videosResult = [];
+          if(!err){
+            for(var i=0,l=videosDailymotion.length;i<l;i++){
+              videosResult.push({
+                url:        videosDailymotion[i].url
+              , inPlaylist: !!videos.findOne({'provider':'dailymotion','providerId':videosDailymotion[i].id})
+              , thumbnail:  videosDailymotion[i].thumbnail_url
+              , title:      videosDailymotion[i].title
+              , duration:   videosDailymotion[i].duration
+              , author:     videosDailymotion[i].owner_fullname
+              });
+            }
+          }
+          displaySearchResults(videosResult);
+        });
+        break;
       case 'youtube':
         Meteor.call('searchYoutubeVideos', query, function(err, videosYoutube){
           var videosResult = [];

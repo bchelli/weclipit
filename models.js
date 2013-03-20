@@ -231,6 +231,19 @@ if(Meteor.isServer){
       });
       Fiber.yield();
     }
+  , searchDailymotionVideos: function(query){
+      var fiber = Fiber.current
+        , videosDailymotion = []
+        ;
+      Meteor.http.get('https://api.dailymotion.com/videos?search='+encodeURIComponent(query)+'&fields=duration,id,title,thumbnail_url,owner_fullname,url&limit=25', function(err, res){
+        if(!err){
+          videosDailymotion = res && res.data && res.data.list ? res.data.list : [];
+        }
+        fiber.run();
+      });
+      Fiber.yield();
+      return videosDailymotion;
+    }
   , searchVimeoVideos: function(query){
       var fiber = Fiber.current
         , videosVimeo = []
