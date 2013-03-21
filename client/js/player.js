@@ -41,6 +41,8 @@ function formatTime(time){
   var player;
   
   function updateFullscreen(){
+    // FIX Bug due to nicescroll
+    $('#playlistContent').css('position', '');
     if(Session.get('fullscreen')){
       var wH = $(window).height();
       $('#player').css({'height':wH-108});
