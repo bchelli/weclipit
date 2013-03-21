@@ -96,8 +96,8 @@ if(Meteor.isClient){
     var playing = Session.get('playing');
     var pls = [];
     if(pl) pls.push(pl);
-    if(playing && playing.playlist) pls.push(playing.playlist);
-    Meteor.subscribe('videos', pls);
+    if(playing && playing.playlist && playing.playlist!=pl) pls.push(playing.playlist);
+    Meteor.subscribe('videos', pls.join(','));
   });
   Deps.autorun(function () {
     var pl = Session.get('playlist');
