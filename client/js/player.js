@@ -45,7 +45,7 @@ function formatTime(time){
     $('#playlistContent').css('position', '');
     if(Session.get('fullscreen')){
       var wH = $(window).height();
-      $('#player').css({'height':wH-108});
+      $('#player').css({'height':wH-105});
       $('body').addClass('fullscreen');
     } else {
       $('#player').css({'height':''});
