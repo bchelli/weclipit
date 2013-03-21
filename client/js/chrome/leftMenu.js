@@ -2,7 +2,7 @@
   var $window = $(window);
   var resizeWindow = function(){
     var wH = $window.height();
-    $('#menuContainer,#playlistContainer').css({'height':wH-108});
+    $('#menuContainer,#playlistContainer').css({'height':wH-105});
   };
   var resizeTO;
   var onResize = function(){

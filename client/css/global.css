@@ -1,11 +1,17 @@
 body {
-  padding-top: 71px;
+  padding-top: 70px;
   padding-bottom: 0;
   background: #fefefe;
 }
+.navbar-fixed-top .navbar-inner, .navbar-static-top .navbar-inner{
+  border:none;
+  box-shadow:0 0;
+  -webkit-box-shadow:0 0;
+}
 .sidebar-nav {
   padding: 9px 0;
-  width:200px;
+  width:199px;
+  border-right:1px solid #ddd;
 }
 .navbar.header .nav > li > a {
   line-height: 50px;
@@ -77,9 +83,6 @@ footer{
 }
 footer.navbar{
   margin-bottom:0;
-  border-bottom:none;
-  border-left:none;
-  border-right:none;
   color:#ddd;
 }
 footer.navbar .navbar-inner {
@@ -90,35 +93,38 @@ footer.navbar .navbar-inner {
   height:35px;
   line-height:35px;
   padding:0 15px;
+  border:none;
 }
 footer.navbar a{
   color:#777;
 }
 #menuContainer{
-  background-color: #f5f5f5;
-  border-right:1px solid #ddd;
+  background-color: #333;
   width:200px;
   float:left;
   overflow:hidden;
+  background-image: url(/img/bg-left-menu.png);
+  background-repeat: no-repeat;
   -webkit-transition: width 1s; /* Safari and Chrome */
      -moz-transition: width 1s; /* Firefox 4 */
        -o-transition: width 1s; /* Opera */
           transition: width 1s;
 }
-  #menuContainer.in-playlist .nav-header,#menuContainer.in-playlist .nav-text{
-    -webkit-transition: opacity 1s; /* Safari and Chrome */
-       -moz-transition: opacity 1s; /* Firefox 4 */
-         -o-transition: opacity 1s; /* Opera */
-            transition: opacity 1s;
+  #menuContainer .sidebar-nav {
+    background-color: #f5f5f5;
+    -webkit-transition: margin 1s; /* Safari and Chrome */
+       -moz-transition: margin 1s; /* Firefox 4 */
+         -o-transition: margin 1s; /* Opera */
+            transition: margin 1s;
   }
 #menuContainer,
 #playlistContainer {
   display:block;
 }
-  #menuContainer.in-playlist{width:45px;}
-    #menuContainer.in-playlist .nav-header,#menuContainer.in-playlist .nav-text{opacity:0;}
+  #menuContainer.in-playlist{width:80px;}
+    #menuContainer.in-playlist .sidebar-nav {margin-left:-200px;}
   #menuContainer.in-playlist:hover{width:200px;}
-    #menuContainer.in-playlist:hover .nav-header,#menuContainer.in-playlist:hover .nav-text{opacity:1;}
+    #menuContainer.in-playlist:hover .sidebar-nav {margin-left:0;}
 
 #playlistContent,#menuContainer .sidebar-nav {
   display: block;
