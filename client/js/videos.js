@@ -20,9 +20,13 @@ Template.videosTemplate.rendered = function(){
 // Set Template Events
 Template.videosTemplate.events({
   'click #remove-playlist-submit': function (event, template) {
-    Meteor.call('removePlaylist', event.currentTarget.getAttribute('playlist'));
+    var pl = event.currentTarget.getAttribute('playlist');
+    Meteor.call('removePlaylist', pl);
     $('#remove-playlist-modal').modal('hide');
-    homeRouter.openHome();
+    var playing = Session.get('playing');
+    if(playing && playing.playlist && playing.playlist===pl) Session.set('playing', null);
+    if(playing && playing.playlist && playing.playlist!==pl) playlistsRouter.setPlaylist(playing.playlist);
+    else homeRouter.goToPage('home');
     return false;
   }
 , 'submit #search-video-modal form': function (event, template) {

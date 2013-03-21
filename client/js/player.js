@@ -117,7 +117,9 @@ function formatTime(time){
   Template.playerTemplate.playerStop = function(){
     Session.set('fullscreen', false);
     updateFullscreen();
-    playlistsRouter.setPlaylist(Session.get('playing').playlist);
+    var pl = Session.get('playlist');
+    if(pl) playlistsRouter.setPlaylist(pl);
+    Session.set('playing', null);
   };
   Template.playerTemplate.playerGoTo = function(direction){
     var playing = Session.get('playing')
