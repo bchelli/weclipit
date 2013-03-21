@@ -91,7 +91,7 @@ footer.navbar .navbar-inner {
   border-radius:0;
   min-height:35px;
   height:35px;
-  line-height:35px;
+  line-height:36px;
   padding:0 15px;
   border:none;
 }
@@ -145,8 +145,8 @@ footer.navbar a{
 }
 
 .ue-tab-container{
-  bottom:5px !important;
-  right:5px !important;
+  bottom:4px !important;
+  right:4px !important;
 }
   .ue-tab-container .ue-bottom {
     border: 0 !important;
