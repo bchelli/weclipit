@@ -206,9 +206,10 @@ if(Meteor.isServer){
   , createPlaylist : function(name){
       var userId = Meteor.userId()
         , user = publicUserInfo(Meteor.user())
+        , result
         ;
       if(userId){
-        playlists.insert({
+        result = playlists.insert({
           name:           name
         , owner:          userId
         , canAccess:      []
@@ -216,6 +217,7 @@ if(Meteor.isServer){
         , privacy:        'private'
         });
       }
+      return result;
     }
   
   // VIDEOS

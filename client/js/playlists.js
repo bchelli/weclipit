@@ -50,8 +50,11 @@ Template.playlistsTemplate.events({
     return false;
   }
 , 'submit #add-playlist-modal form': function (event, template) {
-    Meteor.call('createPlaylist', $('#add-playlist-name').val());
-    $('#add-playlist-modal').modal('hide');
+    Meteor.call('createPlaylist', $('#add-playlist-name').val(), function(err, playlist){
+      console.log(arguments);
+      $('#add-playlist-modal').modal('hide');
+      if(!err && playlist) playlistsRouter.setPlaylist(playlist);
+    });
     return false;
   }
 });
