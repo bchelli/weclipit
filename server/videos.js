@@ -24,6 +24,34 @@ Meteor.methods({
     });
     Fiber.yield();
   }
+, importSoundcloudPlaylist: function(playlist, soundcloudPlaylist){
+    switch(soundcloudPlaylist.type){
+      case 'playlists':
+        var fiber = Fiber.current;
+        Meteor.http.get('https://api.soundcloud.com/playlists/'+encodeURIComponent(soundcloudPlaylist.id)+'.json?consumer_key=apigee&limit=2000', function(err, res){
+          if(!err && res && res.data && res.data.tracks){
+            for(var i=0,l=res.data.tracks.length;i<l;i++){
+              Meteor.call('addVideo', playlist, res.data.tracks[i].permalink_url);
+            }
+          }
+          fiber.run();
+        });
+        Fiber.yield();
+        break;
+      case 'users':
+        var fiber = Fiber.current;
+        Meteor.http.get('https://api.soundcloud.com/users/'+encodeURIComponent(soundcloudPlaylist.id)+'/tracks.json?consumer_key=apigee&limit=2000', function(err, res){
+          if(!err && res && res.data){
+            for(var i=0,l=res.data.length;i<l;i++){
+              Meteor.call('addVideo', playlist, res.data[i].permalink_url);
+            }
+          }
+          fiber.run();
+        });
+        Fiber.yield();
+        break;
+    }
+  }
 , searchDailymotionVideos: function(query){
     var fiber = Fiber.current
       , videosDailymotion = []
@@ -141,6 +169,18 @@ Meteor.methods({
           if(provider === 'soundcloud'){
             if(match = res.data.html.match(/tracks%2F([0-9]+)/)){
               providerId = match[1];
+            }
+            if(match = res.data.html.match(/users%2F([0-9]+)/)){
+              Meteor.call('importSoundcloudPlaylist', playlist, {
+                type:'users'
+              , id:match[1]
+              });
+            }
+            if(match = res.data.html.match(/playlists%2F([0-9]+)/)){
+              Meteor.call('importSoundcloudPlaylist', playlist, {
+                type:'playlists'
+              , id:match[1]
+              });
             }
           }
 

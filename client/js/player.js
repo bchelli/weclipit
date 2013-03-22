@@ -163,6 +163,9 @@ function formatTime(time){
             var video = videos.findOne({_id:pl.video,playlist:pl.playlist}, {reactive:false});
             if(video){
               $('#player').attr('data-title', video.data.title);
+              if(video.provider === 'soundcloud'){
+                $('#playerContent,#videosContent').removeClass('isPlaying');
+              }
               if(App.player[video.provider]){
                 player = new App.player[video.provider]('player-content', video, events);
               }
