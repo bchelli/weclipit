@@ -83,7 +83,7 @@ Meteor.methods({
   }
 , getUsers : function(){
     /// SECURITY WHOLE
-    var u = Meteor.users.find({}).sort({createdAt:1}).fetch(), res = [];
+    var u = Meteor.users.find({}, {sort:{createdAt:1}}).fetch(), res = [];
     for(var i in u){
       res.push(u[i].profile.name)
     }
