@@ -163,14 +163,8 @@ function formatTime(time){
             var video = videos.findOne({_id:pl.video,playlist:pl.playlist}, {reactive:false});
             if(video){
               $('#player').attr('data-title', video.data.title);
-              if(video.provider === 'vimeo'){
-                player = new App.player.vimeo('player-content', video, events);
-              }
-              if(video.provider === 'youtube') {
-                player = new App.player.youtube('player-content', video, events);
-              }
-              if(video.provider === 'dailymotion'){
-                player = new App.player.dailymotion('player-content', video, events);
+              if(App.player[video.provider]){
+                player = new App.player[video.provider]('player-content', video, events);
               }
             } else {
               if(attempt<=4){

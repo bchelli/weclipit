@@ -88,9 +88,10 @@ Meteor.methods({
       , regExpYoutube = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/
       , regExpYoutubePlaylist = /youtu.+list=([^&]+)/
       , regExpDailymotion = /dailymotion[^\/]+\/video\/([^_]+)/
-      , provider = ''
-      , providerId = ''
-      , oEmbedUrl = ''
+      , regExpSoundcloud = /soundcloud/
+      , provider
+      , providerId
+      , oEmbedUrl
       , match
       ;
 
@@ -106,6 +107,10 @@ Meteor.methods({
       provider = 'dailymotion';
       oEmbedUrl = 'http://www.dailymotion.com/services/oembed?format=json&url='+encodeURIComponent(url)
       providerId = match[1];
+    } else if(match = url.match(regExpSoundcloud)){
+      // is dailymotion
+      provider = 'soundcloud';
+      oEmbedUrl = 'http://soundcloud.com/oembed?format=json&url='+encodeURIComponent(url)
     } else if(match = url.match(regExpYoutubePlaylist)) {
       // is youtube
       oEmbedUrl = 'http://www.youtube.com/oembed?url='+encodeURIComponent(url)+'&format=json'
@@ -132,19 +137,27 @@ Meteor.methods({
           for(var i=0,l=acceptedFields.length;i<l;i++){
             if(res.data[acceptedFields[i]]) resultData[acceptedFields[i]] = res.data[acceptedFields[i]];
           }
+          
+          if(provider === 'soundcloud'){
+            if(match = res.data.html.match(/tracks%2F([0-9]+)/)){
+              providerId = match[1];
+            }
+          }
 
-          videos.insert({
-            url:        url
-          , owner:      Meteor.userId()
-          , playlist:   playlist
-          , provider:   provider
-          , providerId: providerId
-          , likes:      []
-          , nbLikes:    0
-          , data:       resultData
-          , createdAt:  (new Date()).getTime()
-          , ownerData:  publicUserInfo(Meteor.user())
-          });
+          if(providerId){
+            videos.insert({
+              url:        url
+            , owner:      Meteor.userId()
+            , playlist:   playlist
+            , provider:   provider
+            , providerId: providerId
+            , likes:      []
+            , nbLikes:    0
+            , data:       resultData
+            , createdAt:  (new Date()).getTime()
+            , ownerData:  publicUserInfo(Meteor.user())
+            });
+          }
         }
         fiber.run();
       }
