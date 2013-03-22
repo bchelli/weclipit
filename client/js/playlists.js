@@ -5,6 +5,11 @@
  *     + the rendering of the playlistsTemplate
  */
 
+Deps.autorun(function () {
+  var pl = Session.get('playlist');
+  Meteor.subscribe('playlists', pl);
+});
+
 // Set Template Variables
 Template.playlistsTemplate.playlists = function() {
   return playlists.find({}, {sort:[['name', 'asc']]});

@@ -5,6 +5,14 @@
  *     + the rendering of the videosTemplate
  */
 
+Deps.autorun(function () {
+  var pl = Session.get('playlist');
+  var playing = Session.get('playing');
+  var pls = [];
+  if(pl) pls.push(pl);
+  if(playing && playing.playlist && playing.playlist!=pl) pls.push(playing.playlist);
+  Meteor.subscribe('videos', pls.join(','));
+});
 
 Template.videosTemplate.rendered = function(){
   $("#video-right-container").niceScroll();
