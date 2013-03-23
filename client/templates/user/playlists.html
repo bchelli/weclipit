@@ -1,0 +1,17 @@
+<template name="userPlaylistsTemplate">
+  <h3><span>Public playlists</span></h3>
+  {{#if playlists.length}}
+    {{#each playlists}}
+    <div class="user-playlist open-playlist" data-playlist-id="{{_id}}">
+      <div class="playlist-title"><i class="icon-list"></i> {{name}}</div>
+      {{> playlistPreview}}
+      {{#each canAccess}}
+        <a href="#" class="open-user" data-user-id="{{_id}}">{{> profilePictureSharing}}</a>
+      {{/each}}
+    </div>
+    {{/each}}
+  {{else}}
+    <h2 class="no-video">No public playlist</h2>
+  {{/if}}
+</template>
+

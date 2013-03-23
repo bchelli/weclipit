@@ -1,8 +1,10 @@
 <template name="videosSharingTemplate">
   <div class="video-title">
+    {{#with playlist}}
+      {{> playlistPreview}}
+    {{/with}}
     {{#with playlist.ownerData}}
-      {{> profilePictureLarge}}
-      <h5>by {{profile.name}}</h5>
+      <h5>by <a href="#" class="open-user" data-user-id="{{_id}}">{{profile.name}}</a></h5>
     {{/with}}
     <ul class="nav nav-pills playlist-actions">
   {{#with playlist}}
@@ -82,7 +84,7 @@
   <h5>Followed by</h5>
   <div class="shared-users">
   {{#each playlist.canAccess}}
-    {{> profilePictureSharing}}
+    <a href="#" class="open-user" data-user-id="{{_id}}">{{> profilePictureSharing}}</a>
   {{/each}}
   </div>
   {{/if}}

@@ -14,14 +14,18 @@ Deps.autorun(function () {
   Meteor.subscribe('videos', pls.join(','));
 });
 
+Template.videosTemplate.helpers({
+  isPlaylistPage:function(){
+    return Session.get('page') === 'playlist';
+  }
+});
+
 Template.videosTemplate.rendered = function(){
-  $("#video-right-container").niceScroll();
-  $("#video-left-container").niceScroll();
+  setNicescroll("#video-right-container,#video-left-container");
   Deps.autorun(function(){
     Session.get('playing');
     Session.get('playlist');
-    $("#video-right-container").niceScroll().resize();
-    $("#video-left-container").niceScroll().resize();
+    setNicescroll("#video-right-container,#video-left-container");
   });
 };
 
@@ -153,9 +157,11 @@ var VideosRouter = Backbone.Router.extend({
   },
   openVideo: function (playlist, video) {
     this.setVideo(playlist, video);
-    Session.set('page', 'playlist');
     Session.set("playing", {video:video,playlist:playlist,date:(new Date()).getTime()});
-    if(!Session.get("playlist")){
+    if(!Session.get('page')
+        || Session.get('page') === '' 
+        || Session.get('page') === 'playlist' && !Session.get("playlist")){
+      Session.set('page', 'playlist');
       Session.set("playlist", playlist);
     }
   },

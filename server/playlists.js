@@ -8,6 +8,18 @@ Meteor.publish('playlists', function(playlist){
   return playlists.find(query);
 });
 
+function updatePlaylistThumbnails(playlist){
+  var v = videos.find({playlist:playlist}, {limit:4}).fetch()
+    , thumbnails = []
+    ;
+  for(var i in v){
+    thumbnails.push(v[i].data.thumbnail_url);
+  }
+  playlists.update({_id:playlist},{
+    $set:{thumbnails:thumbnails}
+  })
+}
+
 Meteor.methods({
   setPrivacy : function(playlist, privacy){
     if(['public','private'].indexOf(privacy)!==-1){

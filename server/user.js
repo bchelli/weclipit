@@ -69,6 +69,11 @@ Meteor.methods({
     videos.update({owner:uid}, {$set:{'ownerData.profile.name':name}}, {multi: true});
     playlists.update({owner:uid}, {$set:{'ownerData.profile.name':name}}, {multi: true});
   }
+, getUserProfile : function(userId){
+    var u = publicUserInfo(Meteor.users.findOne({_id:userId}));
+    u.playlists = playlists.find({owner:userId}, {sort:{name:1}}).fetch();
+    return u;
+  }
 , cleanMeUp : function(){
     var uid = Meteor.userId()
       , u = Meteor.user()

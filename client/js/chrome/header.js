@@ -4,7 +4,7 @@ Template.headerTemplate.user = function(){
 
 Template.headerTemplate.isPlaying = function(){
   var pl = Session.get('playing');
-  return Session.get('page')==='playlist' && !!pl && !!pl.playlist;
+  return !!pl && !!pl.playlist;
 };
 
 Template.headerTemplate.playPauseClass = function(){
@@ -27,6 +27,10 @@ Template.headerTemplate.events({
 , 'click .logout': function(ev){
     Meteor.logout();
     return false;
+  }
+, 'click .my-profile': function(ev){
+    usersRouter.setUser(Meteor.userId());
+    ev.preventDefault();
   }
 , 'click .backward': function(ev){
     Template.playerTemplate.playerGoTo('prev');

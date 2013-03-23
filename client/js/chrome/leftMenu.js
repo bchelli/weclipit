@@ -20,5 +20,5 @@
 })();
 
 Template.leftMenuTemplate.isInPlaylist = function(){
-  return Session.get("page") === 'playlist' && Session.get('playlist') ? 'in-playlist' : '';
+  return Session.get("page") === 'user' || Session.get("page") === 'playlist' && Session.get('playlist') ? 'in-playlist' : '';
 }

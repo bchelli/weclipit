@@ -1,0 +1,7 @@
+<template name="playlistPreview">
+  <div class="img-polaroid playlistPreview {{getClass}}">
+    {{#each getList}}
+    <div class="vignette" style="background-image:url({{.}})"></div>
+    {{/each}}
+  </div>
+</template>

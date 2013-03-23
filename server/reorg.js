@@ -96,6 +96,15 @@ reorg.num5 = function(){
   return true;
 };
 
+reorg.num6 = function(){
+  var pls = playlists.find().fetch()
+    ;
+  _.each(pls, function(pl){
+    updatePlaylistThumbnails(pl._id);
+  });
+  return true;
+};
+
 // RUN Reoganisation on startup
 Meteor.startup(function(){
   var db = getConfig('db') || {version:0};

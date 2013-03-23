@@ -46,6 +46,12 @@ Template.videosSharingTemplate.helpers({
     return type === this.privacy;
   }
 });
+Template.videosSharingTemplate.previewVideos = function() {
+  if(!Session.get('playlist')) return [];
+  var pl = Session.get('playlist');
+  if (!pl) return [];
+  return videos.find({playlist:pl}, {limit:4});
+};
 Template.videosSharingTemplate.playlist = function() {
   if(!Session.get('playlist')) return {};
   var pl = playlists.findOne({_id:Session.get('playlist')});
@@ -120,5 +126,10 @@ Template.videosSharingTemplate.events({
       event.preventDefault();
     }
     _gaq.push(['_trackEvent', 'playlist', 'share', typeSharing]);
+  }
+, 'click .open-user': function (event, template) {
+    var $target=$(event.currentTarget);
+    usersRouter.openUser($target.attr('data-user-id'));
+    return false;
   }
 });

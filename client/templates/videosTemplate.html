@@ -1,4 +1,5 @@
 <template name="videosTemplate">
+  {{#if isPlaylistPage}}
   <div id="video-left-container">
     {{> videosSharingTemplate}}
   </div>
@@ -12,6 +13,7 @@
   {{> search-video-popup}}
   {{> remove-playlist-popup}}
   {{> share-playlist-popup}}
+  {{/if}}
 </template>
 
 

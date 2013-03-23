@@ -197,6 +197,8 @@ Meteor.methods({
             , createdAt:  (new Date()).getTime()
             , ownerData:  publicUserInfo(Meteor.user())
             });
+            // update playlist video preview
+            updatePlaylistThumbnails(playlist);
           }
         }
         fiber.run();
@@ -233,6 +235,7 @@ Meteor.methods({
       var pl = playlists.findOne({_id:vid.playlist});
       if(!playlists.canRemoveVideo(pl, vid)) return;
       videos.remove({_id:video});
+      updatePlaylistThumbnails(vid.playlist);
     }
   }
 });

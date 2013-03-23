@@ -2,18 +2,15 @@
   <div id="playlistContainer" class="{{isInPlaylist}}">
     <div id="playlistContent">
 
-    {{#if isPage 'home'}}
-      {{> homeTemplate}}
-    {{/if}}
-
-    {{#if isPage 'playlist'}}
     <div id="playerContent">
       {{> playerTemplate}}
     </div>
+
     <div id="videosContent">
+      {{> homeTemplate}}
+      {{> userTemplate}}
       {{> videosTemplate}}
     </div>
-    {{/if}}
 
     </div>
   </div><!--/span-->
