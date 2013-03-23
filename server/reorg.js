@@ -105,6 +105,13 @@ reorg.num6 = function(){
   return true;
 };
 
+reorg.num7 = function(){
+  playlists.update({}, {
+    $set: {public:true}
+  }, {multi: true});
+  return true;
+};
+
 // RUN Reoganisation on startup
 Meteor.startup(function(){
   var db = getConfig('db') || {version:0};

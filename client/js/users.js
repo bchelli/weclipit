@@ -4,21 +4,13 @@ Deps.autorun(function () {
 });
 
 Deps.autorun(function () {
-  var u = Session.get('user')
-    , ud = Session.get('userData')
-    ;
-  if(ud && ud._id && ud._id !== u){
-    Session.set('userData', {});
-  }
+  var u = Session.get('user');
   if(u && u !== ''){
-    ud = Session.get('userData');
-    if(!ud || !ud._id || ud._id !== u){
-      Session.set('userLoading', true);
-      Meteor.call('getUserProfile', u, function(err, userData){
-        Session.set('userLoading', false);
-        if(!err) Session.set('userData', userData);
-      });
-    }
+    Session.set('userLoading', true);
+    Meteor.call('getUserProfile', u, function(err, userData){
+      Session.set('userLoading', false);
+      if(!err) Session.set('userData', userData);
+    });
   }
 });
 
@@ -51,7 +43,9 @@ var UsersRouter = Backbone.Router.extend({
   },
   openUser: function (user) {
     this.setUser(user);
+    Session.set('user', '');
     Session.set('user', user);
+    Session.set('userData', {});
     Session.set('page', 'user');
   },
   setUser: function (user) {

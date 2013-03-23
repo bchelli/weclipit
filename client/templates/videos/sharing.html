@@ -14,6 +14,36 @@
       </li>
       <li class="dropdown dropup">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+          {{#if public}}
+            <i class="icon-eye-open"></i>
+            Public
+          {{else}}
+            <i class="icon-eye-close"></i>
+            Private
+          {{/if}}
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a class="set-public" data-public="public">
+          {{#if public}}
+            <i class="icon-ok"></i>
+          {{else}}
+            <i class="icon-"></i>
+          {{/if}}
+            Public
+          </a></li>
+          <li><a class="set-public" data-public="private">
+          {{#if public}}
+            <i class="icon-"></i>
+          {{else}}
+            <i class="icon-ok"></i>
+          {{/if}}
+            Private
+          </a></li>
+        </ul>
+      </li>
+      <li class="dropdown dropup">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
           <i class="icon-plus-sign"></i>
           {{#if privateTo "private"}}
             Only you

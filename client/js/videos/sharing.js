@@ -92,6 +92,11 @@ Template.videosSharingTemplate.events({
     Meteor.call('setPrivacy', Session.get('playlist'), privacy);
     _gaq.push(['_trackEvent', 'playlist', 'privacy', privacy]);
   }
+, 'click .set-public': function(){
+    var public = event.currentTarget.getAttribute('data-public') === 'public';
+    Meteor.call('setPublic', Session.get('playlist'), public);
+    _gaq.push(['_trackEvent', 'playlist', 'public', public]);
+  }
 , 'click .sharing-button': function(event){
     var $target=$(event.currentTarget)
       , typeSharing = $target.attr('data-type-sharing')

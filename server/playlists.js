@@ -29,6 +29,14 @@ Meteor.methods({
       }
     }
   }
+, setPublic : function(playlist, public){
+    if([true,false].indexOf(public)!==-1){
+      var pl = playlists.findOne({owner:Meteor.userId(),_id:playlist});
+      if(pl){
+        playlists.update({_id:playlist}, {$set:{public:public}});
+      }
+    }
+  }
 , updatePlaylistName : function(playlist, name){
     var pl = playlists.findOne({owner:Meteor.userId(),_id:playlist});
     if(pl){
@@ -82,6 +90,7 @@ Meteor.methods({
       , canAccess:      []
       , ownerData:      user
       , privacy:        'private'
+      , public:         true
       });
     }
     return result;

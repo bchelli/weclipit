@@ -76,3 +76,4 @@ h2.no-video {text-align:center;color:#ddd;padding:30px 0;}
 
 .rename-playlist-container{display: inline-block;margin-bottom: -10px;}
 .playlist-actions{margin:-5px 0 0 -13px;}
+  .playlist-actions li{clear:both}

@@ -71,7 +71,7 @@ Meteor.methods({
   }
 , getUserProfile : function(userId){
     var u = publicUserInfo(Meteor.users.findOne({_id:userId}));
-    u.playlists = playlists.find({owner:userId}, {sort:{name:1}}).fetch();
+    u.playlists = playlists.find({owner:userId,public:true}, {sort:{name:1}}).fetch();
     return u;
   }
 , cleanMeUp : function(){
