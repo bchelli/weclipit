@@ -92,7 +92,12 @@ function generateNicescroll($el){
       }, 'slow');
     });
   }
-  updateScrollbars($el, $el.find('.bar'));
+  function updtScrll(){
+    updateScrollbars($el, $el.find('.bar'));
+  }
+  updtScrll();
+  setTimeout(updtScrll, 100);
+  setTimeout(updtScrll, 1000);
 }
 
 var elementsToScroll = [];

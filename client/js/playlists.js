@@ -10,6 +10,10 @@ Deps.autorun(function () {
   Meteor.subscribe('playlists', pl);
 });
 
+Template.playlistsTemplate.rendered = function(){
+  setNicescroll('#menuContainer .sidebar-nav');
+};
+
 // Set Template Variables
 Template.playlistsTemplate.playlists = function() {
   return playlists.find({}, {sort:[['name', 'asc']]});
