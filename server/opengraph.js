@@ -8,6 +8,12 @@ if(Meteor.isServer){
       case 'vimeo':
         return 'http://vimeo.com/moogaloop.swf?clip_id='+video.providerId;
         break;
+      case 'dailymotion':
+        return 'http://www.dailymotion.com/swf/video/'+video.providerId+'?autoPlay=1';
+        break;
+      case 'soundcloud':
+        return 'http://player.soundcloud.com/player.swf?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F'+video.providerId+'&amp;color=3b5998&amp;auto_play=true&amp;show_artwork=false';
+        break;
     }
     return false;
   }
@@ -19,6 +25,12 @@ if(Meteor.isServer){
         break;
       case 'vimeo':
         return 'https://player.vimeo.com/video/'+video.providerId;
+        break;
+      case 'dailymotion':
+        return 'http://www.dailymotion.com/swf/video/'+video.providerId+'?autoPlay=1';
+        break;
+      case 'soundcloud':
+        return 'https://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F'+video.providerId+'&amp;color=3b5998&amp;auto_play=false&amp;show_artwork=true';
         break;
     }
     return false;
