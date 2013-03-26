@@ -1,3 +1,3 @@
-.playlistPreview{width:200px;height:200px;background:url(/img/logo-200px.png) center center no-repeat #fff;}
-  .playlistPreview .vignette{width:100px;height:100px;float:left;background-position:center center;background-repeat:no-repeat;background-size:cover;}
-  .playlistPreview.only-one .vignette{width:200px;height:200px;}
+.playlistPreview{width:150px;height:150px;background:url(/img/logo-100px.png) center center no-repeat #fff;padding:1px;}
+  .playlistPreview .vignette{width:50%;height:50%;float:left;background-position:center center;background-repeat:no-repeat;background-size:cover;}
+  .playlistPreview.only-one .vignette{width:100%;height:100%;}

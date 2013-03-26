@@ -3,7 +3,7 @@
   {{#if playlists.length}}
     {{#each playlists}}
     <div class="user-playlist open-playlist" data-playlist-id="{{_id}}">
-      <div class="playlist-title"><i class="icon-list"></i> {{name}}</div>
+      <div class="playlist-title">{{name}}</div>
       {{> playlistPreview}}
       {{#each canAccess}}
         <a href="#" class="open-user" data-user-id="{{_id}}">{{> profilePictureSharing}}</a>

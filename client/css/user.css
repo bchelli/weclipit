@@ -1,4 +1,4 @@
-.user-playlist{float:left;width:215px;height:285px;text-align:center;overflow:hidden;margin:0 20px 20px 0;cursor: pointer;}
-  .user-playlist .playlist-title{display: block;text-align:left;overflow:hidden;white-space: nowrap;text-overflow: ellipsis;}
-  .user-playlist .playlistPreview{margin-bottom:10px;margin-top: 10px}
-  .user-playlist .open-user img{width:25px;margin:10px 5px 0}
+.user-playlist{float:left;width:155px;height:203px;overflow:hidden;margin:0 40px 40px 0;cursor: pointer;}
+  .user-playlist .playlist-title{display: block;overflow:hidden;white-space: nowrap;text-overflow: ellipsis;font-size:12px;line-height:12px;}
+  .user-playlist .playlistPreview{margin-bottom:10px;margin-top:2px}
+  .user-playlist .open-user img{width:25px;margin:0 5px 5px 0}
