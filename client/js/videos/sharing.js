@@ -87,15 +87,17 @@ Template.videosSharingTemplate.events({
     _gaq.push(['_trackEvent', 'playlist', 'follow']);
     return false;
   }
-, 'click .set-privacy': function(){
+, 'click .set-privacy': function(ev){
     var privacy = event.currentTarget.getAttribute('data-privacy');
     Meteor.call('setPrivacy', Session.get('playlist'), privacy);
     _gaq.push(['_trackEvent', 'playlist', 'privacy', privacy]);
+    ev.preventDefault();
   }
-, 'click .set-public': function(){
+, 'click .set-public': function(ev){
     var public = event.currentTarget.getAttribute('data-public') === 'public';
     Meteor.call('setPublic', Session.get('playlist'), public);
     _gaq.push(['_trackEvent', 'playlist', 'public', public]);
+    ev.preventDefault();
   }
 , 'click .sharing-button': function(event){
     var $target=$(event.currentTarget)

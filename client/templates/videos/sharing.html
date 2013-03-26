@@ -4,8 +4,16 @@
       {{> playlistPreview}}
     {{/with}}
     {{#with playlist.ownerData}}
-      <h5>by <a href="#" class="open-user" data-user-id="{{_id}}">{{profile.name}}</a></h5>
+      <span class="playlist-by">
+        <a href="#" class="open-user" data-user-id="{{_id}}">
+          <i class="icon-user"></i>
+          {{profile.name}}
+        </a>
+      </span>
     {{/with}}
+  </div>
+  <div class="video-title">
+    <h5>Actions</h5>
     <ul class="nav nav-pills playlist-actions">
   {{#with playlist}}
     {{#if rightTo "isOwner" playlist myUser}}
@@ -24,7 +32,7 @@
           <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
-          <li><a class="set-public" data-public="public">
+          <li><a class="set-public" href="#" data-public="public">
           {{#if public}}
             <i class="icon-ok"></i>
           {{else}}
@@ -32,7 +40,7 @@
           {{/if}}
             Public
           </a></li>
-          <li><a class="set-public" data-public="private">
+          <li><a class="set-public" href="#" data-public="private">
           {{#if public}}
             <i class="icon-"></i>
           {{else}}
@@ -55,7 +63,7 @@
           <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
-          <li><a class="set-privacy" data-privacy="private">
+          <li><a class="set-privacy" href="#" data-privacy="private">
           {{#if privateTo "private"}}
             <i class="icon-ok"></i>
           {{else}}
@@ -63,7 +71,7 @@
           {{/if}}
             Only you
           </a></li>
-          <li><a class="set-privacy" data-privacy="public">
+          <li><a class="set-privacy" href="#" data-privacy="public">
           {{#if privateTo "public"}}
             <i class="icon-ok"></i>
           {{else}}
