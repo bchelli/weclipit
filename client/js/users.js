@@ -15,7 +15,10 @@ Deps.autorun(function () {
 });
 
 Accounts.ui.config({
-  passwordSignupFields: 'EMAIL_ONLY'
+  requestPermissions:{
+    google:['profile', 'email', 'https://www.googleapis.com/auth/plus.login']
+  }
+, passwordSignupFields: 'EMAIL_ONLY'
 });
 
 Template.userTemplate.helpers({

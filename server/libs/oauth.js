@@ -4,13 +4,17 @@ Meteor.OAuthRequest = function(req){
 }
 
 Meteor.OAuthRequest.prototype._setOauthHeaders = function(){
-  this.oauth = {
-    "consumer_key":this.req.options.clientId
-  , "nonce":(new Date()).getTime()+'0'+(new Date()).getTime()
-  , "signature_method":"HMAC-SHA1"
-  , "timestamp":Math.floor((new Date()).getTime()/1000)
-  , "version":"1.0"
-  };
+  if(!this.req.options.bearer){
+    this.oauth = {
+      "consumer_key":this.req.options.clientId
+    , "nonce":(new Date()).getTime()+'0'+(new Date()).getTime()
+    , "signature_method":"HMAC-SHA1"
+    , "timestamp":Math.floor((new Date()).getTime()/1000)
+    , "version":"1.0"
+    };
+  } else {
+    this.oauth = {bearer:this.req.options.bearer};
+  }
   if(this.req.options.token && this.req.options.tokenSecret){
     this.oauth.token = this.req.options.token;
   }
@@ -71,7 +75,15 @@ Meteor.OAuthRequest.prototype.call = function(callback){
     hostname: urlParsed.hostname
   , path: urlParsed.pathname+(qs===''?'':'?'+qs)
   , method: this.req.method
-  , headers:{
+  , headers:{}
+  };
+
+  if(this.oauth.bearer){
+    options.headers = {
+      'Authorization':'Bearer '+encodeURIComponent(this.oauth.bearer)
+    }
+  } else {
+    options.headers = {
       'Authorization':'OAuth realm="",'
                 +'oauth_consumer_key="'+      encodeURIComponent(this.oauth.consumer_key)+'",'
                 +'oauth_version="'+           encodeURIComponent(this.oauth.version)+'",'
@@ -81,8 +93,8 @@ Meteor.OAuthRequest.prototype.call = function(callback){
                 +(this.oauth.token?'oauth_token="'+             encodeURIComponent(this.oauth.token)+'",':'')
                 +'oauth_signature="'+         encodeURIComponent(this._getSignature())+'"'
     }
-  };
-  
+  }
+
   var req = http.request(options, function(res) {
     res.setEncoding('utf8');
     var result = [];

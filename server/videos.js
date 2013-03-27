@@ -238,4 +238,11 @@ Meteor.methods({
       updatePlaylistThumbnails(vid.playlist);
     }
   }
+, getLastVideosAdded : function(){
+    var uId = Meteor.userId();
+    var plIds = _.map(playlists.find({'canAccess._id':uId}).fetch(), function(pl){
+      return pl._id;
+    });
+    return videos.find({playlist:{$in:plIds},owner:{$not:{$in:[uId]}}}, {sort:{createdAt:-1},limit:10}).fetch();
+  }
 });

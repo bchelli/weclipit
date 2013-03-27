@@ -1,7 +1,7 @@
 
 var pageFactory = function(page){
-  return function (playlist) {
-    Session.set('page', page);
+  return function () {
+    this.goToPage(page);
   }
 };
 
@@ -16,13 +16,16 @@ Template.loggedTemplate.helpers({
 var HomeRouter = Backbone.Router.extend({
   routes: {
     '':       'openHome'
+  , 'feed':   'openFeed'
 //  , 'search': 'openSearch'
   },
 
   openHome: pageFactory('home'),
+  openFeed: pageFactory('feed'),
 //  openSearch: pageFactory('search'),
 
   goToPage: function (page) {
+    Session.set('page', page);
     this.navigate(page === 'home' ? '' : page, true);
   }
 });

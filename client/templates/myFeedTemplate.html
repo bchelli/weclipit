@@ -1,0 +1,46 @@
+<template name="myFeedTemplate">
+  {{#if isFriendsPage}}
+    <div id="video-right-container">
+      {{#if playlists.length}}
+        <h3><span>Recently added videos</span></h3>
+        {{#each playlists}}
+          <div class="playlist-preview">
+            <a class="open-playlist playlist-preview-img" data-playlist="{{_id}}">
+              {{> playlistPreview}}
+            </a>
+            <div class="playlist-content">
+              <h4><span class="open-playlist" data-playlist="{{_id}}"><i class="icon-list"></i> {{name}}</span></h4>
+              <table class="table table-condensed videos-list">
+                {{#each videos}}
+                <tr class="video video-playlist{{#if isPlaying}} {{else}} not-playing {{/if}}" playlist="{{playlist}}" video="{{_id}}">
+                  <td class="videos-preview"><div class="img-container"><img src="{{data.thumbnail_url}}" /></div></td>
+                  <td class="videos-description">
+                    <div class="video-description-title">{{data.title}}</div>
+                    <div class="video-description-origin">
+                      from <a href="{{data.provider_url}}" target="_blank">{{data.provider_name}}</a>
+                      by <a href="{{data.author_url}}" target="_blank">{{data.author_name}}</a>
+                    </div>
+                  </td>
+                  <td class="videos-added-by">
+                    <a href="#" class="open-user" data-user-id="{{ownerData._id}}">{{ownerData.profile.name}}</a>
+                  </td>
+                  <td class="videos-added-by">
+                    {{formatTime createdAt}} ago
+                  </td>
+                </tr>
+                {{/each}}
+              </table>
+            </div>
+          </div>
+        {{/each}}
+      {{/if}}
+
+      {{#if friends.length}}
+        <h3><span>Friends already 26playing</span></h3>
+        {{#each friends}}
+          {{> profileUser}}
+        {{/each}}
+      {{/if}}
+    </div>
+  {{/if}}
+</template>

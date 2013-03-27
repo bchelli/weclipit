@@ -1,0 +1,24 @@
+.profile-user-big{
+  float:left;
+  display:block;
+  width:225px;
+  height:250px;
+}
+  .profile-user-big img{
+    width:200px;
+    height:200px;
+    padding:1px;
+  }
+
+.playlist-preview{
+  clear:both;
+  min-height: 210px;
+  margin-bottom:20px;
+}
+  .playlist-preview .playlist-preview-img{
+    float: left;
+    margin-right:20px;
+  }
+  .playlist-preview .playlist-content{
+    margin-left: 174px;
+  }
