@@ -6,4 +6,6 @@ Template.homeTemplate.helpers({
 });
 
 Template.homeTemplate.rendered = function(){
+  // SET NICE SCROLL
+  setNicescroll("#video-right-container");
 };

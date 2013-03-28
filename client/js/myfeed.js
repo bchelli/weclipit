@@ -1,23 +1,4 @@
 
-Template.myFeedTemplate.helpers({
-  isFriendsPage:function(){
-    return Session.get('page') === 'feed';
-  }
-, isPlaying: function () {
-    var pl = Session.get("playing");
-    return pl && this._id === pl.video;
-  }
-, formatTime: function(time){
-    var delta = (new Date()).getTime() - time;
-    if(_.isNaN(delta)) return '?';
-    if(delta >= 1000*60*60*24*365) return Math.floor(delta / (1000*60*60*24*365))+' year(s)';
-    if(delta >= 1000*60*60*24*30) return Math.floor(delta / (1000*60*60*24*30))+' month(s)';
-    if(delta >= 1000*60*60*24) return Math.floor(delta / (1000*60*60*24))+' day(s)';
-    if(delta >= 1000*60*60) return Math.floor(delta / (1000*60*60))+' hour(s)';
-    return Math.floor(delta / (1000*60))+' minute(s)';
-  }
-});
-
 Template.myFeedTemplate.events({
   'click .video-playlist': function (event, template) {
     playlistsRouter.setPlaylist(event.currentTarget.getAttribute('playlist'));
@@ -25,7 +6,11 @@ Template.myFeedTemplate.events({
     return false;
   }
 , 'click .open-playlist': function (event, template) {
-    playlistsRouter.setPlaylist(event.currentTarget.getAttribute('data-playlist'));
+    playlistsRouter.setPlaylist(event.currentTarget.getAttribute('data-playlist-id'));
+    return false;
+  }
+, 'click .open-user': function (event, template) {
+    usersRouter.openUser(event.currentTarget.getAttribute('data-user-id'));
     return false;
   }
 });
@@ -35,8 +20,8 @@ Template.myFeedTemplate.friends = function(){
   return Session.get('friends-list');
 };
 
-Template.myFeedTemplate.playlists = function(){
-  return Session.get('playlists-list');
+Template.myFeedTemplate.videos = function(){
+  return Session.get('videos-list');
 };
 
 Template.myFeedTemplate.rendered = function(){
@@ -58,19 +43,13 @@ Template.myFeedTemplate.rendered = function(){
     'getLastVideosAdded' 
   , function(err, videos){
       if(!err) {
-        var pls = {};
-        var plsIds = [];
         for(var i=0,l=videos.length;i<l;i++){
-          var v = videos[i];
-          if(!pls[v.playlist]) {
-            plsIds.push(v.playlist);
-            pls[v.playlist] = playlists.findOne({_id:v.playlist});
-            pls[v.playlist].videos = [];
-          }
-          pls[v.playlist].videos.push(v);
+          videos[i].playlistData = playlists.findOne({_id:videos[i].playlist});
         }
-        Session.set('playlists-list', _.map(plsIds, function(plId){return pls[plId]}));
+        Session.set('videos-list', videos);
       }
     }
   );
+  // SET NICE SCROLL
+  setNicescroll("#feedContent");
 };
