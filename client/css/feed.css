@@ -30,8 +30,11 @@
   overflow: scroll;
   border-left: 1px solid #ddd;
   background-color: #f5f5f5;
+  display: none;
 }
-
+.display-feeds #feedContent{
+  display:block;
+}
   #feedContent h5{
     text-align:center;
   }
@@ -39,6 +42,8 @@
     #feedContent .feed{
       padding:10px;
       border-top:1px solid #ccc;
+      cursor: pointer;
+      min-height:25px;
     }
 
     #feedContent .feed .img-container {

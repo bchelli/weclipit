@@ -1,7 +1,9 @@
 <template name="userTemplate">
   {{#if isUserPage}}
     {{#if isLoading}}
-      <h2 class="no-video">Loading</h2>
+      <div id="video-right-container">
+        <h2 class="no-video">Loading</h2>
+      </div>
     {{else}}
       <div id="video-left-container">
         {{> userDetailsTemplate}}
