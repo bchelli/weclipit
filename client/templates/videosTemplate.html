@@ -10,7 +10,6 @@
 
   {{> remove-video-popup}}
   {{> add-video-popup}}
-  {{> search-video-popup}}
   {{> remove-playlist-popup}}
   {{> share-playlist-popup}}
   {{/if}}
@@ -54,30 +53,6 @@
         </div>
       </div>
     </form>
-  </div>
-</template>
-
-
-<template name="search-video-popup">
-  <div class="modal hide fade" id="search-video-modal">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h3>Search a Video</h3>
-    </div>
-    <div class="modal-body">
-      <form class="form-search">
-        <input type="hidden" id="search-video-provider">
-        <input type="text" class="input-medium search-query span10" id="search-video-query">
-        <button type="submit" class="btn">Search</button>
-      </form>
-      <div id="search-video-result">
-      </div>
-    </div>
-    <div class="modal-footer">
-      <div class="controls">
-        <a href="#" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Done</a>
-      </div>
-    </div>
   </div>
 </template>
 

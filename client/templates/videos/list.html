@@ -29,6 +29,11 @@
         <li>
           <a href="#" class="playlist-edit" playlist="{{_id}}"><i class="icon-pencil"></i></a>
         </li>
+      {{#if rightTo "canAddVideo" playlist myUser}}
+        <li>
+          <a href="#" id="add-video-from-url"><i class="icon-plus-sign"></i></a>
+        </li>
+      {{/if}}
       </ul>
     {{/if}}
     </h3>
@@ -44,15 +49,26 @@
     </form>
     {{/if}}
   {{#if rightTo "canAddVideo" playlist myUser}}
-    <span>Add video from:</span>
-    <a href="#" data-provider="youtube" class="add-video-from-search"><i class="icon-search"></i> YouTube</a>
-    <a href="#" data-provider="vimeo" class="add-video-from-search"><i class="icon-search"></i> Vimeo</a>
-    <a href="#" data-provider="dailymotion" class="add-video-from-search"><i class="icon-search"></i> Dailymotion</a>
-    <a href="#" id="add-video-from-url"><i class="icon-plus-sign"></i> URL</a>
+    <form id="search-form">
+      <input type="text" id="search-field" placeholder="Search" class="input-block-level search-query" />
+    </form>
+    <div id="search-video-results">
+      <ul class="nav nav-pills" id="providers-tabs">
+        <li class="active"><a href="#search-video-result-youtube">Youtube</a></li>
+        <li><a href="#search-video-result-vimeo">Vimeo</a></li>
+        <li><a href="#search-video-result-dailymotion">Dailymotion</a></li>
+      </ul>
+       
+      <div class="tab-content">
+        <div class="tab-pane active" id="search-video-result-youtube"></div>
+        <div class="tab-pane" id="search-video-result-vimeo"></div>
+        <div class="tab-pane" id="search-video-result-dailymotion"></div>
+      </div>
+    </div>
   {{else}}
     <span>You cannot add video into this playlist</span>
-  {{/if}}
     <br /><br />
+  {{/if}}
   </div>
   {{#if videos.count}}
     <table class="table table-condensed videos-list">
