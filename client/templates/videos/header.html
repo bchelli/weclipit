@@ -1,0 +1,50 @@
+<template name="videosHeaderTemplate">
+  <ul class="nav nav-pills sort-by-container pull-right">
+    <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        Sort by: 
+        {{#if sortedBy "time-down"}}
+          Date desc
+        {{/if}}
+        {{#if sortedBy "time-up"}}
+          Date asc
+        {{/if}}
+        {{#if sortedBy "like-down"}}
+          Nb likes
+        {{/if}}
+        <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu pull-right">
+        <li><a class="sort-by" data-sort-by="time-down">Date desc</a></li>
+        <li><a class="sort-by" data-sort-by="time-up">Date asc</a></li>
+        <li><a class="sort-by" data-sort-by="like-down">Nb likes</a></li>
+      </ul>
+    </li>
+  </ul>
+  <h3 id="playlist-name">
+    <span class="playlistName">{{playlist.name}}</span>
+  {{#if rightTo "isOwner" playlist myUser}}
+    <ul class="nav nav-pills rename-playlist-container">
+      <li>
+        <a href="#" class="playlist-edit" playlist="{{_id}}"><i class="icon-pencil"></i></a>
+      </li>
+    {{#if rightTo "canAddVideo" playlist myUser}}
+      <li>
+        <a href="#" id="add-video-from-url"><i class="icon-plus-sign"></i></a>
+      </li>
+    {{/if}}
+    </ul>
+  {{/if}}
+  </h3>
+  {{#if rightTo "isOwner" playlist myUser}}
+  <form class="form-search" id="edit-playlist-name">
+    <input type="text" value="{{playlist.name}}" />
+    <a href="#" class="valid-playlist-name btn btn-mini btn-primary">
+      <i class="icon-ok icon-white"></i>
+    </a>
+    <a href="#" class="cancel-playlist-name btn btn-mini">
+      <i class="icon-remove"></i>
+    </a>
+  </form>
+  {{/if}}
+</template>
