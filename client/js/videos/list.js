@@ -174,7 +174,7 @@ Template.videosListTemplate.events({
       ;
     $('#providers-tabs a').click(function (e) {
       e.preventDefault();
-      $(this).tab('show');
+      $(this).hasClass('provider-tab') && $(this).tab('show');
     });
     $('#search-video-results').show();
 
@@ -220,7 +220,7 @@ Template.videosListTemplate.events({
       if(!err){
         for(var i=0,l=videosYoutube.length;i<l;i++){
           var url = videosYoutube[i].link[0].href.replace('&feature=youtube_gdata', '')
-            , id = url.replace('http://www.youtube.com/watch?v=', '')
+            , id = url.replace('http://www.youtube.com/watch?v=', '').replace('https://www.youtube.com/watch?v=', '')
             ;
           videosResult.push({
             url:        url
@@ -257,6 +257,10 @@ Template.videosListTemplate.events({
     var $el = $(event.currentTarget);
     $('#search-field').val('');
     Meteor.call('addVideo', Session.get('playlist'), $el.attr('data-url'));
+    return false;
+  }
+, 'click #close-inline-search': function(){
+    $('#search-video-results').hide();
     return false;
   }
 });
