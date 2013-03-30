@@ -1,7 +1,10 @@
 <template name="videosSearchTemplate">
   {{#if canAddVideo}}
-    <form id="search-form">
-      <input type="text" id="search-field" placeholder="Search" class="input-block-level search-query" />
+    <form id="search-form" class="form-search">
+      <div class="input-append">
+        <input type="text" class="input-block-level search-query" id="search-field" placeholder="Search on Youtube, Vimeo & Dailymotion" />
+        <button type="submit" class="btn"><i class="icon-search"></i> Search</button>
+      </div>
     </form>
     <div id="search-video-results">
       <ul class="nav nav-pills" id="providers-tabs">

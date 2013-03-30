@@ -86,7 +86,7 @@ h2.no-video {text-align:center;color:#ddd;padding:30px 0;}
   border-radius: 9px;
   -webkit-border-radius: 9px;
   -moz-border-radius: 9px;
-  width: 96%;
+  width: 82.6%;
   margin-left: 2%;
   margin-right: 2%;
   margin-top: -11px;
@@ -113,6 +113,10 @@ h2.no-video {text-align:center;color:#ddd;padding:30px 0;}
 
 #search-video-result-youtube, #search-video-result-vimeo, #search-video-result-dailymotion{overflow:scroll;height:300px;margin-bottom:10px;}
 #search-form{margin-bottom:0px;width:100%;}
-#search-field{margin-bottom:10px;}
+#search-field{margin-bottom:10px;width:85%}
+#search-form .input-append{width:100%;}
+#search-form .btn{width:15%;}
 
 #providers-tabs {margin:10px;}
+
+
