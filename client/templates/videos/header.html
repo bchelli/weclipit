@@ -23,18 +23,18 @@
   </ul>
   <h3 id="playlist-name">
     <span class="playlistName">{{playlist.name}}</span>
-  {{#if rightTo "isOwner" playlist myUser}}
     <ul class="nav nav-pills rename-playlist-container">
+    {{#if rightTo "isOwner" playlist myUser}}
       <li>
         <a href="#" class="playlist-edit" playlist="{{_id}}"><i class="icon-pencil"></i></a>
       </li>
+    {{/if}}
     {{#if rightTo "canAddVideo" playlist myUser}}
       <li>
         <a href="#" id="add-video-from-url"><i class="icon-plus-sign"></i></a>
       </li>
     {{/if}}
     </ul>
-  {{/if}}
   </h3>
   {{#if rightTo "isOwner" playlist myUser}}
   <form class="form-search" id="edit-playlist-name">
