@@ -7,26 +7,14 @@
 
 // Set Template Helpers
 Template.videosSearchTemplate.helpers({
-  rightTo: function(right, playlist, myUser, video){
-    if(right === "isOwner") return playlists.isOwner(playlist, myUser);
-    if(right === "canAccess") return playlists.canAccess(playlist, myUser);
-    if(right === "canAddVideo") return playlists.canAddVideo(playlist, myUser);
-    if(right === "canRemoveVideo") return playlists.canRemoveVideo(playlist, video, myUser);
-    return false;
+  canAddVideo: function(){
+    if(!Session.get('playlist')) return false;
+    return playlists.canAddVideo(
+      playlists.findOne({_id:Session.get('playlist')}, {reactive:false})
+    , Meteor.user()
+    );
   }
 });
-
-// Set Template Variables
-Template.videosSearchTemplate.playlist = function() {
-  if(!Session.get('playlist')) return {};
-  var pl = playlists.findOne({_id:Session.get('playlist')});
-  if(pl) pl.canAccess = _.shuffle(pl.canAccess || []);
-  return pl || {};
-};
-Template.videosSearchTemplate.myUser = function() {
-  var u = Meteor.users.findOne({_id:Meteor.userId()});
-  return u || {};
-};
 
 Template.videosSearchTemplate.events({
   'submit #search-form': function(event, template){
