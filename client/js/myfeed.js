@@ -21,14 +21,19 @@ Template.myFeedTemplate.friends = function(){
 };
 
 Template.myFeedTemplate.videos = function(){
-  return Session.get('videos-list');
+  return videos.getLastVideosAdded(Meteor.userId());
+};
+
+Template.myFeedTemplate.thePlaylist = function(){
+  return playlists.findOne({_id:this.playlist});
 };
 
 Deps.autorun(function(){
   var u = Meteor.user();
+  
+  Meteor.subscribe('getLastVideosAdded', Meteor.userId());
 
   Session.set('friends-list', []);
-  Session.set('videos-list', []);
 
   // must be logged
   if(u && u.services) {
@@ -42,25 +47,12 @@ Deps.autorun(function(){
         if(!err) Session.set('friends-list', friends);
       });
     }
-    // GET LAST MOVIES ADDED
-    Meteor.call(
-      'getLastVideosAdded' 
-    , function(err, videos){
-        if(!err) {
-          for(var i=0,l=videos.length;i<l;i++){
-            videos[i].playlistData = playlists.findOne({_id:videos[i].playlist});
-          }
-          Session.set('videos-list', videos);
-        }
-      }
-    );
   }
 });
 
 Deps.autorun(function(){
   var lists = [
-          Session.get('videos-list')
-        , Session.get('friends-list')
+          Session.get('friends-list')
         ]
     , display = false
     ;

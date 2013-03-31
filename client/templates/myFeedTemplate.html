@@ -1,13 +1,13 @@
 <template name="myFeedTemplate">
   <div id="feedContent">
-    {{#if videos.length}}
+    {{#if videos}}
       <h5><span>Recently added videos</span></h5>
       {{#each videos}}
       <div class="feed video video-playlist not-playing" playlist="{{playlist}}" video="{{_id}}">
         <div class="img-container"><img src="{{data.thumbnail_url}}" /></div>
         <div class="feed-description-title">{{data.title}}</div>
         <div class="feed-description-origin">
-          in <a href="#" class="open-playlist" data-playlist-id="{{playlist}}">{{playlistData.name}}</a>
+          in <a href="#" class="open-playlist" data-playlist-id="{{playlist}}">{{thePlaylist.name}}</a>
           by <a href="#" class="open-user" data-user-id="{{ownerData._id}}">{{ownerData.profile.name}}</a>
         </div>
       </div>

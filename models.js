@@ -4,6 +4,13 @@ var videos = new Meteor.Collection('videos');
 
 var configDb = new Meteor.Collection('configDb');
 
+videos.getLastVideosAdded = function(uId){
+  var plIds = _.map(playlists.find({'canAccess._id':uId}).fetch(), function(pl){
+    return pl._id;
+  });
+  return videos.find({playlist:{$in:plIds},owner:{$not:{$in:[uId]}}}, {sort:{createdAt:-1},limit:10});
+}
+
 videos.isOwner = function(video, user){
   if(!user) user = Meteor.user();
   return video

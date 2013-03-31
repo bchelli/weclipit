@@ -4,6 +4,10 @@ Meteor.publish('videos', function(pls){
   return videos.find({playlist:{'$in':pls.split(',')}});
 });
 
+Meteor.publish('getLastVideosAdded', function(uId){
+  return videos.getLastVideosAdded(uId);
+});
+
 Meteor.methods({
   importYoutubePlaylist: function(playlist, youtubePlaylistId){
     var fiber = Fiber.current;
@@ -242,12 +246,5 @@ Meteor.methods({
       // update playlist video count
       updateVideoCount(vid.playlist);
     }
-  }
-, getLastVideosAdded : function(){
-    var uId = Meteor.userId();
-    var plIds = _.map(playlists.find({'canAccess._id':uId}).fetch(), function(pl){
-      return pl._id;
-    });
-    return videos.find({playlist:{$in:plIds},owner:{$not:{$in:[uId]}}}, {sort:{createdAt:-1},limit:10}).fetch();
   }
 });
