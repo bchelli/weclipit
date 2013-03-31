@@ -81,14 +81,6 @@
           </a></li>
         </ul>
       </li>
-    {{else}}
-      <li>
-      {{#if rightTo "canAccess" playlist myUser}}
-        <a href="#" class="playlist-remove" playlist="{{_id}}"><i class="icon-remove"></i> Unfollow this playlist</a>
-      {{else}}
-        <a href="#" class="playlist-follow" playlist="{{_id}}"><i class="icon-ok"></i> Follow this playlist</a>
-      {{/if}}
-      </li>
     {{/if}}
       <li class="dropdown dropup">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">

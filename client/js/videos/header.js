@@ -64,7 +64,31 @@ function setNewName(){
   });
 }
 Template.videosHeaderTemplate.events({
-  'click #add-video-from-url': function (event, template) {
+  'click .playlist-unfollow': function (event, template) {
+    Meteor.call('unfollowPlaylist', event.currentTarget.getAttribute('playlist'));
+    _gaq.push(['_trackEvent', 'playlist', 'unfollow']);
+    return false;
+  }
+, 'mouseover .playlist-unfollow': function (event, template) {
+    $(event.currentTarget)
+      .removeClass('btn-primary')
+      .addClass('btn-danger')
+      .html('Unfollow')
+      ;
+  }
+, 'mouseout .playlist-unfollow': function (event, template) {
+    $(event.currentTarget)
+      .addClass('btn-primary')
+      .removeClass('btn-danger')
+      .html('Following')
+      ;
+  }
+, 'click .playlist-follow': function (event, template) {
+    Meteor.call('followPlaylist', event.currentTarget.getAttribute('playlist'));
+    _gaq.push(['_trackEvent', 'playlist', 'follow']);
+    return false;
+  }
+, 'click #add-video-from-url': function (event, template) {
     $('#add-video-url').val('');
     $('#add-video-modal')
       .on('shown', function(){

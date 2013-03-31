@@ -1,26 +1,27 @@
 <template name="videosHeaderTemplate">
-  <ul class="nav nav-pills sort-by-container pull-right">
-    <li class="dropdown">
-      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-        Sort by: 
-        {{#if sortedBy "time-down"}}
-          Date desc
-        {{/if}}
-        {{#if sortedBy "time-up"}}
-          Date asc
-        {{/if}}
-        {{#if sortedBy "like-down"}}
-          Nb likes
-        {{/if}}
-        <span class="caret"></span>
-      </a>
-      <ul class="dropdown-menu pull-right">
-        <li><a class="sort-by" data-sort-by="time-down">Date desc</a></li>
-        <li><a class="sort-by" data-sort-by="time-up">Date asc</a></li>
-        <li><a class="sort-by" data-sort-by="like-down">Nb likes</a></li>
-      </ul>
-    </li>
-  </ul>
+  <table class="following-bar">
+    <tr>
+      <td>
+        <span class="value">{{playlist.canAccess.length}}</span>
+        <span class="unit">followers</span>
+      </td>
+      <td>
+        <span class="value">{{playlist.nbVideos}}</span>
+        <span class="unit">videos</span>
+      </td>
+      <td class="last-box">
+    {{#if rightTo "isOwner" playlist myUser}}
+        <a href="#" class="btn disabled">Follow</a>
+    {{else}}
+      {{#if rightTo "canAccess" playlist myUser}}
+        <a href="#" class="btn btn-primary playlist-unfollow" playlist="{{playlist._id}}">Following</a>
+      {{else}}
+        <a href="#" class="btn playlist-follow" playlist="{{playlist._id}}">Follow</a>
+      {{/if}}
+    {{/if}}
+      </td>
+    </tr>
+  </table>
   <h3 id="playlist-name">
     <span class="playlistName">{{playlist.name}}</span>
     <ul class="nav nav-pills rename-playlist-container">
@@ -47,4 +48,26 @@
     </a>
   </form>
   {{/if}}
+  <ul class="nav nav-pills sort-by-container pull-right">
+    <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        Sort by: 
+        {{#if sortedBy "time-down"}}
+          Date desc
+        {{/if}}
+        {{#if sortedBy "time-up"}}
+          Date asc
+        {{/if}}
+        {{#if sortedBy "like-down"}}
+          Nb likes
+        {{/if}}
+        <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu pull-right">
+        <li><a class="sort-by" data-sort-by="time-down">Date desc</a></li>
+        <li><a class="sort-by" data-sort-by="time-up">Date asc</a></li>
+        <li><a class="sort-by" data-sort-by="like-down">Nb likes</a></li>
+      </ul>
+    </li>
+  </ul>
 </template>

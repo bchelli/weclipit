@@ -82,11 +82,6 @@ Template.videosSharingTemplate.events({
     _gaq.push(['_trackEvent', 'playlist', 'remove']);
     return false;
   }
-, 'click .playlist-follow': function (event, template) {
-    Meteor.call('followPlaylist', event.currentTarget.getAttribute('playlist'));
-    _gaq.push(['_trackEvent', 'playlist', 'follow']);
-    return false;
-  }
 , 'click .set-privacy': function(ev){
     var privacy = event.currentTarget.getAttribute('data-privacy');
     Meteor.call('setPrivacy', Session.get('playlist'), privacy);

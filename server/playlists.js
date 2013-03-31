@@ -60,16 +60,22 @@ Meteor.methods({
       }
     }
   }
+, unfollowPlaylist : function(playlist){
+    var pl = playlists.findOne({_id:playlist});
+    if(pl){
+      if(pl.owner!==Meteor.userId()){
+        playlists.update({_id:playlist}, {
+          $pull: {canAccess:{_id:Meteor.userId()}}
+        });
+      }
+    }
+  }
 , removePlaylist : function(playlist){
     var pl = playlists.findOne({_id:playlist});
     if(pl){
       if(pl.owner===Meteor.userId()){
         videos.remove({playlist:pl._id})
         playlists.remove({_id:pl._id})
-      } else {
-        playlists.update({_id:playlist}, {
-          $pull: {canAccess:{_id:Meteor.userId()}}
-        });
       }
     }
   }
