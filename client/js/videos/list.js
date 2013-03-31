@@ -39,7 +39,7 @@ Template.videosListTemplate.helpers({
 });
 
 // Set Template Variables
-Template.videosListTemplate.playlist = function() {
+Template.videosListTemplate.activePlaylist = function() {
   if(!Session.get('playlist')) return {};
   var pl = playlists.findOne({_id:Session.get('playlist')});
   if(pl) pl.canAccess = _.shuffle(pl.canAccess || []);

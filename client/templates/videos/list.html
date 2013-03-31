@@ -1,6 +1,6 @@
 <template name="videosListTemplate">
-  {{#if isNotEmpty playlist}}
-    {{#if isLoaded playlist videos}}
+  {{#if isNotEmpty activePlaylist}}
+    {{#if isLoaded activePlaylist videos}}
     <table class="table table-condensed videos-list">
       <tbody>
       {{#each videos}}
