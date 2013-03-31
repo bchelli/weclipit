@@ -112,6 +112,15 @@ reorg.num7 = function(){
   return true;
 };
 
+reorg.num8 = function(){
+  var pls = playlists.find().fetch()
+    ;
+  _.each(pls, function(pl){
+    updateVideoCount(pl._id);
+  });
+  return true;
+};
+
 // RUN Reoganisation on startup
 Meteor.startup(function(){
   var db = getConfig('db') || {version:0};

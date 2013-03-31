@@ -30,9 +30,21 @@ Template.videosListTemplate.helpers({
     if(delta >= 1000*60*60) return Math.floor(delta / (1000*60*60))+' hour(s)';
     return Math.floor(delta / (1000*60))+' minute(s)';
   }
+, isNotEmpty: function(playlist){
+    return playlist && playlist.nbVideos && playlist.nbVideos !== 0;
+  }
+, isLoaded: function(playlist, videos){
+    return playlist.nbVideos === videos.count();
+  }
 });
 
 // Set Template Variables
+Template.videosListTemplate.playlist = function() {
+  if(!Session.get('playlist')) return {};
+  var pl = playlists.findOne({_id:Session.get('playlist')});
+  if(pl) pl.canAccess = _.shuffle(pl.canAccess || []);
+  return pl || {};
+};
 Template.videosListTemplate.videos = function() {
   if(!Session.get('playlist')) return {};
   var pl = Session.get('playlist');

@@ -1,5 +1,6 @@
 <template name="videosListTemplate">
-  {{#if videos.count}}
+  {{#if isNotEmpty playlist}}
+    {{#if isLoaded playlist videos}}
     <table class="table table-condensed videos-list">
       <tbody>
       {{#each videos}}
@@ -34,6 +35,9 @@
       {{/each}}
       </tbody>
     </table>
+    {{else}}
+      <h2 class="no-video">Loading . . .</h2>
+    {{/if}}
   {{else}}
     <h2 class="no-video">No video in this playlist</h2>
   {{/if}}
