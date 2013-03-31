@@ -20,6 +20,14 @@ function updatePlaylistThumbnails(playlist){
   })
 }
 
+function updateVideoCount(pl){
+  playlists.update({_id:pl}, {
+    $set:{
+      nbVideos:videos.find({playlist:pl}).count()
+    }
+  });
+}
+
 Meteor.methods({
   setPrivacy : function(playlist, privacy){
     if(['public','private'].indexOf(privacy)!==-1){
@@ -91,6 +99,8 @@ Meteor.methods({
       , ownerData:      user
       , privacy:        'private'
       , public:         true
+      , thumbnails:     []
+      , nbVideos:       0
       });
     }
     return result;

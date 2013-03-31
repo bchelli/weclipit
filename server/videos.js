@@ -199,6 +199,8 @@ Meteor.methods({
             });
             // update playlist video preview
             updatePlaylistThumbnails(playlist);
+            // update playlist video count
+            updateVideoCount(playlist);
           }
         }
         fiber.run();
@@ -235,7 +237,10 @@ Meteor.methods({
       var pl = playlists.findOne({_id:vid.playlist});
       if(!playlists.canRemoveVideo(pl, vid)) return;
       videos.remove({_id:video});
+      // update playlist video preview
       updatePlaylistThumbnails(vid.playlist);
+      // update playlist video count
+      updateVideoCount(vid.playlist);
     }
   }
 , getLastVideosAdded : function(){
