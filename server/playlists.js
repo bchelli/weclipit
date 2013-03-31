@@ -51,19 +51,6 @@ Meteor.methods({
       playlists.update({_id:playlist}, {$set:{name:name}});
     }
   }
-, sharePlaylist : function(playlist, users){
-    var pl = playlists.findOne({owner:Meteor.userId(),_id:playlist});
-    if(pl){
-      var u = Meteor.user();
-      for(var i in users){
-        Meteor.facebook.api(
-          '/'+u.services.facebook.id+'/twentysixplays:share'
-        , 'POST'
-        , {'profile':users[i]}
-        );
-      }
-    }
-  }
 , followPlaylist : function(playlist){
     var pl = playlists.findOne({_id:playlist});
     if(pl){
