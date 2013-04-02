@@ -20,6 +20,10 @@ Template.myFeedTemplate.friends = function(){
   return Session.get('friends-list');
 };
 
+Template.myFeedTemplate.hasVideo = function(videos){
+  return videos && videos.fetch && videos.fetch().length > 0;
+};
+
 Template.myFeedTemplate.videos = function(){
   return videos.getLastVideosAdded(Meteor.userId());
 };
