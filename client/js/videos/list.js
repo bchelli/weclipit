@@ -51,6 +51,10 @@ Template.videosListTemplate.videos = function() {
   if (!pl) return {};
   return videos.find({playlist:pl}, {sort:Session.get('video-sort')});
 };
+Template.videosListTemplate.myUser = function() {
+  var u = Meteor.users.findOne({_id:Meteor.userId()});
+  return u || {};
+};
 
 // Set Template Events
 Template.videosListTemplate.events({
