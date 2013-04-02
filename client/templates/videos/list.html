@@ -27,7 +27,7 @@
             {{/with}}
           </td>
           <td class="videos-playing">
-            {{#if rightTo "canRemoveVideo" playlist myUser .}}
+            {{#if rightTo "canRemoveVideo" activePlaylist myUser .}}
             <a href="#" class="remove-video" video="{{_id}}">
               <i class="icon-remove"></i>
             </a>
