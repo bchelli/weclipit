@@ -1,6 +1,7 @@
 <template name="myFeedTemplate">
   <div id="feedContent">
     {{#if videos}}
+    <div class="feed-content">
       <h5><span>Recently added videos</span></h5>
       {{#each videos}}
       <div class="feed video video-playlist not-playing" playlist="{{playlist}}" video="{{_id}}">
@@ -12,9 +13,11 @@
         </div>
       </div>
       {{/each}}
+    </div>
     {{/if}}
   
     {{#if friends.length}}
+    <div class="feed-content">
       <h5><span>26players</span></h5>
       {{#each friends}}
       <div class="feed open-user" data-user-id="{{_id}}">
@@ -22,6 +25,7 @@
         <div class="feed-description-title">{{profile.name}}</div>
       </div>
       {{/each}}
+    </div>
     {{/if}}
   </div>
 </template>

@@ -50,22 +50,9 @@ Deps.autorun(function(){
   }
 });
 
-Deps.autorun(function(){
-  var lists = [
-          Session.get('friends-list')
-        ]
-    , display = false
-    ;
-  for(var i=0,l=lists.length;i<l;i++){
-    if(lists[i] && lists[i].length>0){
-      display = true;
-    }
-  }
-  if(display) $('body').addClass('display-feeds');
-  else $('body').removeClass('display-feeds');
-});
-
 Template.myFeedTemplate.rendered = function(){
   // SET NICE SCROLL
   setNicescroll("#feedContent");
+  if($('.feed-content').length !== 0) $('body').addClass('display-feeds');
+  else $('body').removeClass('display-feeds');
 };
