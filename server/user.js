@@ -35,31 +35,35 @@ Meteor.publish("userData", function () {
 });
 function addUserToCollection(collection, userId){
   collection.users = collection.users || {};
+  collection.ids = collection.ids || [];
   if(!collection.users['u'+userId]){
     collection.users['u'+userId] = true;
-    collection.push(userId);
+    collection.ids.push(userId);
   }
 }
 
 Meteor.publish('playlist-users', function(plId){
   if(plId){
-    var users = [];
+    var users = {};
     var pl = playlists.findOne({_id:plId});
-    if(pl) addUserToCollection(users, pl.owner);
+    if(pl) {
+      addUserToCollection(users, pl.owner);
+      for(var i=0,l=pl.followers.length;i<l;i++){
+        addUserToCollection(users, pl.followers[i]);
+      }
+    }
     var vids = videos.find({playlist:plId}, {fields:{owner:1}}).fetch();
     for(var i=0,l=vids.length;i<l;i++){
       addUserToCollection(users, vids[i].owner);
     }
-    if(pl){
-      return Meteor.users.find(
-        {
-          _id:{$in:users}
-        }
-      , {
-          fields: userFields
-        }
-      );
-    }
+    return Meteor.users.find(
+      {
+        _id:{$in:users.ids}
+      }
+    , {
+        fields: userFields
+      }
+    );
   }
   return [];
 });
@@ -67,13 +71,13 @@ Meteor.publish('playlist-users', function(plId){
 Meteor.publish('feed-users', function(){
   if(this.userId){
     var vids = videos.getLastVideosAdded(this.userId).fetch();
-    var users = [];
+    var users = {};
     for(var i=0,l=vids.length;i<l;i++){
       addUserToCollection(users, vids[i].owner);
     }
     return Meteor.users.find(
       {
-        _id:{$in:users}
+        _id:{$in:users.ids}
       }
     , {
         fields: userFields
@@ -84,7 +88,7 @@ Meteor.publish('feed-users', function(){
 });
 
 Meteor.publish('user-info', function(userId){
-  var users = [];
+  var users = {};
   var pls = playlists.find({owner:userId,public:true}).fetch();
   addUserToCollection(users, userId);
   for(var i=0,l=pls.length;i<l;i++){
@@ -92,7 +96,7 @@ Meteor.publish('user-info', function(userId){
       addUserToCollection(users, pls[i].followers[j]);
     }
   }
-  return Meteor.users.find({_id:{$in:users}});
+  return Meteor.users.find({_id:{$in:users.ids}});
 });
 
 Meteor.publish('user-info-playlists', function(userId){
