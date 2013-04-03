@@ -96,7 +96,14 @@ Meteor.publish('user-info', function(userId){
       addUserToCollection(users, pls[i].followers[j]);
     }
   }
-  return Meteor.users.find({_id:{$in:users.ids}});
+  return Meteor.users.find(
+    {
+      _id:{$in:users.ids}
+    }
+  , {
+      fields: userFields
+    }
+  );
 });
 
 Meteor.publish('user-info-playlists', function(userId){
