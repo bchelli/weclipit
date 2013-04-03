@@ -36,7 +36,7 @@ Meteor.publish("userData", function () {
 function addUserToCollection(collection, userId){
   collection.users = collection.users || {};
   collection.ids = collection.ids || [];
-  if(!collection.users['u'+userId]){
+  if(userId && !collection.users['u'+userId]){
     collection.users['u'+userId] = true;
     collection.ids.push(userId);
   }
@@ -45,16 +45,22 @@ function addUserToCollection(collection, userId){
 Meteor.publish('playlist-users', function(plId){
   if(plId){
     var users = {};
+    addUserToCollection(users);
     var pl = playlists.findOne({_id:plId});
     if(pl) {
+      console.log('START');
+      console.log(pl.owner);
       addUserToCollection(users, pl.owner);
       for(var i=0,l=pl.followers.length;i<l;i++){
+        console.log(pl.followers[i]);
         addUserToCollection(users, pl.followers[i]);
       }
       var vids = videos.find({playlist:plId}, {fields:{owner:1}}).fetch();
       for(var i=0,l=vids.length;i<l;i++){
+        console.log(vids[i].owner);
         addUserToCollection(users, vids[i].owner);
       }
+      console.log(users.ids);
       return Meteor.users.find(
         {
           _id:{$in:users.ids}
@@ -72,6 +78,7 @@ Meteor.publish('feed-users', function(){
   if(this.userId){
     var vids = videos.getLastVideosAdded(this.userId).fetch();
     var users = {};
+    addUserToCollection(users);
     for(var i=0,l=vids.length;i<l;i++){
       addUserToCollection(users, vids[i].owner);
     }
@@ -89,6 +96,7 @@ Meteor.publish('feed-users', function(){
 
 Meteor.publish('user-info', function(userId){
   var users = {};
+  addUserToCollection(users);
   var pls = playlists.find({owner:userId,public:true}).fetch();
   addUserToCollection(users, userId);
   for(var i=0,l=pls.length;i<l;i++){
