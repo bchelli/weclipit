@@ -30,11 +30,6 @@
         <a href="#" class="playlist-edit" playlist="{{_id}}"><i class="icon-pencil"></i></a>
       </li>
     {{/if}}
-    {{#if rightTo "canAddVideo" playlist myUser}}
-      <li>
-        <a href="#" id="add-video-from-url"><i class="icon-plus-sign"></i></a>
-      </li>
-    {{/if}}
     </ul>
   </h3>
   {{#if rightTo "isOwner" playlist myUser}}

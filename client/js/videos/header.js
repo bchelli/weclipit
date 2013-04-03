@@ -88,16 +88,6 @@ Template.videosHeaderTemplate.events({
     _gaq.push(['_trackEvent', 'playlist', 'follow']);
     return false;
   }
-, 'click #add-video-from-url': function (event, template) {
-    $('#add-video-url').val('');
-    $('#add-video-modal')
-      .on('shown', function(){
-        $('#add-video-url').focus();
-      })
-      .modal();
-    _gaq.push(['_trackEvent', 'video', 'search', 'url']);
-    return false;
-  }
 , 'click .sort-by': function(event, template){
     var sortBy = event.currentTarget.getAttribute('data-sort-by');
     setSortBy(sortBy);

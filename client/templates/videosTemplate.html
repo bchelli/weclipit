@@ -13,9 +13,7 @@
   </div>
 
   {{> remove-video-popup}}
-  {{> add-video-popup}}
   {{> remove-playlist-popup}}
-  {{> share-playlist-popup}}
   {{/if}}
 </template>
 
@@ -39,28 +37,6 @@
 </template>
 
 
-<template name="add-video-popup">
-  <div class="modal hide fade" id="add-video-modal">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h3>Add a Video</h3>
-    </div>
-    <form class="form-horizontal">
-      <div class="modal-body">
-        <input type="text" id="add-video-url" placeholder="URL">
-        <img src="/img/player-support.png" />
-      </div>
-      <div class="modal-footer">
-        <div class="controls">
-          <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</a>
-          <button id="add-video-btn" type="submit" class="btn btn-primary" data-loading-text="Adding . . .">Add</button>
-        </div>
-      </div>
-    </form>
-  </div>
-</template>
-
-
 <template name="remove-playlist-popup">
   <div class="modal hide fade" id="remove-playlist-modal">
     <div class="modal-header">
@@ -74,30 +50,6 @@
       <div class="controls">
         <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</a>
         <a href="#" class="btn btn-danger" id="remove-playlist-submit">Remove</a>
-      </div>
-    </div>
-  </div>
-</template>
-
-
-<template name="share-playlist-popup">
-  <div class="modal hide fade" id="share-playlist-modal">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h3>Share Playlist</h3>
-    </div>
-    <div class="modal-body">
-      <div class="input-prepend input-append">
-        <span class="add-on">Filter</span>
-        <input id="filter-share-users-list" type="text" />
-        <span class="add-on">Select: <a href="#" id="share-playlist-select-all">all</a> / <a href="#" id="share-playlist-select-none">none</a></span>
-      </div>
-      <div id="share-users-list"></div>
-    </div>
-    <div class="modal-footer">
-      <div class="controls">
-        <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</a>
-        <a href="#" class="btn btn-primary" id="share-playlist-submit">Share</a>
       </div>
     </div>
   </div>

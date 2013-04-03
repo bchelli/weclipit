@@ -41,14 +41,6 @@ Template.videosTemplate.events({
     else homeRouter.goToPage('home');
     return false;
   }
-, 'submit #add-video-modal form': function (event, template) {
-    $('#add-video-btn').button('loading');
-    Meteor.call('addVideo', Session.get('playlist'), $('#add-video-url').val(), function(){
-      $('#add-video-btn').button('reset');
-      $('#add-video-modal').modal('hide');
-    });
-    return false;
-  }
 , 'click #remove-video-submit': function (event, template) {
     Meteor.call('removeVideo', event.currentTarget.getAttribute('video'));
     $('#remove-video-modal').modal('hide');
