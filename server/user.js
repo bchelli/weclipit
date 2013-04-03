@@ -51,19 +51,19 @@ Meteor.publish('playlist-users', function(plId){
       for(var i=0,l=pl.followers.length;i<l;i++){
         addUserToCollection(users, pl.followers[i]);
       }
-    }
-    var vids = videos.find({playlist:plId}, {fields:{owner:1}}).fetch();
-    for(var i=0,l=vids.length;i<l;i++){
-      addUserToCollection(users, vids[i].owner);
-    }
-    return Meteor.users.find(
-      {
-        _id:{$in:users.ids}
+      var vids = videos.find({playlist:plId}, {fields:{owner:1}}).fetch();
+      for(var i=0,l=vids.length;i<l;i++){
+        addUserToCollection(users, vids[i].owner);
       }
-    , {
-        fields: userFields
-      }
-    );
+      return Meteor.users.find(
+        {
+          _id:{$in:users.ids}
+        }
+      , {
+          fields: userFields
+        }
+      );
+    }
   }
   return [];
 });
