@@ -54,8 +54,8 @@ Meteor.methods({
 , followPlaylist : function(playlist){
     var pl = playlists.findOne({_id:playlist});
     if(pl){
-      var userId = Meteor.userId();
-      if(user){
+      var uId = Meteor.userId();
+      if(uId){
         playlists.update({_id:playlist}, {$addToSet: {followers:uId}});
       }
     }
