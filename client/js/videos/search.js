@@ -68,7 +68,7 @@ Template.videosSearchTemplate.events({
           for(var i=0,l=videosDailymotion.length;i<l;i++){
             videosResult.push({
               url:        videosDailymotion[i].url
-            , inPlaylist: !!videos.findOne({'provider':'dailymotion','providerId':videosDailymotion[i].id})
+            , inPlaylist: !!videos.findOne({'provider':'dailymotion','providerId':videosDailymotion[i].id,playlist:Session.get('playlist')})
             , thumbnail:  videosDailymotion[i].thumbnail_url
             , title:      videosDailymotion[i].title
             , duration:   videosDailymotion[i].duration
@@ -87,7 +87,7 @@ Template.videosSearchTemplate.events({
               ;
             videosResult.push({
               url:        url
-            , inPlaylist: !!videos.findOne({'provider':'youtube','providerId':id})
+            , inPlaylist: !!videos.findOne({'provider':'youtube','providerId':id,playlist:Session.get('playlist')})
             , thumbnail:  videosYoutube[i].media$group.media$thumbnail[0].url
             , title:      videosYoutube[i].title.$t
             , duration:   videosYoutube[i].media$group.yt$duration.seconds
@@ -103,7 +103,7 @@ Template.videosSearchTemplate.events({
           for(var i=0,l=videosVimeo.length;i<l;i++){
             videosResult.push({
               url:        'http://vimeo.com/'+videosVimeo[i].id
-            , inPlaylist: !!videos.findOne({'provider':'vimeo','providerId':videosVimeo[i].id})
+            , inPlaylist: !!videos.findOne({'provider':'vimeo','providerId':videosVimeo[i].id,playlist:Session.get('playlist')})
             , thumbnail:  videosVimeo[i].thumbnails.thumbnail[0]._content
             , title:      videosVimeo[i].title
             , duration:   videosVimeo[i].duration
