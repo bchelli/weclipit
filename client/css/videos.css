@@ -27,7 +27,7 @@
   #add-video-modal .modal-body{padding:70px 0;text-align:center}
 
 .shared-users {overflow: hidden;max-height:104px;font-size:0;margin:15px 0;}
-  .shared-users img {height:50px;width:50px;margin:0 3px 3px 0;}
+  .shared-users img {height:50px;width:50px;margin:0 2px 2px 0;}
   
 .video-title {margin-top: 20px;}
   .video-title img{width:200px;padding:1px;}
