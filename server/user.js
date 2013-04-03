@@ -49,6 +49,7 @@ Meteor.publish('playlist-users', function(plId){
     var pl = playlists.findOne({_id:plId});
     if(pl) {
       addUserToCollection(users, pl.owner);
+      console.log(pl);
       if(pl.followers){
         for(var i=0,l=pl.followers.length;i<l;i++){
           console.log(pl.followers[i]);
