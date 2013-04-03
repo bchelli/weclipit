@@ -48,19 +48,11 @@ Meteor.publish('playlist-users', function(plId){
     addUserToCollection(users);
     var pl = playlists.findOne({_id:plId});
     if(pl) {
-      console.log('START');
-      console.log(pl.owner);
       addUserToCollection(users, pl.owner);
-      for(var i=0,l=pl.followers.length;i<l;i++){
-        console.log(pl.followers[i]);
-        addUserToCollection(users, pl.followers[i]);
-      }
       var vids = videos.find({playlist:plId}, {fields:{owner:1}}).fetch();
       for(var i=0,l=vids.length;i<l;i++){
-        console.log(vids[i].owner);
         addUserToCollection(users, vids[i].owner);
       }
-      console.log(users.ids);
       return Meteor.users.find(
         {
           _id:{$in:users.ids}
