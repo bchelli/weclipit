@@ -11,6 +11,11 @@ Template.playerTemplate.helpers({
   }
 });
 
+Deps.autorun(function () {
+  var playing = Session.get('playing');
+  if(playing && playing.playlist) Meteor.subscribe('playing-videos', playing.playlist);
+});
+
 var playPauseTO = null;
 Template.playerTemplate.events({
   'dblclick #player-over': function(){

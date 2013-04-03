@@ -1,8 +1,10 @@
 
-Meteor.publish('videos', function(pls){
-  pls = ''+pls;
-  return videos.find({playlist:{'$in':pls.split(',')}});
-});
+function videosInPlaylist(playlist){
+  return videos.find({playlist:playlist});
+}
+
+Meteor.publish('playlist-videos', videosInPlaylist);
+Meteor.publish('playing-videos', videosInPlaylist);
 
 Meteor.publish('getLastVideosAdded', function(uId){
   return videos.getLastVideosAdded(uId);
