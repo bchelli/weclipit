@@ -9,7 +9,9 @@
         <div class="feed-description-title">{{data.title}}</div>
         <div class="feed-description-origin">
           in <a href="#" class="open-playlist" data-playlist-id="{{playlist}}">{{thePlaylist.name}}</a>
-          by <a href="#" class="open-user" data-user-id="{{ownerData._id}}">{{ownerData.profile.name}}</a>
+          {{#with ownerObj owner}}
+          by <a href="#" class="open-user" data-user-id="{{_id}}">{{profile.name}}</a>
+          {{/with}}
         </div>
       </div>
       {{/each}}

@@ -1,17 +1,11 @@
 
 Template.userPlaylistsTemplate.playlists = function(){
-  var u = Session.get('userData');
-  if(u){
-    return u.playlists;
-  }
+  return playlists.find({owner:Session.get('user'),public:true}, {sort:{name:1}});
 };
 
-Template.userPlaylistsTemplate.helpers({
-  stackClass:function(){
-    var stack = ['stack-one', 'stack-two', 'stack-three'];
-    return stack[Math.floor(Math.random()*999) % 3];
-  }
-});
+Template.userPlaylistsTemplate.ownerObj = function(uId){
+  return Meteor.users.findOne({_id:uId});
+};
 
 Template.userPlaylistsTemplate.events({
   'click .open-playlist': function(event){

@@ -14,22 +14,90 @@ Accounts.onCreateUser(function(options, user) {
   return user;
 });
 
+var userFields = {
+      'services.facebook.id': 1
+    , 'services.twitter.id': 1
+    , 'services.twitter.screenName': 1
+    , 'services.google.id': 1
+    , 'profile': 1
+    }
+  ;
+
 Meteor.publish("userData", function () {
   return Meteor.users.find(
     {
       _id:this.userId
     }
   , {
-      fields: {
-        'services.facebook.id': 1
-      , 'services.twitter.id': 1
-      , 'services.twitter.screenName': 1
-      , 'services.google.id': 1
-      }
+      fields: userFields
     }
   );
 });
+function addUserToCollection(collection, userId){
+  collection.users = collection.users || {};
+  if(!collection.users['u'+userId]){
+    collection.users['u'+userId] = true;
+    collection.push(userId);
+  }
+}
 
+Meteor.publish('playlist-users', function(plId){
+  if(plId){
+    var users = [];
+    var pl = playlists.findOne({_id:plId});
+    if(pl) addUserToCollection(users, pl.owner);
+    var vids = videos.find({playlist:plId}, {fields:{owner:1}}).fetch();
+    for(var i=0,l=vids.length;i<l;i++){
+      addUserToCollection(users, vids[i].owner);
+    }
+    if(pl){
+      return Meteor.users.find(
+        {
+          _id:{$in:users}
+        }
+      , {
+          fields: userFields
+        }
+      );
+    }
+  }
+  return [];
+});
+
+Meteor.publish('feed-users', function(){
+  if(this.userId){
+    var vids = videos.getLastVideosAdded(this.userId).fetch();
+    var users = [];
+    for(var i=0,l=vids.length;i<l;i++){
+      addUserToCollection(users, vids[i].owner);
+    }
+    return Meteor.users.find(
+      {
+        _id:{$in:users}
+      }
+    , {
+        fields: userFields
+      }
+    );
+  }
+  return [];
+});
+
+Meteor.publish('user-info', function(userId){
+  var users = [];
+  var pls = playlists.find({owner:userId,public:true}).fetch();
+  addUserToCollection(users, userId);
+  for(var i=0,l=pls.length;i<l;i++){
+    for(var j=0,m=pls[i].followers.length;j<m;j++){
+      addUserToCollection(users, pls[i].followers[j]);
+    }
+  }
+  return Meteor.users.find({_id:{$in:users}});
+});
+
+Meteor.publish('user-info-playlists', function(userId){
+  return playlists.find({owner:userId,public:true});
+});
 
 function publicUserInfo(user){
   var result = {};

@@ -4,7 +4,7 @@ Meteor.publish('playlists', function(playlist){
     , user = Meteor.users.findOne({_id:this.userId})
     ;
   if(playlist) query.$or.push({_id:playlist});
-  if(user) query.$or.push({"canAccess._id" : user._id});
+  if(user) query.$or.push({"followers" : user._id});
   return playlists.find(query);
 });
 
@@ -54,9 +54,9 @@ Meteor.methods({
 , followPlaylist : function(playlist){
     var pl = playlists.findOne({_id:playlist});
     if(pl){
-      var user = Meteor.user();
+      var userId = Meteor.userId();
       if(user){
-        playlists.update({_id:playlist}, {$addToSet: {canAccess:publicUserInfo(user)}});
+        playlists.update({_id:playlist}, {$addToSet: {followers:uId}});
       }
     }
   }
@@ -65,7 +65,7 @@ Meteor.methods({
     if(pl){
       if(pl.owner!==Meteor.userId()){
         playlists.update({_id:playlist}, {
-          $pull: {canAccess:{_id:Meteor.userId()}}
+          $pull: {followers:Meteor.userId()}
         });
       }
     }
@@ -88,7 +88,7 @@ Meteor.methods({
       result = playlists.insert({
         name:           name
       , owner:          userId
-      , canAccess:      []
+      , followers:      []
       , ownerData:      user
       , privacy:        'private'
       , public:         true

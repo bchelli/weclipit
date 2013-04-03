@@ -6,11 +6,8 @@ Deps.autorun(function () {
 Deps.autorun(function () {
   var u = Session.get('user');
   if(u && u !== ''){
-    Session.set('userLoading', true);
-    Meteor.call('getUserProfile', u, function(err, userData){
-      Session.set('userLoading', false);
-      if(!err) Session.set('userData', userData);
-    });
+    Meteor.subscribe('user-info', u);
+    Meteor.subscribe('user-info-playlists', u);
   }
 });
 
@@ -32,11 +29,6 @@ Template.userTemplate.helpers({
 
 Template.userTemplate.rendered = function(){
   setNicescroll("#video-right-container,#video-left-container");
-  Deps.autorun(function(){
-    Session.get('user');
-    Session.get('userData');
-    setNicescroll("#video-right-container,#video-left-container");
-  });
 };
 
 // Create a router for users
@@ -48,7 +40,6 @@ var UsersRouter = Backbone.Router.extend({
     this.setUser(user);
     Session.set('user', '');
     Session.set('user', user);
-    Session.set('userData', {});
     Session.set('page', 'user');
   },
   setUser: function (user) {

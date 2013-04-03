@@ -1,12 +1,14 @@
 <template name="userPlaylistsTemplate">
   <h3><span>Public playlists</span></h3>
-  {{#if playlists.length}}
+  {{#if playlists.count}}
     {{#each playlists}}
     <div class="user-playlist open-playlist" data-playlist-id="{{_id}}">
       <div class="playlist-title">{{name}}</div>
       {{> playlistPreview}}
-      {{#each canAccess}}
+      {{#each followers}}
+        {{#with ownerObj .}}
         <a href="#" class="open-user" data-user-id="{{_id}}">{{> profilePictureSharing}}</a>
+        {{/with}}
       {{/each}}
     </div>
     {{/each}}

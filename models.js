@@ -5,7 +5,7 @@ var videos = new Meteor.Collection('videos');
 var configDb = new Meteor.Collection('configDb');
 
 videos.getLastVideosAdded = function(uId){
-  var plIds = _.map(playlists.find({'canAccess._id':uId}).fetch(), function(pl){
+  var plIds = _.map(playlists.find({'followers':uId}).fetch(), function(pl){
     return pl._id;
   });
   return videos.find({playlist:{$in:plIds},owner:{$not:{$in:[uId]}}}, {sort:{createdAt:-1},limit:10});
@@ -31,8 +31,8 @@ playlists.isOwner = function(playlist, user){
 
 playlists.canAccess = function(playlist, user){
   if(!user) user = Meteor.user();
-  var pos = _.find(playlist.canAccess, function(u){
-    return u._id === user._id;
+  var pos = _.find(playlist.followers, function(u){
+    return u === user._id;
   });
   return !_.isUndefined(pos);
 }

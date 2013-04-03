@@ -33,7 +33,6 @@ Template.videosListTemplate.helpers({
 Template.videosListTemplate.activePlaylist = function() {
   if(!Session.get('playlist')) return {};
   var pl = playlists.findOne({_id:Session.get('playlist')});
-  if(pl) pl.canAccess = _.shuffle(pl.canAccess || []);
   return pl || {};
 };
 Template.videosListTemplate.videos = function() {
@@ -45,6 +44,9 @@ Template.videosListTemplate.videos = function() {
 Template.videosListTemplate.myUser = function() {
   var u = Meteor.users.findOne({_id:Meteor.userId()});
   return u || {};
+};
+Template.videosListTemplate.ownerObj = function(owner) {
+  return Meteor.users.findOne({_id:owner}) || {};
 };
 
 // Set Template Events

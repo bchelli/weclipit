@@ -6,8 +6,8 @@ function videosInPlaylist(playlist){
 Meteor.publish('playlist-videos', videosInPlaylist);
 Meteor.publish('playing-videos', videosInPlaylist);
 
-Meteor.publish('getLastVideosAdded', function(uId){
-  return videos.getLastVideosAdded(uId);
+Meteor.publish('getLastVideosAdded', function(){
+  return videos.getLastVideosAdded(this.userId);
 });
 
 Meteor.methods({

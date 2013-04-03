@@ -45,7 +45,6 @@ Template.videosHeaderTemplate.helpers({
 Template.videosHeaderTemplate.playlist = function() {
   if(!Session.get('playlist')) return {};
   var pl = playlists.findOne({_id:Session.get('playlist')});
-  if(pl) pl.canAccess = _.shuffle(pl.canAccess || []);
   return pl || {};
 };
 Template.videosHeaderTemplate.myUser = function() {

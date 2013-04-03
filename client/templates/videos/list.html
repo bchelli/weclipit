@@ -19,7 +19,9 @@
             </div>
           </td>
           <td class="videos-added-by">
-            <a href="#" class="open-user" data-user-id="{{ownerData._id}}">{{ownerData.profile.name}}</a>
+            {{#with ownerObj owner}}
+            <a href="#" class="open-user" data-user-id="{{_id}}">{{profile.name}}</a>
+            {{/with}}
           </td>
           <td class="videos-added-by">
             {{#with createdAt}}

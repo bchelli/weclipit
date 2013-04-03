@@ -121,6 +121,21 @@ reorg.num8 = function(){
   return true;
 };
 
+reorg.num9 = function(){
+  var pls = playlists.find().fetch()
+    ;
+  _.each(pls, function(pl){
+    var followers = [];
+    _.each(pl.canAccess, function(user){
+      followers.push(user._id);
+    });
+    playlists.update({_id:pl._id}, {
+      $set: {followers:followers}
+    });
+  });
+  return true;
+};
+
 // RUN Reoganisation on startup
 Meteor.startup(function(){
   var db = getConfig('db') || {version:0};

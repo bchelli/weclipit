@@ -3,7 +3,7 @@
     {{#with playlist}}
       {{> playlistPreview}}
     {{/with}}
-    {{#with playlist.ownerData}}
+    {{#with ownerObj playlist.owner}}
       <span class="playlist-by">
         <a href="#" class="open-user" data-user-id="{{_id}}">
           <i class="icon-user"></i>
@@ -100,11 +100,13 @@
   {{/with}}
   </div>
 
-  {{#if playlist.canAccess.length}}
+  {{#if playlist.followers.length}}
   <h5>Followed by</h5>
   <div class="shared-users">
-  {{#each playlist.canAccess}}
+  {{#each playlist.followers}}
+    {{#with ownerObj .}}
     <a href="#" class="open-user" data-user-id="{{_id}}">{{> profilePictureSharing}}</a>
+    {{/with}}
   {{/each}}
   </div>
   {{/if}}

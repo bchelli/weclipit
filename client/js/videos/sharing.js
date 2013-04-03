@@ -55,7 +55,7 @@ Template.videosSharingTemplate.previewVideos = function() {
 Template.videosSharingTemplate.playlist = function() {
   if(!Session.get('playlist')) return {};
   var pl = playlists.findOne({_id:Session.get('playlist')});
-  if(pl) pl.canAccess = _.shuffle(pl.canAccess || []);
+  if(pl) pl.followers = _.shuffle(pl.followers || []);
   return pl || {};
 };
 Template.videosSharingTemplate.playlistUrl = function() {
@@ -69,6 +69,10 @@ Template.videosSharingTemplate.playlistUrl = function() {
 Template.videosSharingTemplate.myUser = function() {
   var u = Meteor.users.findOne({_id:Meteor.userId()});
   return u || {};
+};
+
+Template.videosSharingTemplate.ownerObj = function(uId) {
+  return Meteor.users.findOne({_id:uId});
 };
 
 Template.videosSharingTemplate.events({

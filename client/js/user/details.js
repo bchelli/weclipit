@@ -1,4 +1,4 @@
 
 Template.userDetailsTemplate.user = function(){
-  return Session.get('userData');
+  return Meteor.users.findOne({_id:Session.get('user')});
 };

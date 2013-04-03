@@ -7,7 +7,10 @@
 
 Deps.autorun(function () {
   var pl = Session.get('playlist');
-  if(pl) Meteor.subscribe('playlist-videos', pl);
+  if(pl) {
+    Meteor.subscribe('playlist-videos', pl);
+    Meteor.subscribe('playlist-users', pl);
+  }
 });
 
 Template.videosTemplate.helpers({
