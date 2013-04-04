@@ -94,6 +94,7 @@ if(Meteor.isServer){
       var playlistId = isPlaylist(req);
       if(playlistId){
         var playlist = playlists.findOne({_id:playlistId})
+          , u = Meteor.users.findOne({_id:playlist.owner})
           , absoluteUrl = Meteor.absoluteUrl(req.url.substr(0,1)=='/' ? req.url.substr(1) : req.url)
           ;
         if(playlist){
@@ -103,7 +104,7 @@ if(Meteor.isServer){
           , {"property":'twitter:url',         "content":absoluteUrl}
           , {"property":'twitter:title',       "content":playlist.name}
           , {"property":'twitter:image',       "content":Meteor.absoluteUrl('img/playlist-og.jpg')}
-          , {"property":'twitter:description', "content":playlist.name+' by '+playlist.ownerData.profile.name+' on 26plays.com'}
+          , {"property":'twitter:description', "content":playlist.name+' by '+u.profile.name+' on 26plays.com'}
           ];
         }
       }
@@ -116,6 +117,7 @@ if(Meteor.isServer){
       var result = [];
       if(playlistId){
         var playlist = playlists.findOne({_id:playlistId})
+          , u = Meteor.users.findOne({_id:playlist.owner})
           , videoList = videos.find({playlist:playlistId}).fetch()
           , absoluteUrl = Meteor.absoluteUrl(req.url.substr(0,1)=='/' ? req.url.substr(1) : req.url)
           ;
@@ -124,7 +126,7 @@ if(Meteor.isServer){
           result.push({"property":'og:url',         "content":absoluteUrl});
           result.push({"property":'og:title',       "content":playlist.name});
           result.push({"property":'og:image',       "content":Meteor.absoluteUrl('img/playlist-og.jpg')});
-          result.push({"property":'og:description', "content":playlist.name+' by '+playlist.ownerData.profile.name+' on 26plays.com'});
+          result.push({"property":'og:description', "content":playlist.name+' by '+u.profile.name+' on 26plays.com'});
         }
         if(videoList){
           for(var i in videoList){
