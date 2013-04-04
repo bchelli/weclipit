@@ -89,7 +89,6 @@ Meteor.methods({
         name:           name
       , owner:          userId
       , followers:      []
-      , ownerData:      user
       , privacy:        'private'
       , public:         true
       , thumbnails:     []

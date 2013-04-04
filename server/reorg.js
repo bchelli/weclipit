@@ -136,6 +136,29 @@ reorg.num9 = function(){
   return true;
 };
 
+reorg.num10 = function(){
+  playlists.update({}, {
+    $unset:{
+      ownerData:""
+    }
+  }, {multi:true});
+  videos.update({}, {
+    $unset:{
+      ownerData:""
+    }
+  }, {multi:true});
+  return true;
+};
+
+reorg.num11 = function(){
+  playlists.update({}, {
+    $unset:{
+      canAccess:""
+    }
+  }, {multi:true});
+  return true;
+};
+
 // RUN Reoganisation on startup
 Meteor.startup(function(){
   var db = getConfig('db') || {version:0};

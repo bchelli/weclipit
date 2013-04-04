@@ -201,7 +201,6 @@ Meteor.methods({
             , nbLikes:    0
             , data:       resultData
             , createdAt:  (new Date()).getTime()
-            , ownerData:  publicUserInfo(Meteor.user())
             });
             // update playlist video preview
             updatePlaylistThumbnails(playlist);

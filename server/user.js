@@ -150,8 +150,6 @@ Meteor.methods({
     if(!name || name.length<3) throw new Meteor.Error(406, 'Name must be 3 characters or longer');
 
     Meteor.users.update({_id:uid}, {$set:{'profile.name':name}});
-    videos.update({owner:uid}, {$set:{'ownerData.profile.name':name}}, {multi: true});
-    playlists.update({owner:uid}, {$set:{'ownerData.profile.name':name}}, {multi: true});
   }
 , getUserProfile : function(userId){
     var u = publicUserInfo(Meteor.users.findOne({_id:userId}));
