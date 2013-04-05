@@ -48,4 +48,4 @@ var UsersRouter = Backbone.Router.extend({
 });
 
 // instantiate router
-var usersRouter = new UsersRouter;
+usersRouter = new UsersRouter;

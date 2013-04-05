@@ -21,8 +21,8 @@ Meteor.OAuthRequest.prototype._setOauthHeaders = function(){
 };
 
 Meteor.OAuthRequest.prototype._getSignature = function(){
-  var crypto = __meteor_bootstrap__.require('crypto')
-    , qs = __meteor_bootstrap__.require('querystring')
+  var crypto = Npm.require('crypto')
+    , qs = Npm.require('querystring')
     , hmac
     , obj = {}
     , sigObj = {}
@@ -63,10 +63,10 @@ Meteor.OAuthRequest.prototype._getSignature = function(){
 };
 
 Meteor.OAuthRequest.prototype.call = function(callback){
-  var url = __meteor_bootstrap__.require('url')
+  var url = Npm.require('url')
     , urlParsed = url.parse(this.req.url)
-    , qs = __meteor_bootstrap__.require('querystring').stringify(this.req.query)
-    , http = __meteor_bootstrap__.require(urlParsed.protocol.substr(0,urlParsed.protocol.length-1))
+    , qs = Npm.require('querystring').stringify(this.req.query)
+    , http = Npm.require(urlParsed.protocol.substr(0,urlParsed.protocol.length-1))
     ;
 
   this._setOauthHeaders();

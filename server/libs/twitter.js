@@ -1,6 +1,8 @@
 if(Meteor.isServer) {
   (function () {
-    var useragent = __meteor_bootstrap__.require('useragent');
+    var useragent = Npm.require('useragent')
+      , Fiber = Npm.require('fibers')
+      ;
 
     if (!Meteor.twitter) {	 
       Meteor.twitter = {};

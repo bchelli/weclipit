@@ -68,4 +68,4 @@ var VideosRouter = Backbone.Router.extend({
 });
 
 // instantiate router
-var videosRouter = new VideosRouter;
+videosRouter = new VideosRouter;

@@ -1,7 +1,8 @@
 if(Meteor.isServer) {
   (function () {
-    var querystring = __meteor_bootstrap__.require('querystring')
-      , useragent = __meteor_bootstrap__.require('useragent')
+    var querystring = Npm.require('querystring')
+      , useragent = Npm.require('useragent')
+      , Fiber = Npm.require('fibers')
       ;
 
     if (!Meteor.facebook) {	 

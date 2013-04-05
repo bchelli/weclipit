@@ -1,4 +1,6 @@
 
+var Fiber = Npm.require('fibers');
+
 function videosInPlaylist(playlist){
   return videos.find({playlist:playlist});
 }
@@ -203,9 +205,9 @@ Meteor.methods({
             , createdAt:  (new Date()).getTime()
             });
             // update playlist video preview
-            updatePlaylistThumbnails(playlist);
+            playlists.updatePlaylistThumbnails(playlist);
             // update playlist video count
-            updateVideoCount(playlist);
+            playlists.updateVideoCount(playlist);
           }
         }
         fiber.run();
@@ -243,9 +245,9 @@ Meteor.methods({
       if(!playlists.canRemoveVideo(pl, vid)) return;
       videos.remove({_id:video});
       // update playlist video preview
-      updatePlaylistThumbnails(vid.playlist);
+      playlists.updatePlaylistThumbnails(vid.playlist);
       // update playlist video count
-      updateVideoCount(vid.playlist);
+      playlists.updateVideoCount(vid.playlist);
     }
   }
 });

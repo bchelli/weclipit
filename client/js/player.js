@@ -32,15 +32,6 @@ Template.playerTemplate.events({
   }
 });
 
-function formatTime(time){
-  time = Math.floor(time);
-  var sec = time % 60
-    , min = Math.floor(time/60)
-    ;
-  if(sec<10) sec = '0'+sec;
-  return min+':'+sec;
-}
-
 (function(){
 
   var player;
@@ -171,8 +162,8 @@ function formatTime(time){
               if(video.provider === 'soundcloud'){
                 $('#playerContent,#videosContent').removeClass('isPlaying');
               }
-              if(App.player[video.provider]){
-                player = new App.player[video.provider]('player-content', video, events);
+              if(Meteor.player[video.provider]){
+                player = new Meteor.player[video.provider]('player-content', video, events);
               }
             } else {
               if(attempt<=4){

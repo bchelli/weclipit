@@ -101,7 +101,7 @@ function generateNicescroll($el){
 }
 
 var elementsToScroll = [];
-function setNicescroll(selector){
+setNicescroll = function(selector){
   elementsToScroll.push(selector);
 }
 

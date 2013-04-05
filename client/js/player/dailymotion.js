@@ -1,12 +1,9 @@
 
-// init App
-var App = App || {};
+// init Player
+Meteor.player = Meteor.player || {};
 
 // init Player
-App.player = App.player || {};
-
-// init Player
-App.player.dailymotion = function(playerContainer, video, events){
+Meteor.player.dailymotion = function(playerContainer, video, events){
   var playerId = 'dailymotion-player'
     , that = this
     ;
@@ -47,7 +44,7 @@ App.player.dailymotion = function(playerContainer, video, events){
     if(events && events.ready) events.ready();
   });
 };
-App.player.dailymotion.prototype = {
+Meteor.player.dailymotion.prototype = {
   pause: function(){
     if(this && this.player && this.player.pause) this.player.pause();
   }

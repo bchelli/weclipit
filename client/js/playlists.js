@@ -82,4 +82,4 @@ var PlaylistsRouter = Backbone.Router.extend({
 });
 
 // instantiate router
-var playlistsRouter = new PlaylistsRouter;
+playlistsRouter = new PlaylistsRouter;

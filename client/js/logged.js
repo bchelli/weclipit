@@ -31,4 +31,4 @@ var HomeRouter = Backbone.Router.extend({
 });
 
 // instantiate router
-var homeRouter = new HomeRouter;
+homeRouter = new HomeRouter;

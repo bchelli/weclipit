@@ -1,22 +1,3 @@
-function initConfig(key){
-  var config = configDb.findOne({key:key});
-  if(!config){
-    configDb.insert({
-      key:key
-    });
-  }
-}
-
-function getConfig(key){
-  var config = configDb.findOne({key:key});
-  return config ? config.value : null;
-}
-
-function setConfig(key, value){
-  initConfig(key);
-  configDb.update({key:key},{key:key,value:value});
-}
-
 var reorg = {};
 
 reorg.num1 = function(){
@@ -100,7 +81,7 @@ reorg.num6 = function(){
   var pls = playlists.find().fetch()
     ;
   _.each(pls, function(pl){
-    updatePlaylistThumbnails(pl._id);
+    playlists.updatePlaylistThumbnails(pl._id);
   });
   return true;
 };
@@ -116,7 +97,7 @@ reorg.num8 = function(){
   var pls = playlists.find().fetch()
     ;
   _.each(pls, function(pl){
-    updateVideoCount(pl._id);
+    playlists.updateVideoCount(pl._id);
   });
   return true;
 };
@@ -161,13 +142,13 @@ reorg.num11 = function(){
 
 // RUN Reoganisation on startup
 Meteor.startup(function(){
-  var db = getConfig('db') || {version:0};
+  var db = configDb.getConfig('db') || {version:0};
   while(reorg['num'+(db.version+1)]){
     console.log('START REORG '+(db.version+1));
     if(reorg['num'+(db.version+1)]()){
       console.log('DONE REORG '+(db.version+1));
       db.version++;
-      setConfig('db', db);
+      configDb.setConfig('db', db);
     } else {
       console.log('ERROR IN REORG '+(db.version+1));
       return;

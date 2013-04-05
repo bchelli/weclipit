@@ -45,7 +45,7 @@ if(Meteor.isServer){
 
   // Website
   function isWebsite(req){
-    var url = __meteor_bootstrap__.require('url'); 
+    var url = Npm.require('url'); 
     var parts = url.parse(req.url).pathname.split('/');
     var absoluteUrl = Meteor.absoluteUrl(req.url.substr(0,1)=='/' ? req.url.substr(1) : req.url);
     return (parts.length == 2 && parts[1] === '');
@@ -82,7 +82,7 @@ if(Meteor.isServer){
 
   // playlist
   function isPlaylist(req){
-    var url = __meteor_bootstrap__.require('url'); 
+    var url = Npm.require('url'); 
     var parts = url.parse(req.url).pathname.split('/');
     if(parts.length == 3 && parts[1] === 'playlist'){
       return parts[2];
@@ -141,7 +141,7 @@ if(Meteor.isServer){
 
   // video
   function isVideo(req){
-    var url = __meteor_bootstrap__.require('url'); 
+    var url = Npm.require('url'); 
     var parts = url.parse(req.url).pathname.split('/');
     if(parts.length == 5 && parts[1] === 'playlist' && parts[3] === 'video'){
       return parts[4];

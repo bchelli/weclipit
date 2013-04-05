@@ -1,12 +1,9 @@
 
-// init App
-var App = App || {};
+// init Player
+Meteor.player = Meteor.player || {};
 
 // init Player
-App.player = App.player || {};
-
-// init Player
-App.player.soundcloud = function(playerContainer, video, events){
+Meteor.player.soundcloud = function(playerContainer, video, events){
   var playerId = 'soundcloud-player'
     , that = this
     ;
@@ -55,7 +52,7 @@ App.player.soundcloud = function(playerContainer, video, events){
     if(events && events.ready) events.ready();
   });
 };
-App.player.soundcloud.prototype = {
+Meteor.player.soundcloud.prototype = {
   pause: function(){
     if(this && this.player && this.player.pause) this.player.pause();
   }

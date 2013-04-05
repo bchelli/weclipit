@@ -5,7 +5,7 @@ Accounts.emailTemplates.from = "26 Plays <contact@26plays.com>";
 Accounts.onCreateUser(function(options, user) {
   if (options.profile) user.profile = options.profile;
   if(user.emails && user.emails.length>0){
-    var crypto = __meteor_bootstrap__.require('crypto');
+    var crypto = Npm.require('crypto');
     var md5 = crypto.createHash('md5');
     md5.update(user.emails[0].address.trim().toLowerCase());
     if(!user.profile) user.profile = {};
@@ -21,6 +21,7 @@ var userFields = {
     , 'services.google.id': 1
     , 'profile': 1
     }
+  , Fiber = Npm.require('fibers')
   ;
 
 Meteor.publish("userData", function () {

@@ -1,12 +1,9 @@
 
-// init App
-var App = App || {};
+// init Player
+Meteor.player = Meteor.player || {};
 
 // init Player
-App.player = App.player || {};
-
-// init Player
-App.player.youtube = function(playerContainer, video, events){
+Meteor.player.youtube = function(playerContainer, video, events){
   var playerId = 'youtube-player'
   $('#'+playerContainer).html('<div id="'+playerId+'"></div>');
   var youtube = document.getElementById(playerId)
@@ -60,7 +57,7 @@ App.player.youtube = function(playerContainer, video, events){
     }
   });
 };
-App.player.youtube.prototype = {
+Meteor.player.youtube.prototype = {
   pause: function(){
     if(this && this.player && this.player.pauseVideo) this.player.pauseVideo();
   }
