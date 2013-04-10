@@ -14,6 +14,7 @@ Meteor.publish('getLastVideosAdded', function(){
 
 Meteor.methods({
   importYoutubePlaylist: function(playlist, youtubePlaylistId){
+    if(!Meteor.userId()) return;
     var fiber = Fiber.current;
     Meteor.http.get('http://www.youtube.com/playlist?list='+encodeURIComponent(youtubePlaylistId), function(err, res){
       if(!err){
@@ -33,6 +34,7 @@ Meteor.methods({
     Fiber.yield();
   }
 , importSoundcloudPlaylist: function(playlist, soundcloudPlaylist){
+    if(!Meteor.userId()) return;
     switch(soundcloudPlaylist.type){
       case 'playlists':
         var fiber = Fiber.current;
@@ -61,6 +63,7 @@ Meteor.methods({
     }
   }
 , searchDailymotionVideos: function(query){
+    if(!Meteor.userId()) return;
     var fiber = Fiber.current
       , videosDailymotion = []
       ;
@@ -74,6 +77,7 @@ Meteor.methods({
     return videosDailymotion;
   }
 , searchVimeoVideos: function(query){
+    if(!Meteor.userId()) return;
     var fiber = Fiber.current
       , videosVimeo = []
       ;
@@ -106,6 +110,7 @@ Meteor.methods({
     return videosVimeo;
   }
 , searchYoutubeVideos: function(query){
+    if(!Meteor.userId()) return;
     var fiber = Fiber.current
       , videosYoutube = []
       ;
@@ -119,6 +124,7 @@ Meteor.methods({
     return videosYoutube;
   }
 , addVideo : function(playlist, url){
+    if(!Meteor.userId()) return;
     var pl = playlists.findOne({_id:playlist})
       , regExpVimeo = /http(s)?:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/
       , regExpYoutube = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/
@@ -216,6 +222,7 @@ Meteor.methods({
     Fiber.yield();
   }
 , likeVideo : function(video, status){
+    if(!Meteor.userId()) return;
     var userId = Meteor.userId();
     function updateNbLikes(){
       videos.update({_id:video}, {
@@ -239,6 +246,7 @@ Meteor.methods({
     }
   }
 , removeVideo : function(video){
+    if(!Meteor.userId()) return;
     var vid = videos.findOne({_id:video});
     if(vid){
       var pl = playlists.findOne({_id:vid.playlist});

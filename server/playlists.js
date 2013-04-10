@@ -10,6 +10,7 @@ Meteor.publish('playlists', function(playlist){
 
 Meteor.methods({
   setPrivacy : function(playlist, privacy){
+    if(!Meteor.userId()) return;
     if(['public','private'].indexOf(privacy)!==-1){
       var pl = playlists.findOne({owner:Meteor.userId(),_id:playlist});
       if(pl){
@@ -18,6 +19,7 @@ Meteor.methods({
     }
   }
 , setPublic : function(playlist, public){
+    if(!Meteor.userId()) return;
     if([true,false].indexOf(public)!==-1){
       var pl = playlists.findOne({owner:Meteor.userId(),_id:playlist});
       if(pl){
@@ -26,12 +28,14 @@ Meteor.methods({
     }
   }
 , updatePlaylistName : function(playlist, name){
+    if(!Meteor.userId()) return;
     var pl = playlists.findOne({owner:Meteor.userId(),_id:playlist});
     if(pl){
       playlists.update({_id:playlist}, {$set:{name:name}});
     }
   }
 , followPlaylist : function(playlist){
+    if(!Meteor.userId()) return;
     var pl = playlists.findOne({_id:playlist});
     if(pl){
       var uId = Meteor.userId();
@@ -41,6 +45,7 @@ Meteor.methods({
     }
   }
 , unfollowPlaylist : function(playlist){
+    if(!Meteor.userId()) return;
     var pl = playlists.findOne({_id:playlist});
     if(pl){
       if(pl.owner!==Meteor.userId()){
@@ -51,6 +56,7 @@ Meteor.methods({
     }
   }
 , removePlaylist : function(playlist){
+    if(!Meteor.userId()) return;
     var pl = playlists.findOne({_id:playlist});
     if(pl){
       if(pl.owner===Meteor.userId()){
@@ -60,6 +66,7 @@ Meteor.methods({
     }
   }
 , createPlaylist : function(name){
+    if(!Meteor.userId()) return;
     var userId = Meteor.userId()
       , result
       ;

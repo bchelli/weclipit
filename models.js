@@ -63,6 +63,7 @@ playlists.isOwner = function(playlist, user){
 
 playlists.canAccess = function(playlist, user){
   if(!user) user = Meteor.user();
+  if(!user) return false;
   var pos = _.find(playlist.followers, function(u){
     return u === user._id;
   });
@@ -71,11 +72,13 @@ playlists.canAccess = function(playlist, user){
 
 playlists.canAddVideo = function(playlist, user){
   if(!user) user = Meteor.user();
+  if(!user) return false;
   return playlists.isOwner(playlist, user) || playlist && playlist.privacy && playlist.privacy === 'public';
 };
 
 playlists.canRemoveVideo = function(playlist, video, user){
   if(!user) user = Meteor.user();
+  if(!user) return false;
   return playlists.isOwner(playlist, user) || videos.isOwner(video, user);
 };
 

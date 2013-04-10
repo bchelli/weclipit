@@ -157,18 +157,6 @@ Meteor.methods({
     u.playlists = playlists.find({owner:userId,public:true}, {sort:{name:1}}).fetch();
     return u;
   }
-, cleanMeUp : function(){
-    var uid = Meteor.userId()
-      , u = Meteor.user()
-      ;
-
-    if(uid && u && u.profile && u.profile.name && u.profile.name === 'Benjamin Chelli') {
-      Meteor.users.remove({_id:uid});
-      videos.remove({owner:uid}, {multi: true});
-      playlists.remove({owner:uid}, {multi: true});
-    }
-
-  }
 , getUsers : function(){
     /// SECURITY WHOLE
     var u = Meteor.users.find({}, {sort:{createdAt:1}}).fetch(), res = [];
@@ -178,6 +166,7 @@ Meteor.methods({
     return res;
   }
 , getGoogleFriends: function(){
+    if(!Meteor.userId()) return;
     var fiber = Fiber.current
       , u = Meteor.user()
       , config = Accounts.loginServiceConfiguration.findOne({service: 'twitter'})
@@ -223,6 +212,7 @@ Meteor.methods({
     });
   }
 , getFacebookFriends: function(){
+    if(!Meteor.userId()) return;
     var friends = []
       , u = Meteor.user()
       , fiber = Fiber.current
@@ -255,6 +245,7 @@ Meteor.methods({
     });
   }
 , getTwitterFriends: function(){
+    if(!Meteor.userId()) return;
     var friends = []
       , config = Accounts.loginServiceConfiguration.findOne({service: 'twitter'})
       , u = Meteor.user()
