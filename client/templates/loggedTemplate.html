@@ -5,13 +5,15 @@
   <div class="container-fluid no-padding-left">
     <div class="row-fluid">
 
-      {{#if hasName}}
-        <!-- List of Playlists -->
-        {{> leftMenuTemplate}}
+      {{#if needName}}
+        {{> setNameTemplate}}
+      {{else}}
+        {{#if currentUser}}
+          <!-- List of Playlists -->
+          {{> leftMenuTemplate}}
+        {{/if}}
         <!-- main Content -->
         {{> mainContentTemplate}}
-      {{else}}
-        {{> setNameTemplate}}
       {{/if}}
 
     </div><!--/row-->

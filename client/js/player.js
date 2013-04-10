@@ -109,7 +109,7 @@ Template.playerTemplate.events({
 
 
   Template.playerTemplate.toogleFullscreen = function(){
-    Session.set('fullscreen', !Session.get('fullscreen'));
+    Session.set('fullscreen', !Session.get('fullscreen') && !$('body').hasClass('embed'));
     updateFullscreen();
   }
   Template.playerTemplate.playerStop = function(){
@@ -147,7 +147,7 @@ Template.playerTemplate.events({
       $('#player-content').html('');
       var isPlaying = Session.get("playing");
       if(isPlaying){
-        $('#playerContent,#videosContent').addClass('isPlaying');
+        $('#playerContent,#videosContent,body').addClass('isPlaying');
         setVideoPlayed(0,0,'Loading . . .');
         setProgressPosition('playing', 0);
         setProgressPosition('loaded', 0);
@@ -160,7 +160,7 @@ Template.playerTemplate.events({
             if(video){
               $('#player').attr('data-title', video.data.title);
               if(video.provider === 'soundcloud'){
-                $('#playerContent,#videosContent').removeClass('isPlaying');
+                $('#playerContent,#videosContent,body').removeClass('isPlaying');
               }
               if(Meteor.player[video.provider]){
                 player = new Meteor.player[video.provider]('player-content', video, events);
@@ -176,7 +176,7 @@ Template.playerTemplate.events({
           startVideo(0);
         }
       } else {
-        $('#playerContent,#videosContent').removeClass('isPlaying');
+        $('#playerContent,#videosContent,body').removeClass('isPlaying');
       }
     });
   };

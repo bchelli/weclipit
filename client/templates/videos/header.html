@@ -10,14 +10,18 @@
         <span class="unit">videos</span>
       </td>
       <td class="last-box">
-    {{#if rightTo "isOwner" playlist myUser}}
+    {{#if currentUser}}
+      {{#if rightTo "isOwner" playlist myUser}}
         <a href="#" class="btn disabled">Follow</a>
-    {{else}}
-      {{#if rightTo "canAccess" playlist myUser}}
-        <a href="#" class="btn btn-primary playlist-unfollow" playlist="{{playlist._id}}">Following</a>
       {{else}}
+        {{#if rightTo "canAccess" playlist myUser}}
+        <a href="#" class="btn btn-primary playlist-unfollow" playlist="{{playlist._id}}">Following</a>
+        {{else}}
         <a href="#" class="btn playlist-follow" playlist="{{playlist._id}}">Follow</a>
+        {{/if}}
       {{/if}}
+    {{else}}
+        <a href="#" class="btn disabled">Follow</a>
     {{/if}}
       </td>
     </tr>

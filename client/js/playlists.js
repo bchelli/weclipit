@@ -70,14 +70,19 @@ Template.playlistsTemplate.events({
 // Create a router for playlists
 var PlaylistsRouter = Backbone.Router.extend({
   routes: {
-    "playlist/:playlist": "openPlaylist"
+    "embed/playlist/:playlist": "openPlaylistEmbed"
+  , "playlist/:playlist": "openPlaylist"
+  },
+  openPlaylistEmbed: function (playlist) {
+    setEmbed();
+    this.openPlaylist(playlist);
   },
   openPlaylist: function (playlist) {
     Session.set('page', 'playlist');
     Session.set("playlist", playlist);
   },
   setPlaylist: function (playlist) {
-    this.navigate('playlist/'+playlist, true);
+    this.navigate(isEmbedPath()+'playlist/'+playlist, true);
   }
 });
 

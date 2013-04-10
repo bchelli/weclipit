@@ -77,3 +77,13 @@
 .login-img-footer:hover{color:#555;}
 .login-footer {text-align:center;padding:50px 0;background:#333;color:#ccc;border-top:1px solid #000;}
 
+.navbar #login-dropdown-list{
+  right: 4px;
+  top: 20px;
+  left: auto;
+}
+.navbar #login-buttons{
+  position: static;
+  float: right;
+  line-height: 50px;
+}

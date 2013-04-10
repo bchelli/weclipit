@@ -55,3 +55,8 @@ Template.loginTemplate.rendered = function(){
     $(window).resize(resize);
   }
 };
+
+Template.loginTemplate.canAccessSite = function(){
+  Session.equals('page', 'home');
+  return Meteor.userId() || !(location.pathname === '/' || location.pathname === '');
+};

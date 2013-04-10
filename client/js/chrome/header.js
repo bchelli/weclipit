@@ -21,8 +21,10 @@ Template.headerTemplate.events({
     return false;
   }
 , 'click .brand': function(ev){
-    homeRouter.goToPage('home');
-    return false;
+    if(!$('body').hasClass('embed')) {
+      homeRouter.goToPage('home');
+      return false;
+    }
   }
 , 'click .logout': function(ev){
     Meteor.logout();

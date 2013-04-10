@@ -5,11 +5,13 @@
       <tbody>
       {{#each videos}}
         <tr class="video video-playlist{{#if isPlaying}} {{else}} not-playing {{/if}}" playlist="{{playlist}}" video="{{_id}}">
+          {{#if currentUser}}
           <td class="videos-likes">
             <a href="#" class="like-video" video="{{_id}}">
               <i class="{{liked}}"></i><br />{{nbLikes}}
             </a>
           </td>
+          {{/if}}
           <td class="videos-preview"><div class="img-container"><img src="{{data.thumbnail_url}}" /></div></td>
           <td class="videos-description">
             <div class="video-description-title">{{data.title}}</div>

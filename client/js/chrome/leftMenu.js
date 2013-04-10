@@ -1,8 +1,10 @@
 (function(){
-  var $window = $(window);
+  var $window = $(window)
+    , delta = 105
+    ;
   var resizeWindow = function(){
     var wH = $window.height();
-    $('#menuContainer,#playlistContainer').css({'height':wH-105});
+    $('#menuContainer,#playlistContainer').css({'height':wH-delta});
   };
   var resizeTO;
   var onResize = function(){
@@ -17,6 +19,13 @@
   Template.loggedTemplate.destroyed = function() {
     $window.unbind('resize', onResize);
   }
+
+  Deps.autorun(function(){
+    Session.get('embed');
+    if($('body').hasClass('embed')) delta = 0;
+    resizeWindow();
+  });
+
 })();
 
 Template.leftMenuTemplate.isInPlaylist = function(){

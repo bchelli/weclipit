@@ -50,7 +50,12 @@ Template.videosTemplate.events({
 // Create a router for playlists
 var VideosRouter = Backbone.Router.extend({
   routes: {
-    "playlist/:playlist/video/:video": "openVideo"
+    "embed/playlist/:playlist/video/:video": "openVideoEmbed"
+  , "playlist/:playlist/video/:video": "openVideo"
+  },
+  openVideoEmbed: function (playlist, video) {
+    setEmbed();
+    this.openVideo(playlist, video);
   },
   openVideo: function (playlist, video) {
     this.setVideo(playlist, video);
@@ -63,7 +68,7 @@ var VideosRouter = Backbone.Router.extend({
     }
   },
   setVideo: function (playlist, video) {
-    this.navigate('playlist/'+playlist+'/video/'+video, true);
+    this.navigate(isEmbedPath()+ 'playlist/'+playlist+'/video/'+video, true);
   }
 });
 
