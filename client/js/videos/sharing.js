@@ -66,6 +66,14 @@ Template.videosSharingTemplate.playlistUrl = function() {
   if(pl && pl._id) url = Meteor.absoluteUrl('playlist/'+pl._id);
   return url;
 };
+Template.videosSharingTemplate.playlistEmbedUrl = function() {
+  if(!Session.get('playlist')) return {};
+  var pl = playlists.findOne({_id:Session.get('playlist')})
+    , url = ''
+    ;
+  if(pl && pl._id) url = Meteor.absoluteUrl('embed/playlist/'+pl._id);
+  return url;
+};
 Template.videosSharingTemplate.myUser = function() {
   var u = Meteor.users.findOne({_id:Meteor.userId()});
   return u || {};
@@ -121,6 +129,23 @@ Template.videosSharingTemplate.events({
         break;
       case 'email':
         url = 'mailto:?subject='+encodeURIComponent(t)+'&body='+encodeURIComponent(u);
+        break;
+      case 'embed':
+        $('#embed-url-modal')
+          .on('shown', function(){
+            $('#embed-content').val('<iframe '
+                  +'width="560" '
+                  +'height="315" '
+                  +'src="'+u+'" '
+                  +'frameborder="0" '
+                  +'webkitallowfullscreen="webkitallowfullscreen" '
+                  +'mozallowfullscreen="mozallowfullscreen"'
+                  +'msallowfullscreen="msallowfullscreen"'
+                  +'oallowfullscreen="oallowfullscreen"'
+                  +'allowfullscreen="allowFullscreen" '
+                +'></iframe>');
+          })
+          .modal();
         break;
     }
     if(url){

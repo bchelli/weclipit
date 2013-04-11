@@ -14,17 +14,15 @@
   Template.loggedTemplate.rendered = function() {
     $window.bind('resize', onResize);
     resizeWindow();
+    Deps.autorun(function(){
+      if(embed.isEmbedActivated()) delta = 0;
+      resizeWindow();
+    });
   };
   
   Template.loggedTemplate.destroyed = function() {
     $window.unbind('resize', onResize);
   }
-
-  Deps.autorun(function(){
-    Session.get('embed');
-    if($('body').hasClass('embed')) delta = 0;
-    resizeWindow();
-  });
 
 })();
 

@@ -23,11 +23,27 @@ body {
 .header-profile img{
   height:30px;
 }
-.navbar.header .brand{
-  padding-left:80px;
+.embed-logo,.navbar.header .brand{
   line-height:50px;
   background:url(/img/logo-50px.png) no-repeat 20px center;
   font-family: 'Quicksand', sans-serif;
+  float: left;
+  display: block;
+  padding: 10px 20px 10px 80px;
+  margin-left: -20px;
+  font-size: 20px;
+  font-weight: 200;
+  color: #eeeeee;
+  text-shadow: 0 1px 0 #333333;
+}
+.embed-logo{
+  float:none;
+  padding: 10px 20px 10px 90px;
+  background:url(/img/logo-50px.png) no-repeat 30px center;
+}
+.embed-logo:hover{
+  text-decoration:none;
+  color:#eeeeee;
 }
 .navbar.header .divider-vertical {
   height:70px;

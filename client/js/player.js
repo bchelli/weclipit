@@ -109,8 +109,12 @@ Template.playerTemplate.events({
 
 
   Template.playerTemplate.toogleFullscreen = function(){
-    Session.set('fullscreen', !Session.get('fullscreen') && !$('body').hasClass('embed'));
-    updateFullscreen();
+    if(embed.isEmbedActivated()){
+      embed.toogleFullscreen();
+    } else {
+      Session.set('fullscreen', !Session.get('fullscreen'));
+      updateFullscreen();
+    }
   }
   Template.playerTemplate.playerStop = function(){
     Session.set('fullscreen', false);

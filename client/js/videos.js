@@ -54,7 +54,7 @@ var VideosRouter = Backbone.Router.extend({
   , "playlist/:playlist/video/:video": "openVideo"
   },
   openVideoEmbed: function (playlist, video) {
-    setEmbed();
+    embed.activateEmbed();
     this.openVideo(playlist, video);
   },
   openVideo: function (playlist, video) {
@@ -68,7 +68,7 @@ var VideosRouter = Backbone.Router.extend({
     }
   },
   setVideo: function (playlist, video) {
-    this.navigate(isEmbedPath()+ 'playlist/'+playlist+'/video/'+video, true);
+    this.navigate(embed.isEmbedPath()+ 'playlist/'+playlist+'/video/'+video, true);
   }
 });
 

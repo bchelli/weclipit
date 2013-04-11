@@ -74,7 +74,7 @@ var PlaylistsRouter = Backbone.Router.extend({
   , "playlist/:playlist": "openPlaylist"
   },
   openPlaylistEmbed: function (playlist) {
-    setEmbed();
+    embed.activateEmbed();
     this.openPlaylist(playlist);
   },
   openPlaylist: function (playlist) {
@@ -82,7 +82,7 @@ var PlaylistsRouter = Backbone.Router.extend({
     Session.set("playlist", playlist);
   },
   setPlaylist: function (playlist) {
-    this.navigate(isEmbedPath()+'playlist/'+playlist, true);
+    this.navigate(embed.isEmbedPath()+'playlist/'+playlist, true);
   }
 });
 

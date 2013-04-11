@@ -55,6 +55,7 @@ h2.no-video {text-align:center;color:#ddd;padding:30px 0;}
   .share-icon.twitter{background-position:-24px 0;}
   .share-icon.google{background-position:-48px 0;}
   .share-icon.email{background-position:-72px 0;}
+  .share-icon.embed{background-position:-96px 0;}
 
 
 .edit-playlist-container{margin-bottom:-10px;display:inline-block;}
@@ -130,3 +131,5 @@ h2.no-video {text-align:center;color:#ddd;padding:30px 0;}
     .following-bar td .value{display:block;font-weight:bold}
     .following-bar td .unit{color:#aaa;text-transform:uppercase}
   .following-bar td .btn{width:65px}
+
+#embed-content{height:100px;}

@@ -12,9 +12,28 @@
     {{> videosListTemplate}}
   </div>
 
+  {{> embed-url-popup}}
   {{> remove-video-popup}}
   {{> remove-playlist-popup}}
   {{/if}}
+</template>
+
+
+<template name="embed-url-popup">
+  <div class="modal hide fade" id="embed-url-modal">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3>Embed playlist</h3>
+    </div>
+    <div class="modal-body">
+      <textarea id="embed-content" class="span12"></textarea>
+    </div>
+    <div class="modal-footer">
+      <div class="controls">
+        <a href="#" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">OK</a>
+      </div>
+    </div>
+  </div>
 </template>
 
 
