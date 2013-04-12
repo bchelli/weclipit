@@ -39,7 +39,8 @@ if(Meteor.isServer){
   // Set Facebook APP ID
   Meteor.facebook.use({
     openGraphTags:function(req){
-      return [{"property":"fb:app_id",  "content":"157608577727216"}];
+      var config = Accounts.loginServiceConfiguration.findOne({service: 'facebook'});
+      return [{"property":"fb:app_id",  "content":config.appId}];
     }
   });
 
