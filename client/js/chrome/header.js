@@ -2,6 +2,15 @@ Template.headerTemplate.user = function(){
   return Meteor.user();
 };
 
+Template.headerTemplate.hasQualities = function(){
+  var qualities = Session.get('video-qualities');
+  return qualities && qualities.length && qualities.length>1;
+};
+
+Template.headerTemplate.quality = function(){
+  return Session.get('video-qualities');
+};
+
 Template.headerTemplate.isPlaying = function(){
   var pl = Session.get('playing');
   return !!pl && !!pl.playlist;
@@ -51,5 +60,9 @@ Template.headerTemplate.events({
 , 'click .fullscreen': function(ev){
     Template.playerTemplate.toogleFullscreen();
     return false;
+  }
+, 'click .set-quality': function(ev){
+    ev.preventDefault();
+    Template.playerTemplate.setQuality($(ev.currentTarget).attr('data-quality'));
   }
 });

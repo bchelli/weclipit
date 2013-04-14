@@ -186,6 +186,10 @@ footer.navbar a{
   position: absolute;
   background:#333;
 }
+.navbar .nav.player-controls.with-qualities{
+  width:574px;
+  margin-left:-287px;
+}
 
 .navbar .divider-vertical{
   border-left: 1px solid #222;

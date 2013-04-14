@@ -24,7 +24,7 @@
                   My account
                 {{/if}}
               <b class="caret"></b></a>
-              <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+              <ul class="dropdown-menu" role="menu">
                 <li><a href="#" class="my-profile">My public profile</a></li>
                 <li class="divider"></li>
                 <li><a href="#" class="logout">logout</a></li>
@@ -36,7 +36,7 @@
             {{loginButtons}}
           {{/if}}
           {{#if isPlaying}}
-          <ul class="nav player-controls">
+          <ul class="nav player-controls {{#if hasQualities}}with-qualities{{/if}}">
             <li class="divider-vertical"></li>
             <li><a href="#" class="backward"><i class="icon-white icon-fast-backward"></i></a></li>
             <li><a href="#" class="stop"><i class="icon-white icon-stop"></i></a></li>
@@ -49,6 +49,16 @@
                 <div class="bar loaded"></div>
               </div>
             </li>
+            {{#if hasQualities}}
+            <li class="dropdown qualities-dropdown">
+              <a href="#" class="dropdown-toggle header-profile" data-toggle="dropdown"><i class="icon-white icon-cog"></i></a>
+              <ul class="dropdown-menu" role="menu">
+                {{#each quality}}
+                <li><a href="#" class="set-quality" data-quality="{{key}}">{{value}}</a></li>
+                {{/each}}
+              </ul>
+            </li>
+            {{/if}}
             <li><a href="#" class="fullscreen"><i class="icon-white icon-fullscreen"></i></a></li>
             <li class="divider-vertical"></li>
           </ul>

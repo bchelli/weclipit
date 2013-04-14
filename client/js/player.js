@@ -105,8 +105,14 @@ Template.playerTemplate.events({
   , play:function(){
       Session.set('pause', false);
     }
+  , qualities:function(qualities){
+      Session.set('video-qualities', qualities);
+    }
   };
 
+  Template.playerTemplate.setQuality = function(quality){
+    player.setQuality(quality);
+  }
 
   Template.playerTemplate.toogleFullscreen = function(){
     if(embed.isEmbedActivated()){
@@ -156,6 +162,7 @@ Template.playerTemplate.events({
         setProgressPosition('playing', 0);
         setProgressPosition('loaded', 0);
         Session.set('pause', true);
+        Session.set('video-qualities', []);
         var pl = Session.get('playing');
         if(pl){
           function startVideo(attempt){
