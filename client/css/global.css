@@ -190,6 +190,12 @@ footer.navbar a{
   width:574px;
   margin-left:-287px;
 }
+.qualities-dropdown .dropdown-menu>li>a{
+  padding: 3px 15px 3px 10px;
+}
+.qualities-dropdown .dropdown-menu{
+  min-width: 10px;
+}
 
 .navbar .divider-vertical{
   border-left: 1px solid #222;
