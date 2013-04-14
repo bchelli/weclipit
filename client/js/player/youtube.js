@@ -32,6 +32,11 @@ Meteor.player.youtube = function(playerContainer, video, events){
     if(that.player && that.player.getVideoLoadedFraction) that.context.loadPercent = Math.floor(100*that.player.getVideoLoadedFraction());
     that.context.playPercent = Math.floor(100*that.context.seconds/that.context.duration);
     if(events && events.progress) events.progress(that.context);
+    if(events && events.qualities){
+      var resolutions = [], active = that.player.getPlaybackQuality();
+      _.each(that.player.getAvailableQualityLevels(), function(res){resolutions.push({key:res,value:qualities[res],selected:(active===res)});});
+      events.qualities(resolutions);
+    }
   };
 
   that.getPositionInterval = null;
@@ -55,11 +60,6 @@ Meteor.player.youtube = function(playerContainer, video, events){
           Meteor.clearInterval(that.getPositionInterval);
           that.getPositionInterval = Meteor.setInterval(refresh, 1000);
           if(events && events.play) events.play();
-          if(events && events.qualities){
-            var resolutions = [];
-            _.each(that.player.getAvailableQualityLevels(), function(res){resolutions.push({key:res,value:qualities[res]});});
-            events.qualities(resolutions);
-          }
         }
         if(newState.data==2){
           if(events && events.pause) events.pause();

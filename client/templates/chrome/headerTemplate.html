@@ -54,7 +54,14 @@
               <a href="#" class="dropdown-toggle header-profile" data-toggle="dropdown"><i class="icon-white icon-cog"></i></a>
               <ul class="dropdown-menu" role="menu">
                 {{#each quality}}
-                <li><a href="#" class="set-quality" data-quality="{{key}}">{{value}}</a></li>
+                <li><a href="#" class="set-quality" data-quality="{{key}}">
+                    {{#if selected}}
+                      <i class="icon-ok"></i>
+                    {{else}}
+                      <i class="icon-"></i>
+                    {{/if}}
+                    {{value}}
+                </a></li>
                 {{/each}}
               </ul>
             </li>
