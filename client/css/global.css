@@ -38,8 +38,8 @@ body {
 }
 .embed-logo{
   float:none;
-  padding: 10px 20px 10px 90px;
-  background:url(/img/logo-50px.png) no-repeat 30px center;
+  padding: 0px 20px 2px 80px;
+  background:url(/img/logo-50px.png) no-repeat 27px center;
 }
 .embed-logo:hover{
   text-decoration:none;
