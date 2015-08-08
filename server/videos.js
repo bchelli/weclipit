@@ -18,7 +18,7 @@ Meteor.methods({
     var fiber = Fiber.current;
     Meteor.http.get('http://www.youtube.com/playlist?list='+encodeURIComponent(youtubePlaylistId), function(err, res){
       if(!err){
-        var regExp = new RegExp('href="/watch?[^"]+list='+encodeURIComponent(youtubePlaylistId)+'[^"]+"', 'g')
+        var regExp = new RegExp('href="/watch?[^"]+list='+encodeURIComponent(youtubePlaylistId)+'[^"]*"', 'g')
           , extractVideo = new RegExp('v=([^&]+)')
           , list = res.content.match(regExp)
           ;
